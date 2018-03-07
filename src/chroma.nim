@@ -154,8 +154,8 @@ proc parseHtmlRgb*(text: string): Color =
     raise newException(InvalidColor, "Expected 'rgb('")
   if text[^1] != ')':
     raise newException(InvalidColor, "Expected ')'")
-  var inner = text[4..^2].replace(" ", "")
-  var arr = inner.split(',')
+  let inner = text[4..^2].replace(" ", "")
+  let arr = inner.split(',')
   if arr.len != 3:
     raise newException(InvalidColor, "Expected 3 numbers in rgb()")
   result.r = min(1.0, parseFloat(arr[0]) / 255)
@@ -189,8 +189,8 @@ proc parseHtmlRgba*(text: string): Color =
     raise newException(InvalidColor, "Expected 'rgba('")
   if text[^1] != ')':
     raise newException(InvalidColor, "Expected ')'")
-  var inner = text[5..^2].replace(" ", "")
-  var arr = inner.split(',')
+  let inner = text[5..^2].replace(" ", "")
+  let arr = inner.split(',')
   if arr.len != 4:
     raise newException(InvalidColor, "Expected 4 numbers in rgba()")
   result.r = min(1.0, parseFloat(arr[0]) / 255)
@@ -357,7 +357,7 @@ type
 
 proc cmyk*(c: Color): ColorCMYK =
   ## convert Color to ColorCMYK
-  var k = min3(1 - c.r, 1 - c.g, 1 - c.b)
+  let k = min3(1 - c.r, 1 - c.g, 1 - c.b)
   result.k = k * 100
   if k != 1.0:
     result.c = (1 - c.r - k) / (1 - k) * 100

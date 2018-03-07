@@ -1,4 +1,4 @@
-# Chroma - Everything you want to do with colors
+# Chroma - Everything you want to do with colors.
 
 ## Parse/Format
 
@@ -24,6 +24,13 @@ Conversion from and to these colors spaces:
 * HSV models the way paints of different colors mix together
 * YUV origially a television color format, still used in digital movies
 
+## Color Functions
+
+You can use these to change colors you already have
+* darken
+* lighten
+
+
 ## Example
 
 ```land=nim
@@ -35,4 +42,5 @@ echo a.toHex()
 echo parseHex("BADA55")
 echo parseHtmlName("red")
 echo hsv(b).color()
+echo a.darken(.2)
 ```

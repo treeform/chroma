@@ -213,7 +213,7 @@ proc toHtmlRgba*(c: Color): string =
     $c.a & ")"
 
 
-## ------- rgb
+# Color Space: rgb
 type
   ColorRGB* = object
     ## Color stored as 3 uint8s
@@ -284,10 +284,10 @@ proc parseHtmlColor*(colorText: string): Color =
     return parseHtmlName(text)
 
 
-## ------- rgba
+# Color Space: rgba
 type
   ColorRGBA* = object
-    ## Color stored as 3 uint8s
+    ## Color stored as 4 uint8s
     r*: uint8 ## Red 0-255
     g*: uint8 ## Green 0-255
     b*: uint8 ## Blue 0-255
@@ -325,10 +325,10 @@ proc color*(c: ColorRGBA): Color =
   result.a = float(c.a) / 255
 
 
-## ------- cmy
+# Color Space: cmy
 type
   ColorCMY* = object
-    ## CMY colors are reverse of rgb
+    ## CMY colors are reverse of rgb and as 100%
     c*: float ## Cyan 0 to 100
     m*: float ## Magenta 0 to 100
     y*: float ## Yellow 0 to 100
@@ -348,7 +348,7 @@ proc color*(c: ColorCMY): Color =
   result.a = 1.0
 
 
-## ------- cmyk
+# Color Space: cmyk
 type
   ColorCMYK* = object
     ## CMYK colors are used in printing
@@ -380,10 +380,10 @@ proc color*(color: ColorCMYK): Color =
   result.a = 1.0
 
 
-## ------- HSL
+# Color Space: HSL
 type
   ColorHSL* = object
-    ## HSL
+    ## HSL attempts to resemble more perceptual color models
     h*: float ## hue 0 to 360
     s*: float ## saturation 0 to 100
     l*: float ## lightness 0 to 100
@@ -461,10 +461,10 @@ proc color*(c: ColorHSL): Color =
   result.a = 1.0
 
 
-## ------- HSV
+# Color Space: HSV
 type
   ColorHSV* = object
-    ## HSV
+    ## HSV models the way paints of different colors mix together
     h*: float ## hue 0 to 360
     s*: float ## saturation 0 to 100
     v*: float ## value 0 to 100
@@ -524,10 +524,10 @@ proc color*(c: ColorHSV): Color =
       return color(v, p, q)
 
 
-## ------- YUV
+# Color Space: YUV
 type
   ColorYUV* = object
-    ## YUV
+    ## YUV origially a television color format, still used in digital movies
     y*: float ## 0 to 1
     u*: float ## -0.5 to 0.5
     v*: float ## -0.5 to 0.5

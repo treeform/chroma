@@ -589,3 +589,16 @@ proc spin*(color: Color, degrees: float): Color =
   if hsl.h >= 360: hsl.h -= 360
   result = color(hsl)
   result.a = color.a
+
+
+proc mix*(colorA, colorB: Color): Color =
+  ## Mixes two colors together using CMYK
+  let
+    a = colorA.cmyk
+    b = colorB.cmyk
+  var c: ColorCMYK
+  c.c = (a.c + b.c) / 2
+  c.m = (a.m + b.m) / 2
+  c.y = (a.y + b.y) / 2
+  c.k = (a.k + b.k) / 2
+  return c.color

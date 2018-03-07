@@ -129,6 +129,11 @@ suite "functions":
     assert desaturate(parseHex("75E0EF"), 0.2).toHex() == "84D4DF"
   test "spin":
     assert spin(parseHex("75E0EF"), 180).toHex() == "EE8375"
+  test "mix":
+    assert mix(parseHex("FF0000"), parseHex("FF0000")).toHex() == "FF0000"
+    assert mix(parseHex("FFFFFF"), parseHex("000000")).toHex() == "7F7F7F"
+    assert mix(parseHex("FF0000"), parseHex("000000")).toHex() == "7F7F00"
+
 
 when false:
   # example in readme:

@@ -32,7 +32,7 @@ You can use these to change colors you already have
 * `saturate(color, amout)` Saturates (makes brighter) the color by amount 0-1
 * `desaturate(color, amout)` Desaturate (makes grayer) the color by amount 0-1
 * `spin(color, degrees)` Rotates the hue of the color by degrees (0-360)
-
+* `mix(colorA, colorB)` Mixes two colors together using CMYK
 
 ## Example
 

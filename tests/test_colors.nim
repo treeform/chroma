@@ -122,16 +122,22 @@ suite "functions":
   test "darken":
     assert darken(color(0.7,0.8,0.9), 0.2).toHex() == "6598CC"
   test "lighten":
-    echo lighten(color(0.1,0.8,0.9), 0.2).toHex()
     assert lighten(color(0.1,0.8,0.9), 0.2).toHex() == "75E0EF"
+  test "saturate":
+    assert saturate(parseHex("6598CC"), 0.2).toHex() == "5097E0"
+  test "desaturate":
+    assert desaturate(parseHex("75E0EF"), 0.2).toHex() == "84D4DF"
+  test "spin":
+    assert spin(parseHex("75E0EF"), 180).toHex() == "EE8375"
 
-# example in readme:
-let
-  a = color(0.7,0.8,0.9)
-  b = color(0.2,0.3,0.4,0.5)
+when false:
+  # example in readme:
+  let
+    a = color(0.7,0.8,0.9)
+    b = color(0.2,0.3,0.4,0.5)
 
-echo a.toHex()
-echo parseHex("BADA55")
-echo parseHtmlName("red")
-echo hsv(b).color()
-echo a.darken(0.2)
+  echo a.toHex()
+  echo parseHex("BADA55")
+  echo parseHtmlName("red")
+  echo hsv(b).color()
+  echo a.darken(0.2)

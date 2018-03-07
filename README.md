@@ -27,8 +27,11 @@ Conversion from and to these colors spaces:
 ## Color Functions
 
 You can use these to change colors you already have
-* darken
-* lighten
+* `lighten(color, amout)` Lightens the color by amount 0-1
+* `darken(color, amout)` Darkens the color by amount 0-1
+* `saturate(color, amout)` Saturates (makes brighter) the color by amount 0-1
+* `desaturate(color, amout)` Desaturate (makes grayer) the color by amount 0-1
+* `spin(color, degrees)` Rotates the hue of the color by degrees (0-360)
 
 
 ## Example
@@ -42,5 +45,5 @@ echo a.toHex()
 echo parseHex("BADA55")
 echo parseHtmlName("red")
 echo hsv(b).color()
-echo a.darken(.2)
+echo a.darken(0.2)
 ```

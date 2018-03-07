@@ -553,19 +553,39 @@ proc color*(c: ColorYUV): Color =
 
 # Color Functions
 
-proc darken*(color: Color, amount: float): Color =
-    ## Darkens the color by amount 0-1
-    var hsl = color.hsl()
-    hsl.l -= 100 * amount
-    hsl.l = clamp(hsl.l, 0, 100)
-    result = color(hsl)
-    result.a = color.a
-
-
 proc lighten*(color: Color, amount: float): Color =
-    ## Darkens the color by amount 0-1
-    var hsl = color.hsl()
-    hsl.l += 100 * amount
-    hsl.l = clamp(hsl.l, 0, 100)
-    result = color(hsl)
-    result.a = color.a
+  ## Lightens the color by amount 0-1
+  var hsl = color.hsl()
+  hsl.l += 100 * amount
+  hsl.l = clamp(hsl.l, 0, 100)
+  result = color(hsl)
+  result.a = color.a
+
+
+proc darken*(color: Color, amount: float): Color =
+  ## Darkens the color by amount 0-1
+  color.lighten(-amount)
+
+
+proc saturate*(color: Color, amount: float): Color =
+  ## Saturates (makes brighter) the color by amount 0-1
+  var hsl = color.hsl()
+  hsl.s += 100 * amount
+  hsl.s = clamp(hsl.s, 0, 100)
+  result = color(hsl)
+  result.a = color.a
+
+
+proc desaturate*(color: Color, amount: float): Color =
+  ## Desaturate (makes grayer) the color by amount 0-1
+  color.saturate(-amount)
+
+
+proc spin*(color: Color, degrees: float): Color =
+  ## Rotates the hue of the color by degrees (0-360)
+  var hsl = color.hsl()
+  hsl.h += degrees
+  if hsl.h < 0: hsl.h += 360
+  if hsl.h >= 360: hsl.h -= 360
+  result = color(hsl)
+  result.a = color.a

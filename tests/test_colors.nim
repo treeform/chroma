@@ -116,3 +116,14 @@ suite "spaces":
     for c in arr:
       #echo "YUV", c, " -> ", yuv(c)
       assert c.almostEqual(yuv(c).color())
+
+
+# example in readme:
+let
+  a = color(0.7,0.8,0.9)
+  b = color(0.2,0.3,0.4,0.5)
+
+echo a.toHex()
+echo parseHex("BADA55")
+echo parseHtmlName("red")
+echo hsv(b).color()

@@ -10,7 +10,7 @@ Common color parsers and formatters:
 * `HtmlRgba` - `rgba(255, 255, 255, 1.0)`
 * `HtmlName` - `white`
 * `HexAlpha` - `FFFFFFFF`
-* `parseHtmlColor` - Any of HTML formats.
+* `parseHtmlColor` - Any of the HTML formats.
 
 ## Color Spaces
 

@@ -1,6 +1,5 @@
 # Chroma - Everything you want to do with colors
 
-
 ## Parse/Format
 
 Includes parsers and formatters for common HTML colors:
@@ -13,7 +12,6 @@ Includes parsers and formatters for common HTML colors:
 As well as just these formats:
 * `FFFFFF`
 * `(1,1,1,1)`
-
 
 ## Color Spaces
 

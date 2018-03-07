@@ -120,7 +120,7 @@ suite "spaces":
 
 suite "functions":
   test "darken":
-    assert darken(color(0.7,0.8,0.9), 0.2).toHex() == "6598CC"
+    assert darken(color(0.7,0.8,0.9), 0.2).toHex() == "6598CB"
   test "lighten":
     assert lighten(color(0.1,0.8,0.9), 0.2).toHex() == "75E0EF"
   test "saturate":
@@ -128,7 +128,7 @@ suite "functions":
   test "desaturate":
     assert desaturate(parseHex("75E0EF"), 0.2).toHex() == "84D4DF"
   test "spin":
-    assert spin(parseHex("75E0EF"), 180).toHex() == "EE8375"
+    assert spin(parseHex("75E0EF"), 180).toHex() == "EF8374"
   test "mix":
     assert mix(parseHex("FF0000"), parseHex("FF0000")).toHex() == "FF0000"
     assert mix(parseHex("FFFFFF"), parseHex("000000")).toHex() == "7F7F7F"
@@ -137,6 +137,8 @@ suite "functions":
 
 when false:
   # example in readme:
+  import chroma
+
   let
     a = color(0.7,0.8,0.9)
     b = color(0.2,0.3,0.4,0.5)
@@ -146,3 +148,4 @@ when false:
   echo parseHtmlName("red")
   echo hsv(b).color()
   echo a.darken(0.2)
+  echo mix(a, b)

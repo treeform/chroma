@@ -2,18 +2,18 @@ import strutils, math, tables
 import chroma/names
 
 # utility functions
-proc min3(a, b, c: float): float = min(a, min(b, c))
-proc max3(a, b, c: float): float = max(a, max(b, c))
-proc clamp(n, a, b: float): float = min(max(a, n), b)
+proc min3(a, b, c: float32): float32 = min(a, min(b, c))
+proc max3(a, b, c: float32): float32 = max(a, max(b, c))
+proc clamp(n, a, b: float32): float32 = min(max(a, n), b)
 
 
 type
   Color* = object
-    ## Main color type, float points
-    r*: float ## red (0-1)
-    g*: float ## green (0-1)
-    b*: float ## blue (0-1)
-    a*: float ## alpha (0-1, 0 is fully transparent)
+    ## Main color type, float32 points
+    r*: float32 ## red (0-1)
+    g*: float32 ## green (0-1)
+    b*: float32 ## blue (0-1)
+    a*: float32 ## alpha (0-1, 0 is fully transparent)
 
   InvalidColor* = object of Exception
 
@@ -62,9 +62,9 @@ proc parseHex*(hex: string): Color =
   ## * 0000FF -> blue
   ## * FFFFFF -> white
   assert hex.len == 6
-  result.r = float(c2n(hex, 0) * 16 + c2n(hex, 1)) / 255
-  result.g = float(c2n(hex, 2) * 16 + c2n(hex, 3)) / 255
-  result.b = float(c2n(hex, 4) * 16 + c2n(hex, 5)) / 255
+  result.r = float32(c2n(hex, 0) * 16 + c2n(hex, 1)) / 255
+  result.g = float32(c2n(hex, 2) * 16 + c2n(hex, 3)) / 255
+  result.b = float32(c2n(hex, 4) * 16 + c2n(hex, 5)) / 255
   result.a = 1.0
 
 
@@ -73,7 +73,7 @@ proc toHex*(c: Color): string =
   ## * red -> FF0000
   ## * blue -> 0000FF
   ## * white -> FFFFFF
-  proc pair(n: float): string =
+  proc pair(n: float32): string =
     toHex(n*255)[^2..^1]
   return pair(c.r) & pair(c.g) & pair(c.b)
 
@@ -86,10 +86,10 @@ proc parseHexAlpha*(hex: string): Color =
   ## * 000000FF -> opaque  black
   ## * 00000000 -> transparent black
   assert hex.len == 8
-  result.r = float(c2n(hex, 0) * 16 + c2n(hex, 1)) / 255
-  result.g = float(c2n(hex, 2) * 16 + c2n(hex, 3)) / 255
-  result.b = float(c2n(hex, 4) * 16 + c2n(hex, 5)) / 255
-  result.a = float(c2n(hex, 6) * 16 + c2n(hex, 7)) / 255
+  result.r = float32(c2n(hex, 0) * 16 + c2n(hex, 1)) / 255
+  result.g = float32(c2n(hex, 2) * 16 + c2n(hex, 3)) / 255
+  result.b = float32(c2n(hex, 4) * 16 + c2n(hex, 5)) / 255
+  result.a = float32(c2n(hex, 6) * 16 + c2n(hex, 7)) / 255
 
 
 proc toHexAlpha*(c: Color): string =
@@ -99,7 +99,7 @@ proc toHexAlpha*(c: Color): string =
   ## * white -> FFFFFFFF
   ## * opaque  black -> 000000FF
   ## * transparent black -> 00000000
-  proc pair(n: float): string =
+  proc pair(n: float32): string =
     toHex(n*255)[^2..^1]
   return pair(c.r) & pair(c.g) & pair(c.b) & pair(c.a)
 
@@ -130,9 +130,9 @@ proc parseHtmlHexTiny*(hex: string): Color =
   if hex[0] != '#':
     raise newException(InvalidColor, "Expected '#'")
   assert hex.len == 4
-  result.r = float(c2n(hex, 1)) / 15
-  result.g = float(c2n(hex, 2)) / 15
-  result.b = float(c2n(hex, 3)) / 15
+  result.r = float32(c2n(hex, 1)) / 15
+  result.g = float32(c2n(hex, 2)) / 15
+  result.b = float32(c2n(hex, 3)) / 15
   result.a = 1.0
 
 
@@ -141,7 +141,7 @@ proc toHtmlHexTiny*(c: Color): string =
   ## * red -> #F00
   ## * blue -> #00F
   ## * white -> #FFF
-  proc pair(n: float): string =
+  proc pair(n: float32): string =
     toHex(n*15)[^1..^1]
   return '#' & pair(c.r) & pair(c.g) & pair(c.b)
 
@@ -241,9 +241,9 @@ proc rgb*(r, g, b: uint8): ColorRGB =
 
 proc color*(c: ColorRGB): Color =
   ## Convert ColorRGB to Color
-  result.r = float(c.r) / 255
-  result.g = float(c.g) / 255
-  result.b = float(c.b) / 255
+  result.r = float32(c.r) / 255
+  result.g = float32(c.g) / 255
+  result.b = float32(c.b) / 255
   result.a = 1.0
 
 
@@ -319,19 +319,19 @@ proc rgba*(r, g, b, a: uint8): ColorRGBA =
 
 proc color*(c: ColorRGBA): Color =
   ## Convert ColorRGBA to Color
-  result.r = float(c.r) / 255
-  result.g = float(c.g) / 255
-  result.b = float(c.b) / 255
-  result.a = float(c.a) / 255
+  result.r = float32(c.r) / 255
+  result.g = float32(c.g) / 255
+  result.b = float32(c.b) / 255
+  result.a = float32(c.a) / 255
 
 
 # Color Space: cmy
 type
   ColorCMY* = object
     ## CMY colors are reverse of rgb and as 100%
-    c*: float ## Cyan 0 to 100
-    m*: float ## Magenta 0 to 100
-    y*: float ## Yellow 0 to 100
+    c*: float32 ## Cyan 0 to 100
+    m*: float32 ## Magenta 0 to 100
+    y*: float32 ## Yellow 0 to 100
 
 proc cmy*(c: Color): ColorCMY =
   ## convert Color to ColorCMY
@@ -352,10 +352,10 @@ proc color*(c: ColorCMY): Color =
 type
   ColorCMYK* = object
     ## CMYK colors are used in printing
-    c*: float ## Cyan 0 to 1
-    m*: float ## Magenta 0 to 1
-    y*: float ## Yellow 0 to 1
-    k*: float ## Black 0 to 1
+    c*: float32 ## Cyan 0 to 1
+    m*: float32 ## Magenta 0 to 1
+    y*: float32 ## Yellow 0 to 1
+    k*: float32 ## Black 0 to 1
 
 proc cmyk*(c: Color): ColorCMYK =
   ## convert Color to ColorCMYK
@@ -384,9 +384,9 @@ proc color*(color: ColorCMYK): Color =
 type
   ColorHSL* = object
     ## HSL attempts to resemble more perceptual color models
-    h*: float ## hue 0 to 360
-    s*: float ## saturation 0 to 100
-    l*: float ## lightness 0 to 100
+    h*: float32 ## hue 0 to 360
+    s*: float32 ## saturation 0 to 100
+    l*: float32 ## lightness 0 to 100
 
 
 proc hsl*(c: Color): ColorHSL =
@@ -427,7 +427,7 @@ proc color*(c: ColorHSL): Color =
     h = c.h / 360
     s = c.s / 100
     l = c.l / 100
-  var t1, t2, t3: float
+  var t1, t2, t3: float32
   if s == 0.0:
     return color(l, l, l)
   if l < 0.5:
@@ -436,15 +436,15 @@ proc color*(c: ColorHSL): Color =
     t2 = l + s - l * s
   t1 = 2 * l - t2
 
-  var rgb: array[3, float]
+  var rgb: array[3, float32]
   for i in 0..2:
-    t3 = h + 1.0 / 3.0 * - (float(i) - 1.0)
+    t3 = h + 1.0 / 3.0 * - (float32(i) - 1.0)
     if t3 < 0:
       t3 += 1
     elif t3 > 1:
       t3 -= 1
 
-    var val: float
+    var val: float32
     if 6 * t3 < 1:
       val = t1 + (t2 - t1) * 6 * t3
     elif 2 * t3 < 1:
@@ -465,9 +465,9 @@ proc color*(c: ColorHSL): Color =
 type
   ColorHSV* = object
     ## HSV models the way paints of different colors mix together
-    h*: float ## hue 0 to 360
-    s*: float ## saturation 0 to 100
-    v*: float ## value 0 to 100
+    h*: float32 ## hue 0 to 360
+    s*: float32 ## saturation 0 to 100
+    v*: float32 ## value 0 to 100
 
 
 proc hsv*(c: Color): ColorHSV =
@@ -528,9 +528,9 @@ proc color*(c: ColorHSV): Color =
 type
   ColorYUV* = object
     ## YUV origially a television color format, still used in digital movies
-    y*: float ## 0 to 1
-    u*: float ## -0.5 to 0.5
-    v*: float ## -0.5 to 0.5
+    y*: float32 ## 0 to 1
+    u*: float32 ## -0.5 to 0.5
+    v*: float32 ## -0.5 to 0.5
 
 
 proc yuv*(c: Color): ColorYUV =
@@ -553,7 +553,7 @@ proc color*(c: ColorYUV): Color =
 
 # Color Functions
 
-proc lighten*(color: Color, amount: float): Color =
+proc lighten*(color: Color, amount: float32): Color =
   ## Lightens the color by amount 0-1
   var hsl = color.hsl()
   hsl.l += 100 * amount
@@ -562,12 +562,12 @@ proc lighten*(color: Color, amount: float): Color =
   result.a = color.a
 
 
-proc darken*(color: Color, amount: float): Color =
+proc darken*(color: Color, amount: float32): Color =
   ## Darkens the color by amount 0-1
   color.lighten(-amount)
 
 
-proc saturate*(color: Color, amount: float): Color =
+proc saturate*(color: Color, amount: float32): Color =
   ## Saturates (makes brighter) the color by amount 0-1
   var hsl = color.hsl()
   hsl.s += 100 * amount
@@ -576,12 +576,12 @@ proc saturate*(color: Color, amount: float): Color =
   result.a = color.a
 
 
-proc desaturate*(color: Color, amount: float): Color =
+proc desaturate*(color: Color, amount: float32): Color =
   ## Desaturate (makes grayer) the color by amount 0-1
   color.saturate(-amount)
 
 
-proc spin*(color: Color, degrees: float): Color =
+proc spin*(color: Color, degrees: float32): Color =
   ## Rotates the hue of the color by degrees (0-360)
   var hsl = color.hsl()
   hsl.h += degrees

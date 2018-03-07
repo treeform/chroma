@@ -36,6 +36,8 @@ You can use these to change colors you already have
 ## Example
 
 ```land=nim
+import chroma
+
 let
 	a = color(0.7,0.8,0.9)
 	b = color(0.2,0.3,0.4,0.5)
@@ -45,4 +47,5 @@ echo parseHex("BADA55")
 echo parseHtmlName("red")
 echo hsv(b).color()
 echo a.darken(0.2)
+echo mix(a, b)
 ```

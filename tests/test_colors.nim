@@ -118,6 +118,13 @@ suite "spaces":
       assert c.almostEqual(yuv(c).color())
 
 
+suite "functions":
+  test "darken":
+    assert darken(color(0.7,0.8,0.9), 0.2).toHex() == "6598CC"
+  test "lighten":
+    echo lighten(color(0.1,0.8,0.9), 0.2).toHex()
+    assert lighten(color(0.1,0.8,0.9), 0.2).toHex() == "75E0EF"
+
 # example in readme:
 let
   a = color(0.7,0.8,0.9)

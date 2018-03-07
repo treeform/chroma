@@ -549,3 +549,23 @@ proc color*(c: ColorYUV): Color =
   result.r = clamp(result.r, 0, 1)
   result.g = clamp(result.g, 0, 1)
   result.b = clamp(result.b, 0, 1)
+
+
+# Color Functions
+
+proc darken*(color: Color, amount: float): Color =
+    ## Darkens the color by amount 0-1
+    var hsl = color.hsl()
+    hsl.l -= 100 * amount
+    hsl.l = clamp(hsl.l, 0, 100)
+    result = color(hsl)
+    result.a = color.a
+
+
+proc lighten*(color: Color, amount: float): Color =
+    ## Darkens the color by amount 0-1
+    var hsl = color.hsl()
+    hsl.l += 100 * amount
+    hsl.l = clamp(hsl.l, 0, 100)
+    result = color(hsl)
+    result.a = color.a

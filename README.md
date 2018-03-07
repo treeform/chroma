@@ -26,7 +26,7 @@ Conversion from and to these colors spaces:
 
 ## Example
 
-```
+```land=nim
 let
 	a = color(0.7,0.8,0.9)
 	b = color(0.2,0.3,0.4,0.5)

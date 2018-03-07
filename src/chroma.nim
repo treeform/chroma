@@ -45,13 +45,11 @@ proc almostEqual*(a, b: Color, ep = 0.01): bool =
 
 
 proc c2n(hex: string, i: int): int =
-  var c = ord(hex[i])
-  if c >= ord('0') and c <= ord('9'):
-    return c - ord('0')
-  elif c >= ord('a') and c <= ord('f'):
-    return 10 + c - ord('a')
-  elif c >= ord('A') and c <= ord('F'):
-    return 10 + c - ord('A')
+  let c = ord(hex[i])
+  case c
+  of ord('0') .. ord('9'): return c - ord('0')
+  of ord('a') .. ord('f'): return c - ord('a')
+  of ord('A') .. ord('F'): return c - ord('A')
   else:
     raise newException(InvalidColor, "format is not hex")
 

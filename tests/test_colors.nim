@@ -132,7 +132,7 @@ suite "functions":
   test "mix":
     assert mix(parseHex("FF0000"), parseHex("FF0000")).toHex() == "FF0000"
     assert mix(parseHex("FFFFFF"), parseHex("000000")).toHex() == "7F7F7F"
-    assert mix(parseHex("FF0000"), parseHex("000000")).toHex() == "7F7F00"
+    assert mix(parseHex("FF0000"), parseHex("00FF00")).toHex() == "7F7F00"
 
 
 when false:

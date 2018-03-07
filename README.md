@@ -2,16 +2,15 @@
 
 ## Parse/Format
 
-Includes parsers and formatters for common HTML colors:
-* `#FFF`
-* `#FFFFFF`
-* `rgb(255, 255, 255)`
-* `rgba(255, 255, 255, 1.0)`
-* `white`
-
-As well as just these formats:
-* `FFFFFF`
-* `(1,1,1,1)`
+Common color parsers and formatters:
+* `hex` - `FFFFFF`
+* `HtmlHexTiny` - `#FFF`
+* `HtmlHex` - `#FFFFFF`
+* `HtmlRgb` - `rgb(255, 255, 255)`
+* `HtmlRgba` - `rgba(255, 255, 255, 1.0)`
+* `HtmlName` - `white`
+* `HexAlpha` - `FFFFFFFF`
+* `parseHtmlColor` - Any of HTML formats.
 
 ## Color Spaces
 

@@ -48,8 +48,8 @@ proc c2n(hex: string, i: int): int =
   let c = ord(hex[i])
   case c
   of ord('0') .. ord('9'): return c - ord('0')
-  of ord('a') .. ord('f'): return c - ord('a')
-  of ord('A') .. ord('F'): return c - ord('A')
+  of ord('a') .. ord('f'): return 10 + c - ord('a')
+  of ord('A') .. ord('F'): return 10 + c - ord('A')
   else:
     raise newException(InvalidColor, "format is not hex")
 

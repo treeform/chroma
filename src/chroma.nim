@@ -1,3 +1,7 @@
+##
+## **Everything you want to do with colors.**
+##
+
 import strutils, math, tables
 import chroma/names
 

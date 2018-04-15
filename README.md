@@ -1,5 +1,7 @@
 # Chroma - Everything you want to do with colors.
 
+docs: https://treeform.github.io/chroma/
+
 ## Parse/Format
 
 Common color parsers and formatters:
@@ -39,8 +41,8 @@ You can use these to change colors you already have
 import chroma
 
 let
-	a = color(0.7,0.8,0.9)
-	b = color(0.2,0.3,0.4,0.5)
+    a = color(0.7,0.8,0.9)
+    b = color(0.2,0.3,0.4,0.5)
 
 echo a.toHex()
 echo parseHex("BADA55")

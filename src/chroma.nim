@@ -39,7 +39,6 @@ proc `$`*(c: Color): string =
   ## returns colors as "(r, g, b, a)"
   "(" & $c.r & ", " & $c.g & ", " & $c.b & ", " & $c.a & ")"
 
-
 proc almostEqual*(a, b: Color, ep = 0.01): bool =
   ## Returns true if colors are close
   if abs(a.r - b.r) > ep: return false
@@ -123,6 +122,9 @@ proc toHtmlHex*(c: Color): string =
   ## * white -> #FFFFFF
   return '#' & c.toHex()
 
+proc `%`*(c: Color): string =
+  ## returns colors as htmlHex for JSON serialization
+  return '#' & c.toHex()
 
 proc parseHtmlHexTiny*(hex: string): Color =
   ## parse colors with leading '#' and 3 hex numbers like:

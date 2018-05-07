@@ -53,6 +53,7 @@ suite "parsers":
     for c in arr & arrAlpha:
       #echo "parseHtmlHex/toHtmlHex", c, " -> ", toHtmlHex(c)
       assert c.almostEqual(parseHtmlHex(c.toHtmlHex()))
+      assert c.almostEqual(parseHtmlHex(% c))
 
   test "HtmlHexTiny":
     for c in arr & arrAlpha:

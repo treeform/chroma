@@ -9,7 +9,7 @@ import chroma/names
 proc min3(a, b, c: float32): float32 = min(a, min(b, c))
 proc max3(a, b, c: float32): float32 = max(a, max(b, c))
 proc clamp(n, a, b: float32): float32 = min(max(a, n), b)
-
+proc toHex(a: float32): string = toHex(int(a))
 
 type
   Color* = object

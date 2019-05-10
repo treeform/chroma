@@ -1,6 +1,6 @@
 # Chroma - Everything you want to do with colors.
 
-docs: https://treeform.github.io/chroma/
+Docs: https://treeform.github.io/chroma/
 
 ## Parse/Format
 
@@ -37,7 +37,7 @@ You can use these to change colors you already have
 
 ## Example
 
-```land=nim
+```nim
 import chroma
 
 let

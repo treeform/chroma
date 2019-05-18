@@ -471,6 +471,68 @@ proc color*(c: ColorHSL): Color =
   result.b = rgb[2]
   result.a = 1.0
 
+# Taken straight from R's grDevices module color.c:
+# https://svn.r-project.org/R/trunk/src/library/grDevices/src/colors.c
+# or mirror on GitHub with marked lines:
+# https://github.com/wch/r-source/blob/trunk/src/library/grDevices/src/colors.c#L273-L309
+# Color Space: HCL
+type
+  ColorHCL* = object
+    h*: float32 ## hue
+    c*: float32 ## chroma
+    l*: float32 ## luminance
+
+func gtrans(u: float32): float32 =
+  # Standard CRT Gamma
+  const GAMMA = 2.4
+  if u > 0.00304:
+    result = 1.055 * pow(u, (1.0 / GAMMA)) - 0.055
+  else:
+    result = 12.92 * u
+
+proc color*(c: ColorHCL): Color =
+  ## convert ColorHCL to Color
+  if c.l <= 0:
+    return color(0.0, 0.0, 0.0)
+
+  # Step 1 : Convert to CIE-LUV
+  const
+    WHITE_Y = 100.000'f32
+    WHITE_u = 0.1978398
+    WHITE_v = 0.4683363
+  let
+    h = c.h * PI / 180.0
+    L = c.l
+    U = c.c * cos(h)
+    V = c.c * sin(h)
+  var
+    X: float32
+    Y: float32
+    Z: float32
+    u: float32
+    v: float32
+
+  # Step 2 : Convert to CIE-XYZ */
+  if L <= 0 and U == 0 and V == 0:
+    X = 0
+    Y = 0
+    Z = 0
+  else:
+    Y = if L > 7.999592:
+          WHITE_Y * pow((L + 16)/116, 3)
+        else:
+          L / 903.3
+    u = U / (13.0 * L) + WHITE_u
+    v = V / (13.0 * L) + WHITE_v
+    X =  9.0 * Y * u / (4 * v)
+    Z =  - X / 3 - 5 * Y + 3 * Y / v
+
+  # Step 4 : CIE-XYZ to sRGB */
+  result.r = gtrans(( 3.240479 * X - 1.537150 * Y - 0.498535 * Z) / WHITE_Y)
+  result.g = gtrans((-0.969256 * X + 1.875992 * Y + 0.041556 * Z) / WHITE_Y)
+  result.b = gtrans(( 0.055648 * X - 0.204043 * Y + 1.057311 * Z) / WHITE_Y)
+  result.a = 1.0
+
 
 # Color Space: HSV
 type

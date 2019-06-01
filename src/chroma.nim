@@ -593,7 +593,17 @@ proc spin*(color: Color, degrees: float32): Color =
   result.a = color.a
 
 
-proc mix*(colorA, colorB: Color): Color =
+proc mix*(a, b: Color): Color =
+  ## Mixes two ColorRGBA colors together
+  var c: Color
+  c.r = (a.r + b.r) / 2.0
+  c.g = (a.g + b.g) / 2.0
+  c.b = (a.b + b.b) / 2.0
+  c.a = (a.a + b.a) / 2.0
+  return c
+
+
+proc mixCMYK*(colorA, colorB: Color): Color =
   ## Mixes two colors together using CMYK
   let
     a = colorA.cmyk
@@ -604,3 +614,13 @@ proc mix*(colorA, colorB: Color): Color =
   c.y = (a.y + b.y) / 2
   c.k = (a.k + b.k) / 2
   return c.color
+
+
+proc mix*(a, b: ColorRGBA): ColorRGBA =
+  ## Mixes two ColorRGBA colors together
+  var c: ColorRGBA
+  c.r = a.r div 2 + b.r div 2
+  c.g = a.g div 2 + b.g div 2
+  c.b = a.b div 2 + b.b div 2
+  c.a = a.a div 2 + b.a div 2
+  return c

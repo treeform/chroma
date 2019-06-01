@@ -544,7 +544,7 @@ proc yuv*(c: Color): ColorYUV =
 
 proc color*(c: ColorYUV): Color =
   ## convert ColorYUV to Color
-  result.r = (c.y * 1) + (c.u *  0) + (c.v * 1.13983);
+  result.r = (c.y * 1) + (c.u * 0) + (c.v * 1.13983);
   result.g = (c.y * 1) + (c.u * -0.39465) + (c.v * -0.58060);
   result.b = (c.y * 1) + (c.u * 2.02311) + (c.v * 0);
 

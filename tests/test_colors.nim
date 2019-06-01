@@ -3,28 +3,28 @@ import unittest
 
 
 let arr = @[
-  color(1,0,0),
-  color(0,1,0),
-  color(0,0,1),
-  color(1,1,1),
-  color(0,0,0),
-  color(0.5,0.5,0.5),
-  color(0.1,0.2,0.3),
-  color(0.6,0.5,0.4),
-  color(0.7,0.8,0.9),
-  color(0.001,0.001,0.001),
-  color(0.999,0.999,0.999),
-  color(0.01,0.0,0.0),
-  color(0.0,0.01,0.0),
-  color(0.0,0.0,0.01),
+  color(1, 0, 0),
+  color(0, 1, 0),
+  color(0, 0, 1),
+  color(1, 1, 1),
+  color(0, 0, 0),
+  color(0.5, 0.5, 0.5),
+  color(0.1, 0.2, 0.3),
+  color(0.6, 0.5, 0.4),
+  color(0.7, 0.8, 0.9),
+  color(0.001, 0.001, 0.001),
+  color(0.999, 0.999, 0.999),
+  color(0.01, 0.0, 0.0),
+  color(0.0, 0.01, 0.0),
+  color(0.0, 0.0, 0.01),
 ]
 
 let arrAlpha = @[
-  color(0,0,0,0),
-  color(0,0,0,0.25),
-  color(0,0,0,0.5),
-  color(0,0,0,0.75),
-  color(0,0,0,1.0),
+  color(0, 0, 0, 0),
+  color(0, 0, 0, 0.25),
+  color(0, 0, 0, 0.5),
+  color(0, 0, 0, 0.75),
+  color(0, 0, 0, 1.0),
 ]
 
 
@@ -120,9 +120,9 @@ suite "spaces":
 
 suite "functions":
   test "darken":
-    assert darken(color(0.7,0.8,0.9), 0.2).toHex() == "6598CB"
+    assert darken(color(0.7, 0.8, 0.9), 0.2).toHex() == "6598CB"
   test "lighten":
-    assert lighten(color(0.1,0.8,0.9), 0.2).toHex() == "75E0EF"
+    assert lighten(color(0.1, 0.8, 0.9), 0.2).toHex() == "75E0EF"
   test "saturate":
     assert saturate(parseHex("6598CC"), 0.2).toHex() == "5097E0"
   test "desaturate":
@@ -140,8 +140,8 @@ when false:
   import chroma
 
   let
-    a = color(0.7,0.8,0.9)
-    b = color(0.2,0.3,0.4,0.5)
+    a = color(0.7, 0.8, 0.9)
+    b = color(0.2, 0.3, 0.4, 0.5)
 
   echo a.toHex()
   echo parseHex("BADA55")

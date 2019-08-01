@@ -2,7 +2,7 @@
 ## **Everything you want to do with colors.**
 ##
 
-import strutils, math, tables
+import strutils, math, tables, hashes
 import chroma/names
 
 # utility functions
@@ -38,6 +38,15 @@ proc color*(r, g, b, a = 1.0): Color =
 proc `$`*(c: Color): string =
   ## returns colors as "(r, g, b, a)"
   "(" & $c.r & ", " & $c.g & ", " & $c.b & ", " & $c.a & ")"
+
+
+proc hash*(c: Color): Hash =
+  var h: Hash = 0
+  h = h !& hash(c.r)
+  h = h !& hash(c.g)
+  h = h !& hash(c.b)
+  h = h !& hash(c.a)
+  result = !$h
 
 
 proc almostEqual*(a, b: Color, ep = 0.01): bool =

@@ -1,6 +1,6 @@
 import chroma
 import unittest
-
+include chroma
 
 let arr = @[
   color(1, 0, 0),
@@ -116,6 +116,23 @@ suite "spaces":
     for c in arr:
       #echo "YUV", c, " -> ", yuv(c)
       assert c.almostEqual(yuv(c).color())
+
+  test "space transformations":
+    template backForth(trafo: untyped): untyped =
+      echo "Trafo: ", trafo, " for ", astToStr(trafo)
+      doAssert c.almostEqual(trafo)
+    for c in arr:
+      backForth(c.asXYZ.asRGB)
+      backForth(c.asLAB.asRGB)
+      # TODO: the following tranfsormations are still somewhat
+      # broken. Chances are if these work, the longer trafos should also
+      # work!
+      #backForth(c.asPolarLAB.asRGB)
+      #backForth(c.asLUV.asRGB)
+      #backForth(c.asPolarLUV.asRGB)
+      #backForth(c.asHSL.asRGB)
+      backForth(c.asHSV.asRGB)
+      backForth(c.asHSV.asRGB)
 
 
 suite "functions":

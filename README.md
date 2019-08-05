@@ -23,7 +23,31 @@ Conversion from and to these colors spaces:
 * CMYK colors are used in printing
 * HSL attempts to resemble more perceptual color models
 * HSV models the way paints of different colors mix together
-* YUV origially a television color format, still used in digital movies
+* YUV origially a television color format, still used in digital
+  movies
+* XYZ (CIE `XYZ`; CIE 1931 color space)
+* LAB (CIE `L*a*b*`, CIELAB), derived from XYZ (Note: a fixed white
+  point is assumed)
+* CIELCh, LAB in polar coordinates (type: `ColorPolarLAB`)
+* LUV (CIE `L*u*v*`, CIELUV), derived from XYZ (Note: a fixed white
+  point is assumed)
+* CIELCH, LUV in polar coordinates (type: `ColorPolarLUV`), often
+  called HCL
+
+The default type is an RGB based type using `float32` as its base type
+(with values ranging from 0 to 1) and is called `Color`. All the above
+color spaces have corresponding type names of `Color<ColorSpaceName>`,
+where `ColorSpaceName` is the name in the bullet points above (unless
+specified by "type:" in parenthesis).
+
+Convenience procs to convert from and to the default type `Color` are
+provided in the form of
+* `proc color(c: Color<ColorSpaceName>): Color`
+and the inverse:
+* `proc <colorSpaceName>(c: Color): Color<ColorSpaceName>`.
+
+These are generated based on the Nim types with the
+`generateConvenienceProcs` macro in `chroma.nim`.
 
 ## Color Functions
 

@@ -613,12 +613,12 @@ proc LAB_to_polarLAB*(c: ColorLAB): ColorPolarLAB =
     vh = vh - 360.0
   while vH < 0.0:
     vH = vH + 360.0
-  result.l = result.l
+  result.l = c.l
   result.c = sqrt(c.a * c.a + c.b * c.b)
   result.h = vH
 
 proc polarLAB_to_LAB*(c: ColorPolarLab): ColorLAB =
-  result.l = result.l
+  result.l = c.l
   result.a = cos(degToRad(c.h)) * c.c
   result.b = sin(degToRad(c.h)) * c.c
 

@@ -314,9 +314,9 @@ macro generateConvenienceProcs(): untyped =
   let types = getType(SomeColor)
   result = newStmtList()
   for t in types:
+    # work on all types, which are more than `Color` and skip the `or` node
     if "Color" in t.strVal and t.strVal != "Color":
       let p1 = generateColorProcs(t)
-      echo p1.repr
       result.add p1
 generateConvenienceProcs()
 # add an alias for polarLUV, since `hcl` may be more well known

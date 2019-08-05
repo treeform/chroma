@@ -117,12 +117,13 @@ suite "spaces":
       #echo "YUV", c, " -> ", yuv(c)
       assert c.almostEqual(yuv(c).color())
 
-  test "space transformations":
+  test "Space transformations using `as*` procs":
     template backForth(trafo: untyped): untyped =
-      echo "Trafo: ", trafo, " for ", astToStr(trafo)
+      # echo "Trafo: ", trafo, " for ", astToStr(trafo)
       doAssert c.almostEqual(trafo)
 
     for c in arr:
+      # first the trivial back and forth trafos
       backForth(c.asRGB_type.asRGB)
       backForth(c.asRGBA.asRGB)
       backForth(c.asHSL.asRGB)
@@ -135,11 +136,11 @@ suite "spaces":
       backForth(c.asPolarLAB.asRGB)
       backForth(c.asLUV.asRGB)
       backForth(c.asPolarLUV.asRGB)
+      # then trafos containing multiple (previously broken) trafos
       backForth(c.asCMYK.asXYZ.asRGB)
       backForth(c.asCMY.asXYZ.asRGB)
       backForth(c.asHSL.asHSV.asYUV.asCMYK.asCMY.asXYZ.asLAB.asPolarLAB.asLUV.asPolarLUV.asRGB)
       backForth(c.asHSL.asHSV.asYUV.asCMYK.asCMY.asXYZ.asLAB.asPolarLAB.asLUV.asPolarLUV.asRGB_type.asRGBA.asRGB)
-
 
 suite "functions":
   test "darken":

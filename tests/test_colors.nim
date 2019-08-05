@@ -129,7 +129,7 @@ suite "spaces":
       # work!
       backForth(c.asPolarLAB.asRGB)
       backForth(c.asLUV.asRGB)
-      #backForth(c.asPolarLUV.asRGB)
+      backForth(c.asPolarLUV.asRGB)
       #backForth(c.asHSL.asRGB)
       backForth(c.asHSV.asRGB)
 

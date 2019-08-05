@@ -128,7 +128,7 @@ suite "spaces":
       # broken. Chances are if these work, the longer trafos should also
       # work!
       backForth(c.asPolarLAB.asRGB)
-      #backForth(c.asLUV.asRGB)
+      backForth(c.asLUV.asRGB)
       #backForth(c.asPolarLUV.asRGB)
       #backForth(c.asHSL.asRGB)
       backForth(c.asHSV.asRGB)

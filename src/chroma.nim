@@ -961,7 +961,7 @@ proc XYZ_to_LUV*(c: ColorXYZ): ColorLUV =
   (u, v) = XYZ_to_uv(c)
   (uN, vN) = XYZ_to_uv(ColorXYZ(x: WhiteX, y: WhiteY, z: WhiteZ))
   y = c.y / WhiteY
-  result.l = if (y > epsilon): 116.0 * pow(y, 1.0 / 3.0) - 16 else: kappa * y
+  result.l = if (y > epsilon): 116.0 * pow(y, 1.0 / 3.0) - 16.0 else: kappa * y
   result.u = 13.0 * result.l * (u - uN)
   result.v = 13.0 * result.l * (v - vN)
 
@@ -977,7 +977,7 @@ proc LUV_to_XYZ*(c: ColorLUV): ColorXYZ =
     result.z = 0.0
   else:
     ##  8 = kappa*epsilon
-    result.y = WhiteY * (if (c.l > 8): pow((c.l + 16.0) / 116.0, 3.0) else: c.l / kappa)
+    result.y = WhiteY * (if (c.l > 8.0): pow((c.l + 16.0) / 116.0, 3.0) else: c.l / kappa)
     (uN, vN) = XYZ_to_uv(ColorXYZ(x: WhiteX, y: WhiteY, z: WhiteZ))
     ##  Avoid division by zero if L = 0
     if c.l == 0.0:
@@ -986,7 +986,7 @@ proc LUV_to_XYZ*(c: ColorLUV): ColorXYZ =
     else:
       u = c.u / (13.0 * c.l) + uN
       v = c.v / (13.0 * c.l) + vN
-    result.x = 9.0 * result.y * c.u / (4.0 * v)
+    result.x = 9.0 * result.y * u / (4.0 * v)
     result.z = -result.x / 3.0 - 5.0 * result.y + 3.0 * result.y / v
 
 proc LUV_to_polarLUV*(c: ColorLUV): ColorPolarLUV =

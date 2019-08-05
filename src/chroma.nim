@@ -501,26 +501,30 @@ proc HSL_to_RGB(c: ColorHSL): Color =
 
 
 
-type
-  ColorXYZ* = object
-    x*: float32
-    y*: float32
-    z*: float32
-
-  ColorLAB* = object
-    l: float32
-    a: float32
-    b: float32
-
-  ColorPolarLAB* = object # not to be confused with ColorPolarLUV == ColorHCL!
-    l: float32
-    c: float32
-    h: float32
-
 const
   WhiteX = 95.047
   WhiteY = 100.000
   WhiteZ = 108.883
+
+type
+  ColorXYZ* = object
+    x*: float32 ## range 0.0 to WhiteX
+    y*: float32 ## range 0.0 to WhiteY
+    z*: float32 ## range 0.0 to WhiteZ
+
+  ColorLAB* = object
+    l*: float32 ## lightness, range 0.0 (black) to 100.0 (white)
+    a*: float32 ## green (min) to red (max)
+    b*: float32 ## blue (min) to yellow (max)
+
+  ## LAB in polar coordinates
+  ## Also known as: CIELCh, CIEHLC
+  ## not to be confused with ColorPolarLUV == ColorHCL!
+  ColorPolarLAB* = object
+    l*: float32 ## lightness, range 0.0 (black) to 100.0 (white)
+    c*: float32 ## chroma, range 0.0 to max
+    h*: float32 ## hue angle, range 0.0 to 360.0
+                ## (red: 0, yellow: 90, green: 180, blue: 270)
 
 ##  ----- CIE-XYZ <-> Device independent RGB -----
 ##
@@ -763,7 +767,6 @@ type
     s*: float32 ## saturation 0 to 100
     v*: float32 ## value 0 to 100
 
-
 proc hsv*(c: Color): ColorHSV =
   ## convert Color to ColorHSV
   let
@@ -932,9 +935,17 @@ proc HLS_to_RGB*(c: ColorHSL): Color =
 ##  ----- CIE-XYZ <-> CIE-LUV -----
 type
   ColorLUV* = object
-    l: float32
-    u: float32
-    v: float32
+    l: float32 ## lightness, range 0.0 to 100.0
+    u: float32 ## red to green
+    v: float32 ## blue to yellow
+
+type
+  ColorHCL* = object
+    h*: float32 ## hue angle, range 0.0 to 360.0
+    c*: float32 ## chroma
+    l*: float32 ## luminance
+
+  ColorPolarLUV* = ColorHCL
 
 proc XYZ_to_uv*(c: ColorXYZ): tuple[u, v: float32] =
   var
@@ -1011,7 +1022,7 @@ proc asRGB[T: SomeColor](c: T): Color =
   when T is Color:
     result = c
   elif T is ColorHSL:
-    result = c.HLS_to_RGB
+    result = c.HSL_to_RGB
   elif T is ColorHSV:
     result = c.HSV_to_RGB
   elif T is ColorXYZ:
@@ -1019,7 +1030,7 @@ proc asRGB[T: SomeColor](c: T): Color =
   elif T is ColorLAB | ColorPolarLAB | ColorLUV | ColorPolarLUV:
     result = c.asXYZ.XYZ_to_RGB
 
-proc asHSL[T: SomeColor](c: T): ColorHSL =
+proc asHLS[T: SomeColor](c: T): ColorHSL =
   when T is Color:
     result = c.RGB_to_HSL
   elif T is ColorHSL:
@@ -1081,8 +1092,6 @@ proc asLUV[T: SomeColor](c: T): ColorLUV =
   else:
     result = c.asXYZ.XYZ_to_LUV
 
-import typetraits
-
 proc asPolarLUV[T: SomeColor](c: T): ColorPolarLUV =
   when T is ColorLab:
     result = c.LUV_to_polarLUV
@@ -1095,7 +1104,7 @@ proc to*[T: SomeColor](c: T, toColor: typedesc): toColor =
   when toColor is Color:
     result = c.asRGB
   elif toColor is ColorHSL:
-    result = c.asHSL
+    result = c.asHLS
   elif toColor is ColorHSV:
     result = c.asHSV
   elif toColor is ColorLAB:

@@ -121,6 +121,16 @@ suite "spaces":
     template backForth(trafo: untyped): untyped =
       echo "Trafo: ", trafo, " for ", astToStr(trafo)
       doAssert c.almostEqual(trafo)
+
+    template findMaxOf(field: untyped): untyped =
+      var minval = 0.0
+      var maxval = 0.0
+      for c {.inject.} in arr:
+        minval = min(field, minval)
+        maxval = max(field, maxval)
+      echo "Minval of ", astToStr(field), " was: ", minVal
+      echo "Maxval of ", astToStr(field), " was: ", maxVal
+    var labmax = 0.0
     for c in arr:
       backForth(c.asXYZ.asRGB)
       backForth(c.asLAB.asRGB)
@@ -130,8 +140,26 @@ suite "spaces":
       backForth(c.asPolarLAB.asRGB)
       backForth(c.asLUV.asRGB)
       backForth(c.asPolarLUV.asRGB)
-      #backForth(c.asHSL.asRGB)
+      backForth(c.asHLS.asRGB)
       backForth(c.asHSV.asRGB)
+
+      # compare HSL_to_RGB with HLS_to_RGB
+      echo "HLS: ", c.RGB_to_HLS
+      echo "HSL: ", c.RGB_to_HSL
+
+    findMaxOf(c.asLAB.l)
+    findMaxOf(c.asLAB.a)
+    findMaxOf(c.asLAB.b)
+    findMaxOf(c.asPolarLAB.l)
+    findMaxOf(c.asPolarLAB.c)
+    findMaxOf(c.asPolarLAB.h)
+
+    findMaxOf(c.asLUV.l)
+    findMaxOf(c.asLUV.u)
+    findMaxOf(c.asLUV.v)
+    findMaxOf(c.asPolarLUV.l)
+    findMaxOf(c.asPolarLUV.c)
+    findMaxOf(c.asPolarLUV.h)
 
 
 

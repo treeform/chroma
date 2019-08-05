@@ -2,7 +2,7 @@
 ## **Everything you want to do with colors.**
 ##
 
-import strutils, math, tables, hashes
+import strutils, math, tables, hashes, macros
 import chroma / [names, colortypes, transformations]
 export colortypes
 export transformations.color
@@ -211,10 +211,6 @@ proc rgb*(r, g, b: uint8): ColorRGB =
   result.g = g
   result.b = b
 
-proc rgb*(c: Color): ColorRGB = RGB_to_RGB_type(c)
-proc color*(c: ColorRGB): Color = RGB_type_to_RGB(c)
-
-
 proc parseHtmlName*(text: string): Color =
   ## Parses HTML color as as a name
   ## * "red"
@@ -265,29 +261,7 @@ proc rgba*(r, g, b, a: uint8): ColorRGBA =
   result.b = b
   result.a = a
 
-proc rgba*(c: Color): ColorRGBA = RGB_to_RGBA(c)
-proc color*(c: ColorRGBA): Color = RGBA_to_RGB(c)
-
-# Convenience procs to convert from and to other colorspaces
-proc cmy*(c: Color): ColorCMY = RGB_to_CMY(c)
-proc color*(c: ColorCMY): Color = CMY_to_RGB(c)
-
-
-proc cmyk*(c: Color): ColorCMYK = RGB_to_CMYK(c)
-proc color*(c: ColorCMYK): Color = CMYK_to_RGB(c)
-
-
-proc hsl*(c: Color): ColorHSL = RGB_to_HSL(c)
-proc color*(c: ColorHSL): Color = HSL_to_RGB(c)
-
-proc hsv*(c: Color): ColorHSV = RGB_to_HSV(c)
-proc color*(c: ColorHSV): Color = HSV_to_RGB(c)
-
-proc yuv*(c: Color): ColorYUV = RGB_to_YUV(c)
-proc color*(c: ColorYUV): Color = YUV_to_RGB(c)
-
-
-proc to*[T: SomeColor](c: T, toColor: typedesc): toColor =
+proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T =
   ## Allows conversion of transformation of a color in any
   ## colorspace into any other colorspace.
   when toColor is Color:
@@ -312,8 +286,41 @@ proc to*[T: SomeColor](c: T, toColor: typedesc): toColor =
     result = c.asPolarLab
   elif toColor is ColorLUV:
     result = c.asLUV
-  elif toColor is ColorPolarLUV:
-    result = c.asPolarLab
+  elif toColor is ColorPolarLUV | ColorHCL:
+    result = c.asPolarLUV
+
+proc generateColorProcs(typeName: NimNode): NimNode =
+  ## Generates the convenience procs from a given `typeName` that is
+  ## part of `SomeColor`.
+  ## One proc to convert from `Color` to `typeName`:
+  ## proc <colorSpaceName>(c: Color): Color<ColorSpaceName>
+  ## And the inverse:
+  ## proc color(c: Color<ColorSpaceName>): Color
+  ## where `<ColorSpaceName>` refers to the latter part of the `typeName`,
+  ## e.g. `HSL` for `ColorHSL`.
+  let typeId = ident(typeName.strVal)
+  # remove the `Color` prefix and convert to lower ascii
+  let spaceName = ident(typeName.strVal.replace("Color", "").toLowerAscii)
+  let argName = ident"c"
+  result = quote do:
+    # generate the procs using the `to` proc
+    proc color*(`argName`: `typeId`): Color = `argName`.to(Color)
+    proc `spaceName`*(`argName`: Color): `typeId` = `argName`.to(`typeId`)
+
+macro generateConvenienceProcs(): untyped =
+  ## Generates all convenience procs to convert from and to Color to
+  ## any other colorspace, e.g. `hsl`, `hsv`, `rgb` and the inverse
+  ## `color` procs.
+  let types = getType(SomeColor)
+  result = newStmtList()
+  for t in types:
+    if "Color" in t.strVal and t.strVal != "Color":
+      let p1 = generateColorProcs(t)
+      echo p1.repr
+      result.add p1
+generateConvenienceProcs()
+# add an alias for polarLUV, since `hcl` may be more well known
+proc hcl*(c: Color): ColorHCL = polarLUV(c)
 
 # Color Functions
 

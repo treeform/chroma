@@ -206,7 +206,6 @@ suite "spaces":
                   xyz(12.01096, 6.198577, 4.700508)]
     for i in 0 ..< colors.len:
       check cXyz[i].almostEq(expXyz[i])
-      echo "nim ", cXyz[i], " R ", expXyz[i]
 
 suite "functions":
   test "darken":

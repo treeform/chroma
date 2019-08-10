@@ -331,15 +331,33 @@ const
 ##
 ##
 
+proc ftrans(u, gamma: float32): float32 =
+  if u > 0.03928:
+    result = pow((u + 0.055) / 1.055, gamma)
+  else:
+    result = u / 12.92
+
+func gtrans(u: float32): float32 =
+  # Standard CRT Gamma
+  const GAMMA = 2.4
+  if u > 0.00304:
+    result = 1.055 * pow(u, (1.0 / GAMMA)) - 0.055
+  else:
+    result = 12.92 * u
+
 func RGB_to_XYZ*(c: Color): ColorXYZ =
-  result.x = WhiteY * (0.412453 * c.r + 0.35758 * c.g + 0.180423 * c.b)
-  result.y = WhiteY * (0.212671 * c.r + 0.71516 * c.g + 0.072169 * c.b)
-  result.z = WhiteY * (0.019334 * c.r + 0.119193 * c.g + 0.950227 * c.b)
+  let
+    r = ftrans(c.r, 2.4)
+    g = ftrans(c.g, 2.4)
+    b = ftrans(c.b, 2.4)
+  result.x = WhiteY * (0.412453 * r + 0.35758 * g + 0.180423 * b)
+  result.y = WhiteY * (0.212671 * r + 0.71516 * g + 0.072169 * b)
+  result.z = WhiteY * (0.019334 * r + 0.119193 * g + 0.950227 * b)
 
 proc XYZ_to_RGB*(c: ColorXYZ): Color =
-  result.r = (3.240479 * c.x - 1.53715 * c.y - 0.498535 * c.z) / WhiteY
-  result.g = (-(0.969256 * c.x) + 1.875992 * c.y + 0.041556 * c.z) / WhiteY
-  result.b = (0.055648 * c.x - 0.204043 * c.y + 1.057311 * c.z) / WhiteY
+  result.r = gtrans((3.240479 * c.x - 1.53715 * c.y - 0.498535 * c.z) / WhiteY)
+  result.g = gtrans((-(0.969256 * c.x) + 1.875992 * c.y + 0.041556 * c.z) / WhiteY)
+  result.b = gtrans((0.055648 * c.x - 0.204043 * c.y + 1.057311 * c.z) / WhiteY)
   result.fixupColor
   result.a = 1.0
 

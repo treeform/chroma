@@ -202,14 +202,14 @@ proc toHtmlRgba*(c: Color): string =
     $c.a & ")"
 
 
-proc rgb*(r, g, b: uint8): ColorRGB =
-  ## Creates ColorRGB from intergers in 0-255 range like:
-  ## * rgb(255,0,0) -> red
-  ## * rgb(0,255,0) -> green
-  ## * rgb(0,0,255) -> blue
-  result.r = r
-  result.g = g
-  result.b = b
+#proc rgb*(r, g, b: uint8): ColorRGB =
+#  ## Creates ColorRGB from intergers in 0-255 range like:
+#  ## * rgb(255,0,0) -> red
+#  ## * rgb(0,255,0) -> green
+#  ## * rgb(0,0,255) -> blue
+#  result.r = r
+#  result.g = g
+#  result.b = b
 
 proc parseHtmlName*(text: string): Color =
   ## Parses HTML color as as a name
@@ -247,19 +247,19 @@ proc parseHtmlColor*(colorText: string): Color =
   else:
     return parseHtmlName(text)
 
-proc rgba*(r, g, b, a: uint8): ColorRGBA =
-  ## Creates ColorRGBA from intergers in 0-255 range like:
-  ## * rgba(255,0,0) -> red
-  ## * rgba(0,255,0) -> green
-  ## * rgba(0,0,255) -> blue
-  ## * rgba(0,0,0,255) -> opaque  black
-  ## * rgba(0,0,0,0) -> transparent black
-  ##
-  ## Note: this is *not* like HTML's rgba where the alpha is 0 to 1.
-  result.r = r
-  result.g = g
-  result.b = b
-  result.a = a
+#proc rgba*(r, g, b, a: uint8): ColorRGBA =
+#  ## Creates ColorRGBA from intergers in 0-255 range like:
+#  ## * rgba(255,0,0) -> red
+#  ## * rgba(0,255,0) -> green
+#  ## * rgba(0,0,255) -> blue
+#  ## * rgba(0,0,0,255) -> opaque  black
+#  ## * rgba(0,0,0,0) -> transparent black
+#  ##
+#  ## Note: this is *not* like HTML's rgba where the alpha is 0 to 1.
+#  result.r = r
+#  result.g = g
+#  result.b = b
+#  result.a = a
 
 proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T =
   ## Allows conversion of transformation of a color in any
@@ -291,23 +291,67 @@ proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T =
   elif toColor is ColorPolarLUV | ColorHCL:
     result = c.asPolarLUV
 
+proc genColorFromFieldsProc(spaceName, typeName: NimNode): NimNode =
+  ## this generates a proc to create a Color<ColorSpace> object from the fields
+  ## directly, without requiring to define a `Color` object beforehand.
+  let dtype = typeName.getTypeImpl
+  var fieldsTypes = newSeq[(NimNode, NimNode)]()
+  for field in dtype[2]: # RecList
+    fieldsTypes.add (ident(field[0].strVal), ident(field[1].strVal))
+  # given fields and types generate both argument list as well as
+  # type creation
+  var obj = nnkObjConstr.newTree(ident(typeName.strVal))
+  var params = nnkFormalParams.newTree(ident(typeName.strVal))
+  for (field, dtype) in fieldsTypes:
+    params.add nnkIdentDefs.newTree(field, dtype, newEmptyNode())
+    # argument variables are named after the fields, thus field: field
+    obj.add nnkExprColonExpr.newTree(field, field)
+  let resIdent = ident"result"
+  let body = quote do:
+    `resIdent` = `obj`
+  result = nnkProcDef.newTree(nnkPostFix.newTree(ident"*", spaceName),
+                              newEmptyNode(),
+                              newEmptyNode(),
+                              params,
+                              newEmptyNode(),
+                              newEmptyNode(),
+                              body)
+
 proc generateColorProcs(typeName: NimNode): NimNode =
   ## Generates the convenience procs from a given `typeName` that is
   ## part of `SomeColor`.
   ## One proc to convert from `Color` to `typeName`:
-  ## proc <colorSpaceName>(c: Color): Color<ColorSpaceName>
-  ## And the inverse:
-  ## proc color(c: Color<ColorSpaceName>): Color
+  ##
+  ## `proc <colorSpaceName>(c: Color): Color<ColorSpaceName>`
+  ## e.g.
+  ##
+  ## `proc hsl(c: Color): ColorHSL`
+  ## the inverse:
+  ##
+  ## `proc color(c: Color<ColorSpaceName>): Color`
+  ## e.g.
+  ##
+  ## `proc color(c: ColorHSL): Color`
   ## where `<ColorSpaceName>` refers to the latter part of the `typeName`,
   ## e.g. `HSL` for `ColorHSL`.
+  ## and lastly a proc to generate a color from the fields:
+  ##
+  ## `proc <colorSpaceName>(<fieldName1>: <fieldType, ...): Color<ColorSpaceName>`
+  ## e.g.
+  ##
+  ## `proc hsl(h: float32, s: float32, l: float32): ColorHSL`
   let typeId = ident(typeName.strVal)
   # remove the `Color` prefix and convert to lower ascii
   let spaceName = ident(typeName.strVal.replace("Color", "").toLowerAscii)
   let argName = ident"c"
+
   result = quote do:
     # generate the procs using the `to` proc
     proc color*(`argName`: `typeId`): Color = `argName`.to(Color)
     proc `spaceName`*(`argName`: Color): `typeId` = `argName`.to(`typeId`)
+  # finally add a proc to generate a color of a specific space directly from the
+  # fields
+  result.add genColorFromFieldsProc(spaceName, typeName)
 
 macro generateConvenienceProcs(): untyped =
   ## Generates all convenience procs to convert from and to Color to

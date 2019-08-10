@@ -2,6 +2,8 @@ import chroma
 import unittest
 import chroma / transformations
 
+import sequtils, macros
+
 let arr = @[
   color(1, 0, 0),
   color(0, 1, 0),
@@ -141,6 +143,70 @@ suite "spaces":
       backForth(c.asCMY.asXYZ.asRGB)
       backForth(c.asHSL.asHSV.asYUV.asCMYK.asCMY.asXYZ.asLAB.asPolarLAB.asLUV.asPolarLUV.asRGB)
       backForth(c.asHSL.asHSV.asYUV.asCMYK.asCMY.asXYZ.asLAB.asPolarLAB.asLUV.asPolarLUV.asRGB_type.asRGBA.asRGB)
+
+  test "More space transformations - compared with R colorspace output":
+    macro almostEq(c1, c2: typed, ep = 0.01): untyped =
+      let dtype = c1.getTypeImpl
+      doAssert dtype == c2.getTypeImpl
+      var body = newStmtList()
+      var tmpId = ident"tmp"
+      body.add quote do:
+        var `tmpId` = true
+      for field in dtype[2]: # RecList
+        let fieldName = field[0]
+        body.add quote do:
+          if abs(`c1`.`fieldName` - `c2`.`fieldName`) > `ep`:
+            `tmpId` = false
+      result = quote do:
+        block:
+          `body`
+          `tmpId`
+
+    #func almostEq[T: SomeColor](c1, c2: T, ep = 0.01): bool =
+    #  ## Returns true if colors are close
+    #  for n, val in fieldPairs(c1):
+    #    if abs(c1.n - c2.n) > ep: return false
+    #  return true
+
+    const colors = [parseHex("023FA5"),
+                    parseHex("6371AF"),
+                    parseHex("959CC3"),
+                    parseHex("BEC1D4"),
+                    parseHex("DBDCE0"),
+                    parseHex("E0DBDC"),
+                    parseHex("D6BCC0"),
+                    parseHex("C6909A"),
+                    parseHex("AE5A6D"),
+                    parseHex("8E063B")]
+    # given those colors convert to some other colorspace and compare with output
+    let cRgb = colors.mapIt(it.to(Color))
+    let expRgb = [color(0.007843137, 0.24705882, 0.6470588),
+                  color(0.388235294, 0.44313725, 0.6862745),
+                  color(0.584313725, 0.61176471, 0.7647059),
+                  color(0.745098039, 0.75686275, 0.8313725),
+                  color(0.858823529, 0.86274510, 0.8784314),
+                  color(0.878431373, 0.85882353, 0.8627451),
+                  color(0.839215686, 0.73725490, 0.7529412),
+                  color(0.776470588, 0.56470588, 0.6039216),
+                  color(0.682352941, 0.35294118, 0.4274510),
+                  color(0.556862745, 0.02352941, 0.2313725)]
+    for i in 0 ..< colors.len:
+      check cRgb[i].almostEq(expRgb[i])
+
+    let cXyz = colors.mapIt(it.to(ColorXYZ))
+    let expXyz = [xyz(8.59108, 6.283171, 36.347084),
+                  xyz(18.78561, 17.556945, 42.944822),
+                  xyz(34.12995, 34.105738, 56.399873),
+                  xyz(52.18543, 53.840026, 69.912376),
+                  xyz(68.25775, 71.628143, 80.730460),
+                  xyz(68.98728, 71.677877, 77.891637),
+                  xyz(55.22770, 54.069481, 57.382059),
+                  xyz(39.09464, 34.287270, 35.121978),
+                  xyz(23.87290, 17.417248, 16.568451),
+                  xyz(12.01096, 6.198577, 4.700508)]
+    for i in 0 ..< colors.len:
+      check cXyz[i].almostEq(expXyz[i])
+      echo "nim ", cXyz[i], " R ", expXyz[i]
 
 suite "functions":
   test "darken":

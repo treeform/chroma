@@ -280,6 +280,8 @@ proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T =
     result = c.asCMY
   elif toColor is ColorCMYK:
     result = c.asCMYK
+  elif toColor is ColorXYZ:
+    result = c.asXYZ
   elif toColor is ColorLAB:
     result = c.asLAB
   elif toColor is ColorPolarLAB:

@@ -43,8 +43,12 @@ specified by "type:" in parenthesis).
 Convenience procs to convert from and to the default type `Color` are
 provided in the form of
 * `proc color(c: Color<ColorSpaceName>): Color`
+
 and the inverse:
 * `proc <colorSpaceName>(c: Color): Color<ColorSpaceName>`.
+
+and using the field names:
+* `proc <colorSpaceName>(<fieldName1>, <fieldName2>, <fieldName3>: <fieldType>): Color<ColorSpaceName>`
 
 These are generated based on the Nim types with the
 `generateConvenienceProcs` macro in `chroma.nim`.

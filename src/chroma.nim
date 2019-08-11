@@ -367,6 +367,7 @@ macro generateConvenienceProcs(): untyped =
 generateConvenienceProcs()
 # add an alias for polarLUV, since `hcl` may be more well known
 proc hcl*(c: Color): ColorHCL = polarLUV(c)
+proc hcl*(h, c, l: float32): ColorHCL = ColorHCL(h: h, c: c, l: l)
 
 # Color Functions
 

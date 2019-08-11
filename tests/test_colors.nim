@@ -2,7 +2,7 @@ import chroma
 import unittest
 import chroma / transformations
 
-import sequtils, macros
+import sequtils, macros, strutils
 
 let arr = @[
   color(1, 0, 0),
@@ -120,29 +120,78 @@ suite "spaces":
       assert c.almostEqual(yuv(c).color())
 
   test "Space transformations using `as*` procs":
+    template space(s: untyped): untyped =
+      # generate the type name from the `asXXX` identifier or returns
+      # it, if it does not contain `as`.
+      if "as" in s.strVal:
+        var name = s.strVal.replace("as", "")
+        if name == "RGB_type":
+          name = "RGB"
+        elif name == "RGB":
+          name = ""
+        ident("Color" & name)
+      else:
+        s
+
+    proc rewriteAsTo(n: NimNode): NimNode =
+      case n.kind
+      of nnkIdent:
+        # return name of colorspace type
+        result = space(n)
+      of nnkDotExpr:
+        # rewrite and wrap dot expression in `to` calls
+        let dotexpr = nnkDotExpr.newTree(
+          rewriteAsTo(n[0]),
+          ident"to"
+        )
+        let arg2 = rewriteAsTo(n[1])
+        result = nnkCall.newTree(dotexpr)
+        result.add arg2
+      else: discard
+
+    macro genTo(trafo: untyped): untyped =
+      let rewrite = rewriteAsTo(trafo)
+      result = quote do:
+        to(`rewrite`, Color)
+      #echo result.repr
+
+    macro genAs(trafo: untyped): untyped =
+      result = quote do:
+        `trafo`.asRGB
+      #echo result.repr
+
     template backForth(trafo: untyped): untyped =
-      # echo "Trafo: ", trafo, " for ", astToStr(trafo)
-      doAssert c.almostEqual(trafo)
+      ## Tests transformation both via the given `c.asXXX.asYYY...` transformations,
+      ## as well as using the `to(color, <type>)` proc to make sure both work.
+      ## Finally it also compares the calls of `c.asXXX...` with those of `c.to(..)...`.
+      ## Input is a transformation including the color from which to start, with all
+      ## transformations written as dot expressions using `asXXX`.
+      # using `as`
+      doAssert c.almostEqual(genAs(trafo))
+      # using `to`
+      doAssert c.almostEqual(genTo(trafo))
+      # compare `as` with `to`
+      doAssert almostEqual(genAs(trafo), genTo(trafo))
 
     for c in arr:
       # first the trivial back and forth trafos
-      backForth(c.asRGB_type.asRGB)
-      backForth(c.asRGBA.asRGB)
-      backForth(c.asHSL.asRGB)
-      backForth(c.asHSV.asRGB)
-      backForth(c.asYUV.asRGB)
-      backForth(c.asCMYK.asRGB)
-      backForth(c.asCMY.asRGB)
-      backForth(c.asXYZ.asRGB)
-      backForth(c.asLAB.asRGB)
-      backForth(c.asPolarLAB.asRGB)
-      backForth(c.asLUV.asRGB)
-      backForth(c.asPolarLUV.asRGB)
+      backForth(c.asRGB_type)
+      backForth(c.asRGBA)
+      backForth(c.asHSL)
+      backForth(c.asHSV)
+      backForth(c.asYUV)
+      backForth(c.asCMYK)
+      backForth(c.asCMY)
+      backForth(c.asXYZ)
+      backForth(c.asLAB)
+      backForth(c.asPolarLAB)
+      backForth(c.asLUV)
+      backForth(c.asPolarLUV)
       # then trafos containing multiple (previously broken) trafos
-      backForth(c.asCMYK.asXYZ.asRGB)
-      backForth(c.asCMY.asXYZ.asRGB)
-      backForth(c.asHSL.asHSV.asYUV.asCMYK.asCMY.asXYZ.asLAB.asPolarLAB.asLUV.asPolarLUV.asRGB)
-      backForth(c.asHSL.asHSV.asYUV.asCMYK.asCMY.asXYZ.asLAB.asPolarLAB.asLUV.asPolarLUV.asRGB_type.asRGBA.asRGB)
+      backForth(c.asCMYK.asXYZ)
+      backForth(c.asCMY.asXYZ)
+      backForth(c.asHSL.asHSV.asYUV.asCMYK.asCMY.asXYZ.asLAB.asPolarLAB.asLUV.asPolarLUV)
+      backForth(c.asHSL.asHSV.asYUV.asCMYK.asCMY.asXYZ.asLAB.asPolarLAB.asLUV.asPolarLUV.asRGB_type.asRGBA)
 
   test "More space transformations - compared with R colorspace output":
     macro almostEq(c1, c2: typed, ep = 0.01): untyped =

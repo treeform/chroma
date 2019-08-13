@@ -6,8 +6,6 @@ type
     b*: float32 ## blue (0-1)
     a*: float32 ## alpha (0-1, 0 is fully transparent)
 
-  InvalidColor* = object of Exception
-
   # Color Space: rgb
   ColorRGB* = object
     ## Color stored as 3 uint8s
@@ -93,3 +91,5 @@ type
 
   SomeColor* = Color|ColorRGB|ColorRGBA|ColorHSL|ColorHSV|ColorCMY|ColorCMYK|
                ColorYUV|ColorLAB|ColorPolarLAB|ColorLUV|ColorPolarLUV|ColorXYZ
+
+  InvalidColor* = object of Exception

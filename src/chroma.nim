@@ -202,15 +202,6 @@ proc toHtmlRgba*(c: Color): string =
     $c.a & ")"
 
 
-#proc rgb*(r, g, b: uint8): ColorRGB =
-#  ## Creates ColorRGB from intergers in 0-255 range like:
-#  ## * rgb(255,0,0) -> red
-#  ## * rgb(0,255,0) -> green
-#  ## * rgb(0,0,255) -> blue
-#  result.r = r
-#  result.g = g
-#  result.b = b
-
 proc parseHtmlName*(text: string): Color =
   ## Parses HTML color as as a name
   ## * "red"
@@ -223,7 +214,6 @@ proc parseHtmlName*(text: string): Color =
     return parseHex(colorNames[lowerName])
   else:
     raise newException(InvalidColor, "Not a valid color name.")
-
 
 proc parseHtmlColor*(colorText: string): Color =
   ## Parses HTML color any any of the formats:
@@ -246,20 +236,6 @@ proc parseHtmlColor*(colorText: string): Color =
     return parseHtmlRgb(text)
   else:
     return parseHtmlName(text)
-
-#proc rgba*(r, g, b, a: uint8): ColorRGBA =
-#  ## Creates ColorRGBA from intergers in 0-255 range like:
-#  ## * rgba(255,0,0) -> red
-#  ## * rgba(0,255,0) -> green
-#  ## * rgba(0,0,255) -> blue
-#  ## * rgba(0,0,0,255) -> opaque  black
-#  ## * rgba(0,0,0,0) -> transparent black
-#  ##
-#  ## Note: this is *not* like HTML's rgba where the alpha is 0 to 1.
-#  result.r = r
-#  result.g = g
-#  result.b = b
-#  result.a = a
 
 proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T =
   ## Allows conversion of transformation of a color in any

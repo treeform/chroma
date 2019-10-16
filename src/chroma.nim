@@ -2,37 +2,15 @@
 ## **Everything you want to do with colors.**
 ##
 
-import strutils, math, tables, hashes
-import chroma/names
+import strutils, math, tables, hashes, macros
+import chroma / [names, colortypes, transformations]
+export colortypes
+export transformations.color
+
 
 # utility functions
-proc min3(a, b, c: float32): float32 = min(a, min(b, c))
-proc max3(a, b, c: float32): float32 = max(a, max(b, c))
 proc clamp(n, a, b: float32): float32 = min(max(a, n), b)
 proc toHex(a: float32): string = toHex(int(a))
-
-type
-  Color* = object
-    ## Main color type, float32 points
-    r*: float32 ## red (0-1)
-    g*: float32 ## green (0-1)
-    b*: float32 ## blue (0-1)
-    a*: float32 ## alpha (0-1, 0 is fully transparent)
-
-  InvalidColor* = object of Exception
-
-
-proc color*(r, g, b, a = 1.0): Color =
-  ## Creates from floats like:
-  ## * color(1,0,0) -> red
-  ## * color(0,1,0) -> green
-  ## * color(0,0,1) -> blue
-  ## * color(0,0,0,1) -> opaque  black
-  ## * color(0,0,0,0) -> transparent black
-  result.r = r
-  result.g = g
-  result.b = b
-  result.a = a
 
 
 proc `$`*(c: Color): string =
@@ -224,40 +202,6 @@ proc toHtmlRgba*(c: Color): string =
     $c.a & ")"
 
 
-# Color Space: rgb
-type
-  ColorRGB* = object
-    ## Color stored as 3 uint8s
-    r*: uint8 ## Red 0-255
-    g*: uint8 ## Green 0-255
-    b*: uint8 ## Blue 0-255
-
-
-proc rgb*(c: Color): ColorRGB =
-  ## Convert Color to ColorRGB
-  result.r = uint8(c.r * 255)
-  result.g = uint8(c.g * 255)
-  result.b = uint8(c.b * 255)
-
-
-proc rgb*(r, g, b: uint8): ColorRGB =
-  ## Creates ColorRGB from intergers in 0-255 range like:
-  ## * rgb(255,0,0) -> red
-  ## * rgb(0,255,0) -> green
-  ## * rgb(0,0,255) -> blue
-  result.r = r
-  result.g = g
-  result.b = b
-
-
-proc color*(c: ColorRGB): Color =
-  ## Convert ColorRGB to Color
-  result.r = float32(c.r) / 255
-  result.g = float32(c.g) / 255
-  result.b = float32(c.b) / 255
-  result.a = 1.0
-
-
 proc parseHtmlName*(text: string): Color =
   ## Parses HTML color as as a name
   ## * "red"
@@ -270,7 +214,6 @@ proc parseHtmlName*(text: string): Color =
     return parseHex(colorNames[lowerName])
   else:
     raise newException(InvalidColor, "Not a valid color name.")
-
 
 proc parseHtmlColor*(colorText: string): Color =
   ## Parses HTML color any any of the formats:
@@ -294,273 +237,113 @@ proc parseHtmlColor*(colorText: string): Color =
   else:
     return parseHtmlName(text)
 
+proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T =
+  ## Allows conversion of transformation of a color in any
+  ## colorspace into any other colorspace.
+  when toColor is Color:
+    result = c.asRGB
+  elif toColor is ColorRGB:
+    result = c.asRGB_type
+  elif toColor is ColorRGBA:
+    result = c.asRGBA
+  elif toColor is ColorHSL:
+    result = c.asHSL
+  elif toColor is ColorHSV:
+    result = c.asHSV
+  elif toColor is ColorYUV:
+    result = c.asYUV
+  elif toColor is ColorCMY:
+    result = c.asCMY
+  elif toColor is ColorCMYK:
+    result = c.asCMYK
+  elif toColor is ColorXYZ:
+    result = c.asXYZ
+  elif toColor is ColorLAB:
+    result = c.asLAB
+  elif toColor is ColorPolarLAB:
+    result = c.asPolarLab
+  elif toColor is ColorLUV:
+    result = c.asLUV
+  elif toColor is ColorPolarLUV | ColorHCL:
+    result = c.asPolarLUV
 
-# Color Space: rgba
-type
-  ColorRGBA* = object
-    ## Color stored as 4 uint8s
-    r*: uint8 ## Red 0-255
-    g*: uint8 ## Green 0-255
-    b*: uint8 ## Blue 0-255
-    a*: uint8 ## Alpha 0-255
+proc genColorFromFieldsProc(spaceName, typeName: NimNode): NimNode =
+  ## this generates a proc to create a Color<ColorSpace> object from the fields
+  ## directly, without requiring to define a `Color` object beforehand.
+  let dtype = typeName.getTypeImpl
+  var fieldsTypes = newSeq[(NimNode, NimNode)]()
+  for field in dtype[2]: # RecList
+    fieldsTypes.add (ident(field[0].strVal), ident(field[1].strVal))
+  # given fields and types generate both argument list as well as
+  # type creation
+  var obj = nnkObjConstr.newTree(ident(typeName.strVal))
+  var params = nnkFormalParams.newTree(ident(typeName.strVal))
+  for (field, dtype) in fieldsTypes:
+    params.add nnkIdentDefs.newTree(field, dtype, newEmptyNode())
+    # argument variables are named after the fields, thus field: field
+    obj.add nnkExprColonExpr.newTree(field, field)
+  let resIdent = ident"result"
+  let body = quote do:
+    `resIdent` = `obj`
+  result = nnkProcDef.newTree(nnkPostFix.newTree(ident"*", spaceName),
+                              newEmptyNode(),
+                              newEmptyNode(),
+                              params,
+                              newEmptyNode(),
+                              newEmptyNode(),
+                              body)
 
-
-proc rgba*(c: Color): ColorRGBA =
-  ## Convert Color to ColorRGBA
-  result.r = uint8(c.r * 255)
-  result.g = uint8(c.g * 255)
-  result.b = uint8(c.b * 255)
-  result.a = uint8(c.a * 255)
-
-
-proc rgba*(r, g, b, a: uint8): ColorRGBA =
-  ## Creates ColorRGBA from intergers in 0-255 range like:
-  ## * rgba(255,0,0) -> red
-  ## * rgba(0,255,0) -> green
-  ## * rgba(0,0,255) -> blue
-  ## * rgba(0,0,0,255) -> opaque  black
-  ## * rgba(0,0,0,0) -> transparent black
+proc generateColorProcs(typeName: NimNode): NimNode =
+  ## Generates the convenience procs from a given `typeName` that is
+  ## part of `SomeColor`.
+  ## One proc to convert from `Color` to `typeName`:
   ##
-  ## Note: this is *not* like HTML's rgba where the alpha is 0 to 1.
-  result.r = r
-  result.g = g
-  result.b = b
-  result.a = a
+  ## `proc <colorSpaceName>(c: Color): Color<ColorSpaceName>`
+  ## e.g.
+  ##
+  ## `proc hsl(c: Color): ColorHSL`
+  ## the inverse:
+  ##
+  ## `proc color(c: Color<ColorSpaceName>): Color`
+  ## e.g.
+  ##
+  ## `proc color(c: ColorHSL): Color`
+  ## where `<ColorSpaceName>` refers to the latter part of the `typeName`,
+  ## e.g. `HSL` for `ColorHSL`.
+  ## and lastly a proc to generate a color from the fields:
+  ##
+  ## `proc <colorSpaceName>(<fieldName1>: <fieldType, ...): Color<ColorSpaceName>`
+  ## e.g.
+  ##
+  ## `proc hsl(h: float32, s: float32, l: float32): ColorHSL`
+  let typeId = ident(typeName.strVal)
+  # remove the `Color` prefix and convert to lower ascii
+  let spaceName = ident(typeName.strVal.replace("Color", "").toLowerAscii)
+  let argName = ident"c"
 
+  result = quote do:
+    # generate the procs using the `to` proc
+    proc color*(`argName`: `typeId`): Color = `argName`.to(Color)
+    proc `spaceName`*(`argName`: Color): `typeId` = `argName`.to(`typeId`)
+  # finally add a proc to generate a color of a specific space directly from the
+  # fields
+  result.add genColorFromFieldsProc(spaceName, typeName)
 
-proc color*(c: ColorRGBA): Color =
-  ## Convert ColorRGBA to Color
-  result.r = float32(c.r) / 255
-  result.g = float32(c.g) / 255
-  result.b = float32(c.b) / 255
-  result.a = float32(c.a) / 255
-
-
-# Color Space: cmy
-type
-  ColorCMY* = object
-    ## CMY colors are reverse of rgb and as 100%
-    c*: float32 ## Cyan 0 to 100
-    m*: float32 ## Magenta 0 to 100
-    y*: float32 ## Yellow 0 to 100
-
-proc cmy*(c: Color): ColorCMY =
-  ## convert Color to ColorCMY
-  result.c = (1 - c.r) * 100
-  result.m = (1 - c.g) * 100
-  result.y = (1 - c.b) * 100
-
-
-proc color*(c: ColorCMY): Color =
-  ## convert ColorCMY to Color
-  result.r = 1 - c.c / 100
-  result.g = 1 - c.m / 100
-  result.b = 1 - c.y / 100
-  result.a = 1.0
-
-
-# Color Space: cmyk
-type
-  ColorCMYK* = object
-    ## CMYK colors are used in printing
-    c*: float32 ## Cyan 0 to 1
-    m*: float32 ## Magenta 0 to 1
-    y*: float32 ## Yellow 0 to 1
-    k*: float32 ## Black 0 to 1
-
-proc cmyk*(c: Color): ColorCMYK =
-  ## convert Color to ColorCMYK
-  let k = min3(1 - c.r, 1 - c.g, 1 - c.b)
-  result.k = k * 100
-  if k != 1.0:
-    result.c = (1 - c.r - k) / (1 - k) * 100
-    result.m = (1 - c.g - k) / (1 - k) * 100
-    result.y = (1 - c.b - k) / (1 - k) * 100
-
-
-proc color*(color: ColorCMYK): Color =
-  ## convert ColorCMYK to Color
-  let
-    k = color.k / 100
-    c = color.c / 100
-    m = color.m / 100
-    y = color.y / 100
-  result.r = 1 - min(1, c * (1 - k) + k)
-  result.g = 1 - min(1, m * (1 - k) + k)
-  result.b = 1 - min(1, y * (1 - k) + k)
-  result.a = 1.0
-
-
-# Color Space: HSL
-type
-  ColorHSL* = object
-    ## HSL attempts to resemble more perceptual color models
-    h*: float32 ## hue 0 to 360
-    s*: float32 ## saturation 0 to 100
-    l*: float32 ## lightness 0 to 100
-
-
-proc hsl*(c: Color): ColorHSL =
-  ## convert Color to ColorHSL
-  let
-    min = min3(c.r, c.g, c.b)
-    max = max3(c.r, c.g, c.b)
-    delta = max - min
-  if max == min:
-    result.h = 0.0
-  elif c.r == max:
-    result.h = (c.g - c.b) / delta
-  elif c.g == max:
-    result.h = 2 + (c.b - c.r) / delta
-  elif c.b == max:
-    result.h = 4 + (c.r - c.g) / delta
-
-  result.h = min(result.h * 60, 360)
-  if result.h < 0:
-    result.h += 360
-
-  result.l = (min + max) / 2
-
-  if max == min:
-    result.s = 0
-  elif result.l <= 0.5:
-    result.s = delta / (max + min)
-  else:
-    result.s = delta / (2 - max - min)
-
-  result.s *= 100
-  result.l *= 100
-
-
-proc color*(c: ColorHSL): Color =
-  ## convert ColorHSL to Color
-  let
-    h = c.h / 360
-    s = c.s / 100
-    l = c.l / 100
-  var t1, t2, t3: float32
-  if s == 0.0:
-    return color(l, l, l)
-  if l < 0.5:
-    t2 = l * (1 + s)
-  else:
-    t2 = l + s - l * s
-  t1 = 2 * l - t2
-
-  var rgb: array[3, float32]
-  for i in 0..2:
-    t3 = h + 1.0 / 3.0 * - (float32(i) - 1.0)
-    if t3 < 0:
-      t3 += 1
-    elif t3 > 1:
-      t3 -= 1
-
-    var val: float32
-    if 6 * t3 < 1:
-      val = t1 + (t2 - t1) * 6 * t3
-    elif 2 * t3 < 1:
-      val = t2
-    elif 3 * t3 < 2:
-      val = t1 + (t2 - t1) * (2 / 3 - t3) * 6
-    else:
-      val = t1
-
-    rgb[i] = val
-  result.r = rgb[0]
-  result.g = rgb[1]
-  result.b = rgb[2]
-  result.a = 1.0
-
-
-# Color Space: HSV
-type
-  ColorHSV* = object
-    ## HSV models the way paints of different colors mix together
-    h*: float32 ## hue 0 to 360
-    s*: float32 ## saturation 0 to 100
-    v*: float32 ## value 0 to 100
-
-
-proc hsv*(c: Color): ColorHSV =
-  ## convert Color to ColorHSV
-  let
-    min = min3(c.r, c.g, c.b)
-    max = max3(c.r, c.g, c.b)
-    delta = max - min
-
-  if max == min:
-    result.s = 0
-  else:
-    result.s = delta / max * 100
-
-  if max == min:
-    result.h = 0.0
-  elif c.r == max:
-    result.h = (c.g - c.b) / delta
-  elif c.g == max:
-    result.h = 2 + (c.b - c.r) / delta
-  elif c.b == max:
-    result.h = 4 + (c.r - c.g) / delta
-
-  result.h = min(result.h * 60, 360)
-  if result.h < 0:
-    result.h += 360
-
-  result.v = max * 100
-
-
-proc color*(c: ColorHSV): Color =
-  ## convert ColorHSV to Color
-  let
-    h = c.h / 60
-    s = c.s / 100
-    v = c.v / 100
-    hi = floor(h) mod 6
-    f = h - floor(h)
-    p = v * (1 - s)
-    q = v * (1 - (s * f))
-    t = v * (1 - (s * (1 - f)))
-  case hi:
-    of 0:
-      return color(v, t, p)
-    of 1:
-      return color(q, v, p)
-    of 2:
-      return color(p, v, t)
-    of 3:
-      return color(p, q, v)
-    of 4:
-      return color(t, p, v)
-    of 5:
-      return color(v, p, q)
-
-
-# Color Space: YUV
-type
-  ColorYUV* = object
-    ## YUV origially a television color format, still used in digital movies
-    y*: float32 ## 0 to 1
-    u*: float32 ## -0.5 to 0.5
-    v*: float32 ## -0.5 to 0.5
-
-
-proc yuv*(c: Color): ColorYUV =
-  ## convert Color to ColorYUV
-  result.y = (c.r * 0.299) + (c.g * 0.587) + (c.b * 0.114)
-  result.u = (c.r * -0.14713) + (c.g * -0.28886) + (c.b * 0.436)
-  result.v = (c.r * 0.615) + (c.g * -0.51499) + (c.b * -0.10001)
-
-
-proc color*(c: ColorYUV): Color =
-  ## convert ColorYUV to Color
-  result.r = (c.y * 1) + (c.u * 0) + (c.v * 1.13983);
-  result.g = (c.y * 1) + (c.u * -0.39465) + (c.v * -0.58060);
-  result.b = (c.y * 1) + (c.u * 2.02311) + (c.v * 0);
-
-  result.r = clamp(result.r, 0, 1)
-  result.g = clamp(result.g, 0, 1)
-  result.b = clamp(result.b, 0, 1)
-
+macro generateConvenienceProcs(): untyped =
+  ## Generates all convenience procs to convert from and to Color to
+  ## any other colorspace, e.g. `hsl`, `hsv`, `rgb` and the inverse
+  ## `color` procs.
+  let types = getType(SomeColor)
+  result = newStmtList()
+  for t in types:
+    # work on all types, which are more than `Color` and skip the `or` node
+    if "Color" in t.strVal and t.strVal != "Color":
+      let p1 = generateColorProcs(t)
+      result.add p1
+generateConvenienceProcs()
+# add an alias for polarLUV, since `hcl` may be more well known
+proc hcl*(c: Color): ColorHCL = polarLUV(c)
+proc hcl*(h, c, l: float32): ColorHCL = ColorHCL(h: h, c: c, l: l)
 
 # Color Functions
 

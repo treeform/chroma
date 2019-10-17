@@ -46,7 +46,7 @@ proc c2n(hex: string, i: int): int =
 
 
 proc parseHex*(hex: string): Color =
-  ## parse colors like
+  ## Parses colors like:
   ## * FF0000 -> red
   ## * 0000FF -> blue
   ## * FFFFFF -> white
@@ -68,7 +68,7 @@ proc toHex*(c: Color): string =
 
 
 proc parseHexAlpha*(hex: string): Color =
-  ## parse colors like
+  ## Parses colors like:
   ## * FF0000FF -> red
   ## * 0000FFFF -> blue
   ## * FFFFFFFF -> white
@@ -94,7 +94,7 @@ proc toHexAlpha*(c: Color): string =
 
 
 proc parseHtmlHex*(hex: string): Color =
-  ## parse colors with leading '#' like:
+  ## Parses colors with leading '#' like::
   ## * #FF0000 -> red
   ## * #0000ff -> blue
   ## * #ffffff -> white
@@ -112,7 +112,7 @@ proc toHtmlHex*(c: Color): string =
 
 
 proc parseHtmlHexTiny*(hex: string): Color =
-  ## parse colors with leading '#' and 3 hex numbers like:
+  ## Parses colors with leading '#' and 3 hex numbers like::
   ## * #F00 -> red
   ## * #0ff -> blue
   ## * #fff -> white
@@ -136,7 +136,7 @@ proc toHtmlHexTiny*(c: Color): string =
 
 
 proc parseHtmlRgb*(text: string): Color =
-  ## parse colors in html's rgb format:
+  ## Parses colors in html's rgb format::
   ## * rgb(255, 0, 0) -> red
   ## * rgb(0,0,255) -> blue
   ## * rgb(255,255,255) -> white
@@ -156,7 +156,7 @@ proc parseHtmlRgb*(text: string): Color =
 
 
 proc toHtmlRgb*(c: Color): string =
-  ## parse colors in html's rgb format:
+  ## Parses colors in html's rgb format::
   ## * red -> rgb(255, 0, 0)
   ## * blue -> rgb(0,0,255)
   ## * white -> rgb(255,255,255)
@@ -167,7 +167,7 @@ proc toHtmlRgb*(c: Color): string =
 
 
 proc parseHtmlRgba*(text: string): Color =
-  ## parse colors in html's rgba format:
+  ## Parses colors in html's rgba format::
   ## * rgba(255, 0, 0, 1.0) -> red
   ## * rgba(0,0,255, 1.0) -> blue
   ## * rgba(255,255,255, 1.0) -> white
@@ -191,7 +191,7 @@ proc parseHtmlRgba*(text: string): Color =
 
 
 proc toHtmlRgba*(c: Color): string =
-  ## parse colors in html's rgb format:
+  ## Parses colors in html's rgb format::
   ## * red -> rgb(255, 0, 0)
   ## * blue -> rgb(0,0,255)
   ## * white -> rgb(255,255,255)

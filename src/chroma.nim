@@ -14,11 +14,12 @@ proc toHex(a: float32): string = toHex(int(a))
 
 
 proc `$`*(c: Color): string =
-  ## returns colors as "(r, g, b, a)"
+  ## Returns colors as "(r, g, b, a)".
   "(" & $c.r & ", " & $c.g & ", " & $c.b & ", " & $c.a & ")"
 
 
 proc hash*(c: Color): Hash =
+  ## Hahses a color - used in tables.
   var h: Hash = 0
   h = h !& hash(c.r)
   h = h !& hash(c.g)
@@ -36,6 +37,7 @@ proc almostEqual*(a, b: Color, ep = 0.01): bool =
 
 
 proc c2n(hex: string, i: int): int =
+  ## Format int as a two diget HEX.
   let c = ord(hex[i])
   case c
   of ord('0') .. ord('9'): return c - ord('0')
@@ -136,7 +138,7 @@ proc toHtmlHexTiny*(c: Color): string =
 
 
 proc parseHtmlRgb*(text: string): Color =
-  ## Parses colors in html's rgb format::
+  ## Parses colors in html's rgb format:
   ## * rgb(255, 0, 0) -> red
   ## * rgb(0,0,255) -> blue
   ## * rgb(255,255,255) -> white
@@ -156,7 +158,7 @@ proc parseHtmlRgb*(text: string): Color =
 
 
 proc toHtmlRgb*(c: Color): string =
-  ## Parses colors in html's rgb format::
+  ## Parses colors in html's rgb format:
   ## * red -> rgb(255, 0, 0)
   ## * blue -> rgb(0,0,255)
   ## * white -> rgb(255,255,255)
@@ -167,7 +169,7 @@ proc toHtmlRgb*(c: Color): string =
 
 
 proc parseHtmlRgba*(text: string): Color =
-  ## Parses colors in html's rgba format::
+  ## Parses colors in html's rgba format:
   ## * rgba(255, 0, 0, 1.0) -> red
   ## * rgba(0,0,255, 1.0) -> blue
   ## * rgba(255,255,255, 1.0) -> white
@@ -175,7 +177,6 @@ proc parseHtmlRgba*(text: string): Color =
   ## * rgba(0,0,0,0.0) -> transparent black
   ##
   ## Note: rgb is 0-255, while alpha is 0 to 1.
-
   if text[0..4] != "rgba(":
     raise newException(InvalidColor, "Expected 'rgba('")
   if text[^1] != ')':
@@ -191,7 +192,7 @@ proc parseHtmlRgba*(text: string): Color =
 
 
 proc toHtmlRgba*(c: Color): string =
-  ## Parses colors in html's rgb format::
+  ## Parses colors in html's rgb format:
   ## * red -> rgb(255, 0, 0)
   ## * blue -> rgb(0,0,255)
   ## * white -> rgb(255,255,255)
@@ -203,7 +204,7 @@ proc toHtmlRgba*(c: Color): string =
 
 
 proc parseHtmlName*(text: string): Color =
-  ## Parses HTML color as as a name
+  ## Parses HTML color as as a name:
   ## * "red"
   ## * "blue"
   ## * "white"
@@ -348,7 +349,7 @@ proc hcl*(h, c, l: float32): ColorHCL = ColorHCL(h: h, c: c, l: l)
 # Color Functions
 
 proc lighten*(color: Color, amount: float32): Color =
-  ## Lightens the color by amount 0-1
+  ## Lightens the color by amount 0-1.
   var hsl = color.hsl()
   hsl.l += 100 * amount
   hsl.l = clamp(hsl.l, 0, 100)
@@ -357,12 +358,12 @@ proc lighten*(color: Color, amount: float32): Color =
 
 
 proc darken*(color: Color, amount: float32): Color =
-  ## Darkens the color by amount 0-1
+  ## Darkens the color by amount 0-1.
   color.lighten(-amount)
 
 
 proc saturate*(color: Color, amount: float32): Color =
-  ## Saturates (makes brighter) the color by amount 0-1
+  ## Saturates (makes brighter) the color by amount 0-1.
   var hsl = color.hsl()
   hsl.s += 100 * amount
   hsl.s = clamp(hsl.s, 0, 100)
@@ -371,12 +372,12 @@ proc saturate*(color: Color, amount: float32): Color =
 
 
 proc desaturate*(color: Color, amount: float32): Color =
-  ## Desaturate (makes grayer) the color by amount 0-1
+  ## Desaturate (makes grayer) the color by amount 0-1.
   color.saturate(-amount)
 
 
 proc spin*(color: Color, degrees: float32): Color =
-  ## Rotates the hue of the color by degrees (0-360)
+  ## Rotates the hue of the color by degrees (0-360).
   var hsl = color.hsl()
   hsl.h += degrees
   if hsl.h < 0: hsl.h += 360
@@ -386,7 +387,7 @@ proc spin*(color: Color, degrees: float32): Color =
 
 
 proc mix*(a, b: Color): Color =
-  ## Mixes two ColorRGBA colors together
+  ## Mixes two Color colors together using simple avarage.
   var c: Color
   c.r = (a.r + b.r) / 2.0
   c.g = (a.g + b.g) / 2.0
@@ -396,7 +397,7 @@ proc mix*(a, b: Color): Color =
 
 
 proc mixCMYK*(colorA, colorB: Color): Color =
-  ## Mixes two colors together using CMYK
+  ## Mixes two colors together using CMYK.
   let
     a = colorA.cmyk
     b = colorB.cmyk
@@ -409,7 +410,7 @@ proc mixCMYK*(colorA, colorB: Color): Color =
 
 
 proc mix*(a, b: ColorRGBA): ColorRGBA =
-  ## Mixes two ColorRGBA colors together
+  ## Mixes two ColorRGBA colors together using simple avarage.
   var c: ColorRGBA
   c.r = a.r div 2 + b.r div 2
   c.g = a.g div 2 + b.g div 2

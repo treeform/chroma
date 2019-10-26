@@ -1,5 +1,5 @@
 # Package
-version = "0.0.1"
+version = "0.1.0"
 author = "Andre von Houck"
 description = "Everything you want to do with colors"
 license = "MIT"
@@ -7,7 +7,7 @@ license = "MIT"
 srcDir = "src"
 
 # Deps
-requires "nim >= 0.18.0"
+requires "nim >= 1.0.0"
 
 task test, "run all tests":
   exec "nim c -r tests/test_colors.nim"

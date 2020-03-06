@@ -2,7 +2,7 @@
 ## **Everything you want to do with colors.**
 ##
 
-import strutils, math, tables, hashes, macros
+import strutils, tables, hashes, macros
 import chroma / [names, colortypes, transformations]
 export colortypes
 export transformations.color

@@ -89,7 +89,7 @@ import chroma
 Returns colors as "(r, g, b, a)".
 
 ```nim
-proc `$`(c: Color): string 
+proc `$`(c: Color): string
 ```
 
 ## **proc** hash
@@ -97,7 +97,7 @@ proc `$`(c: Color): string
 Hahses a color - used in tables.
 
 ```nim
-proc hash(c: Color): Hash 
+proc hash(c: Color): Hash
 ```
 
 ## **proc** almostEqual
@@ -105,7 +105,7 @@ proc hash(c: Color): Hash
 Returns true if colors are close
 
 ```nim
-proc almostEqual(a, b: Color; ep = 0.01): bool 
+proc almostEqual(a, b: Color; ep = 0.01): bool
 ```
 
 ## **proc** parseHex
@@ -131,7 +131,7 @@ Formats color as hex (upper case):
 
 
 ```nim
-proc toHex(c: Color): string 
+proc toHex(c: Color): string
 ```
 
 ## **proc** parseHexAlpha
@@ -161,7 +161,7 @@ Formats color as hex (upper case):
 
 
 ```nim
-proc toHexAlpha(c: Color): string 
+proc toHexAlpha(c: Color): string
 ```
 
 ## **proc** parseHtmlHex
@@ -187,7 +187,7 @@ Formats color as HTML hex (upper case):
 
 
 ```nim
-proc toHtmlHex(c: Color): string 
+proc toHtmlHex(c: Color): string
 ```
 
 ## **proc** parseHtmlHexTiny
@@ -213,7 +213,7 @@ Formats color as HTML 3 hex numbers (upper case):
 
 
 ```nim
-proc toHtmlHexTiny(c: Color): string 
+proc toHtmlHexTiny(c: Color): string
 ```
 
 ## **proc** parseHtmlRgb
@@ -239,7 +239,7 @@ Parses colors in html's rgb format:
 
 
 ```nim
-proc toHtmlRgb(c: Color): string 
+proc toHtmlRgb(c: Color): string
 ```
 
 ## **proc** parseHtmlRgba
@@ -268,7 +268,7 @@ Parses colors in html's rgb format:
 
 
 ```nim
-proc toHtmlRgba(c: Color): string 
+proc toHtmlRgba(c: Color): string
 ```
 
 ## **proc** parseHtmlName
@@ -313,266 +313,266 @@ proc to[T: SomeColor](c: SomeColor; toColor: typedesc[T]): T
 
 
 ```nim
-proc color(c: ColorRGB): Color 
+proc color(c: ColorRGB): Color
 ```
 
 ## **proc** rgb
 
 
 ```nim
-proc rgb(c: Color): ColorRGB 
+proc rgb(c: Color): ColorRGB
 ```
 
 ## **proc** rgb
 
 
 ```nim
-proc rgb(r: uint8; g: uint8; b: uint8): ColorRGB 
+proc rgb(r: uint8; g: uint8; b: uint8): ColorRGB
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorRGBA): Color 
+proc color(c: ColorRGBA): Color
 ```
 
 ## **proc** rgba
 
 
 ```nim
-proc rgba(c: Color): ColorRGBA 
+proc rgba(c: Color): ColorRGBA
 ```
 
 ## **proc** rgba
 
 
 ```nim
-proc rgba(r: uint8; g: uint8; b: uint8; a: uint8): ColorRGBA 
+proc rgba(r: uint8; g: uint8; b: uint8; a: uint8): ColorRGBA
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorHSL): Color 
+proc color(c: ColorHSL): Color
 ```
 
 ## **proc** hsl
 
 
 ```nim
-proc hsl(c: Color): ColorHSL 
+proc hsl(c: Color): ColorHSL
 ```
 
 ## **proc** hsl
 
 
 ```nim
-proc hsl(h: float32; s: float32; l: float32): ColorHSL 
+proc hsl(h: float32; s: float32; l: float32): ColorHSL
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorHSV): Color 
+proc color(c: ColorHSV): Color
 ```
 
 ## **proc** hsv
 
 
 ```nim
-proc hsv(c: Color): ColorHSV 
+proc hsv(c: Color): ColorHSV
 ```
 
 ## **proc** hsv
 
 
 ```nim
-proc hsv(h: float32; s: float32; v: float32): ColorHSV 
+proc hsv(h: float32; s: float32; v: float32): ColorHSV
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorCMY): Color 
+proc color(c: ColorCMY): Color
 ```
 
 ## **proc** cmy
 
 
 ```nim
-proc cmy(c: Color): ColorCMY 
+proc cmy(c: Color): ColorCMY
 ```
 
 ## **proc** cmy
 
 
 ```nim
-proc cmy(c: float32; m: float32; y: float32): ColorCMY 
+proc cmy(c: float32; m: float32; y: float32): ColorCMY
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorCMYK): Color 
+proc color(c: ColorCMYK): Color
 ```
 
 ## **proc** cmyk
 
 
 ```nim
-proc cmyk(c: Color): ColorCMYK 
+proc cmyk(c: Color): ColorCMYK
 ```
 
 ## **proc** cmyk
 
 
 ```nim
-proc cmyk(c: float32; m: float32; y: float32; k: float32): ColorCMYK 
+proc cmyk(c: float32; m: float32; y: float32; k: float32): ColorCMYK
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorYUV): Color 
+proc color(c: ColorYUV): Color
 ```
 
 ## **proc** yuv
 
 
 ```nim
-proc yuv(c: Color): ColorYUV 
+proc yuv(c: Color): ColorYUV
 ```
 
 ## **proc** yuv
 
 
 ```nim
-proc yuv(y: float32; u: float32; v: float32): ColorYUV 
+proc yuv(y: float32; u: float32; v: float32): ColorYUV
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorLAB): Color 
+proc color(c: ColorLAB): Color
 ```
 
 ## **proc** lab
 
 
 ```nim
-proc lab(c: Color): ColorLAB 
+proc lab(c: Color): ColorLAB
 ```
 
 ## **proc** lab
 
 
 ```nim
-proc lab(l: float32; a: float32; b: float32): ColorLAB 
+proc lab(l: float32; a: float32; b: float32): ColorLAB
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorPolarLAB): Color 
+proc color(c: ColorPolarLAB): Color
 ```
 
 ## **proc** polarlab
 
 
 ```nim
-proc polarlab(c: Color): ColorPolarLAB 
+proc polarlab(c: Color): ColorPolarLAB
 ```
 
 ## **proc** polarlab
 
 
 ```nim
-proc polarlab(l: float32; c: float32; h: float32): ColorPolarLAB 
+proc polarlab(l: float32; c: float32; h: float32): ColorPolarLAB
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorLUV): Color 
+proc color(c: ColorLUV): Color
 ```
 
 ## **proc** luv
 
 
 ```nim
-proc luv(c: Color): ColorLUV 
+proc luv(c: Color): ColorLUV
 ```
 
 ## **proc** luv
 
 
 ```nim
-proc luv(l: float32; u: float32; v: float32): ColorLUV 
+proc luv(l: float32; u: float32; v: float32): ColorLUV
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorPolarLUV): Color 
+proc color(c: ColorPolarLUV): Color
 ```
 
 ## **proc** polarluv
 
 
 ```nim
-proc polarluv(c: Color): ColorPolarLUV 
+proc polarluv(c: Color): ColorPolarLUV
 ```
 
 ## **proc** polarluv
 
 
 ```nim
-proc polarluv(h: float32; c: float32; l: float32): ColorPolarLUV 
+proc polarluv(h: float32; c: float32; l: float32): ColorPolarLUV
 ```
 
 ## **proc** color
 
 
 ```nim
-proc color(c: ColorXYZ): Color 
+proc color(c: ColorXYZ): Color
 ```
 
 ## **proc** xyz
 
 
 ```nim
-proc xyz(c: Color): ColorXYZ 
+proc xyz(c: Color): ColorXYZ
 ```
 
 ## **proc** xyz
 
 
 ```nim
-proc xyz(x: float32; y: float32; z: float32): ColorXYZ 
+proc xyz(x: float32; y: float32; z: float32): ColorXYZ
 ```
 
 ## **proc** hcl
 
 
 ```nim
-proc hcl(c: Color): ColorHCL 
+proc hcl(c: Color): ColorHCL
 ```
 
 ## **proc** hcl
 
 
 ```nim
-proc hcl(h, c, l: float32): ColorHCL 
+proc hcl(h, c, l: float32): ColorHCL
 ```
 
 ## **proc** lighten
@@ -580,7 +580,7 @@ proc hcl(h, c, l: float32): ColorHCL
 Lightens the color by amount 0-1.
 
 ```nim
-proc lighten(color: Color; amount: float32): Color 
+proc lighten(color: Color; amount: float32): Color
 ```
 
 ## **proc** darken
@@ -588,7 +588,7 @@ proc lighten(color: Color; amount: float32): Color
 Darkens the color by amount 0-1.
 
 ```nim
-proc darken(color: Color; amount: float32): Color 
+proc darken(color: Color; amount: float32): Color
 ```
 
 ## **proc** saturate
@@ -596,7 +596,7 @@ proc darken(color: Color; amount: float32): Color
 Saturates (makes brighter) the color by amount 0-1.
 
 ```nim
-proc saturate(color: Color; amount: float32): Color 
+proc saturate(color: Color; amount: float32): Color
 ```
 
 ## **proc** desaturate
@@ -604,7 +604,7 @@ proc saturate(color: Color; amount: float32): Color
 Desaturate (makes grayer) the color by amount 0-1.
 
 ```nim
-proc desaturate(color: Color; amount: float32): Color 
+proc desaturate(color: Color; amount: float32): Color
 ```
 
 ## **proc** spin
@@ -612,7 +612,7 @@ proc desaturate(color: Color; amount: float32): Color
 Rotates the hue of the color by degrees (0-360).
 
 ```nim
-proc spin(color: Color; degrees: float32): Color 
+proc spin(color: Color; degrees: float32): Color
 ```
 
 ## **proc** mix
@@ -620,7 +620,7 @@ proc spin(color: Color; degrees: float32): Color
 Mixes two Color colors together using simple avarage.
 
 ```nim
-proc mix(a, b: Color): Color 
+proc mix(a, b: Color): Color
 ```
 
 ## **proc** mixCMYK
@@ -628,7 +628,7 @@ proc mix(a, b: Color): Color
 Mixes two colors together using CMYK.
 
 ```nim
-proc mixCMYK(colorA, colorB: Color): Color 
+proc mixCMYK(colorA, colorB: Color): Color
 ```
 
 ## **proc** mix
@@ -636,6 +636,5 @@ proc mixCMYK(colorA, colorB: Color): Color
 Mixes two ColorRGBA colors together using simple avarage.
 
 ```nim
-proc mix(a, b: ColorRGBA): ColorRGBA 
+proc mix(a, b: ColorRGBA): ColorRGBA
 ```
-

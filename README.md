@@ -115,8 +115,6 @@ Parses colors like:
  * 0000FF -> blue
  * FFFFFF -> white
 
-
-
 ```nim
 proc parseHex(hex: string): Color {.raises: [InvalidColor].}
 ```
@@ -127,8 +125,6 @@ Formats color as hex (upper case):
  * red -> FF0000
  * blue -> 0000FF
  * white -> FFFFFF
-
-
 
 ```nim
 proc toHex(c: Color): string
@@ -143,8 +139,6 @@ Parses colors like:
  * 000000FF -> opaque  black
  * 00000000 -> transparent black
 
-
-
 ```nim
 proc parseHexAlpha(hex: string): Color {.raises: [InvalidColor].}
 ```
@@ -158,8 +152,6 @@ Formats color as hex (upper case):
  * opaque  black -> 000000FF
  * transparent black -> 00000000
 
-
-
 ```nim
 proc toHexAlpha(c: Color): string
 ```
@@ -170,8 +162,6 @@ Parses colors with leading '#' like::
  * #FF0000 -> red
  * #0000ff -> blue
  * #ffffff -> white
-
-
 
 ```nim
 proc parseHtmlHex(hex: string): Color {.raises: [InvalidColor].}
@@ -184,8 +174,6 @@ Formats color as HTML hex (upper case):
  * blue -> #0000FF
  * white -> #FFFFFF
 
-
-
 ```nim
 proc toHtmlHex(c: Color): string
 ```
@@ -196,8 +184,6 @@ Parses colors with leading '#' and 3 hex numbers like::
  * #F00 -> red
  * #0ff -> blue
  * #fff -> white
-
-
 
 ```nim
 proc parseHtmlHexTiny(hex: string): Color {.raises: [InvalidColor].}
@@ -210,8 +196,6 @@ Formats color as HTML 3 hex numbers (upper case):
  * blue -> #00F
  * white -> #FFF
 
-
-
 ```nim
 proc toHtmlHexTiny(c: Color): string
 ```
@@ -223,8 +207,6 @@ Parses colors in html's rgb format:
  * rgb(0,0,255) -> blue
  * rgb(255,255,255) -> white
 
-
-
 ```nim
 proc parseHtmlRgb(text: string): Color {.raises: [InvalidColor, ValueError].}
 ```
@@ -235,8 +217,6 @@ Parses colors in html's rgb format:
  * red -> rgb(255, 0, 0)
  * blue -> rgb(0,0,255)
  * white -> rgb(255,255,255)
-
-
 
 ```nim
 proc toHtmlRgb(c: Color): string
@@ -253,7 +233,6 @@ Parses colors in html's rgba format:
 
 <p>Note: rgb is 0-255, while alpha is 0 to 1.</p>
 
-
 ```nim
 proc parseHtmlRgba(text: string): Color {.raises: [InvalidColor, ValueError].}
 ```
@@ -264,8 +243,6 @@ Parses colors in html's rgb format:
  * red -> rgb(255, 0, 0)
  * blue -> rgb(0,0,255)
  * white -> rgb(255,255,255)
-
-
 
 ```nim
 proc toHtmlRgba(c: Color): string
@@ -280,8 +257,6 @@ Parses HTML color as as a name:
  * "amber"
  * "Lavender Gray"
 
-
-
 ```nim
 proc parseHtmlName(text: string): Color {.raises: [InvalidColor, KeyError].}
 ```
@@ -294,8 +269,6 @@ Parses HTML color any any of the formats:
  * rgb(255, 255, 255)
  * rgba(255, 255, 255, 1.0)
  * white
-
-
 
 ```nim
 proc parseHtmlColor(colorText: string): Color {.raises: [InvalidColor, ValueError, KeyError].}

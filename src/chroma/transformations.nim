@@ -30,9 +30,7 @@
 ## and link to a mirror of the C file:
 ## - https://github.com/cran/colorspace/blob/master/src/colorspace.c
 
-import math
-import colortypes
-
+import colortypes, math
 ################################################################################
 ###                          Code from chroma.nim                            ###
 ################################################################################
@@ -77,7 +75,6 @@ proc color*(r, g, b, a = 1.0): Color =
   result.b = b
   result.a = a
 
-
 proc RGB_to_RGB_type*(c: Color): ColorRGB =
   ## Convert Color to ColorRGB
   result.r = uint8(c.r * 255)
@@ -104,7 +101,6 @@ proc RGBA_to_RGB*(c: ColorRGBA): Color =
   result.g = float32(c.g) / 255
   result.b = float32(c.b) / 255
   result.a = float32(c.a) / 255
-
 
 proc RGB_to_HSL*(c: Color): ColorHSL =
   ## convert Color to ColorHSL
@@ -282,7 +278,6 @@ proc CMYK_to_RGB*(color: ColorCMYK): Color =
   result.g = 1 - min(1, m * (1 - k) + k)
   result.b = 1 - min(1, y * (1 - k) + k)
   result.a = 1.0
-
 
 ################################################################################
 ###                      Ported code from colorspaces                        ###
@@ -482,7 +477,10 @@ proc LUV_to_XYZ*(c: ColorLUV): ColorXYZ =
     result.z = 0.0
   else:
     ##  8 = kappa*epsilon
-    result.y = WhiteY * (if (c.l > 8.0): pow((c.l + 16.0) / 116.0, 3.0) else: c.l / kappa)
+    if c.l > 8.0:
+      result.y = WhiteY * pow((c.l + 16.0) / 116.0, 3.0)
+    else:
+      result.y = WhiteY * c.l / kappa
     (uN, vN) = XYZ_to_uv(ColorXYZ(x: WhiteX, y: WhiteY, z: WhiteZ))
     ##  Avoid division by zero if L = 0
     if c.l == 0.0:

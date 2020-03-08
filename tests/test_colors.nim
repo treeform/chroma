@@ -1,9 +1,5 @@
-import chroma
-import unittest
-import chroma / transformations
-
-import sequtils, macros, strutils
-
+import chroma, chroma / transformations, unittest
+import macros, sequtils, strutils
 let arr = @[
   color(1, 0, 0),
   color(0, 1, 0),
@@ -28,7 +24,6 @@ let arrAlpha = @[
   color(0, 0, 0, 0.75),
   color(0, 0, 0, 1.0),
 ]
-
 
 suite "parsers":
   test "hex":
@@ -74,7 +69,6 @@ suite "parsers":
     assert parseHtmlColor("rgb(0,0,255)").toHex() == "0000FF"
     assert parseHtmlColor("rgba(255,255,255,255)").toHex() == "FFFFFF"
     assert parseHtmlColor("black").toHex() == "000000"
-
 
 suite "spaces":
   test "RGB":
@@ -300,12 +294,12 @@ suite "spaces":
                        polarLuv(259.8579844, 54.211960, 48.95426),
                        polarLuv(259.9902473, 33.473383, 65.04641),
                        polarLuv(260.0952278, 15.796709, 78.36836),
-                       polarLuv(256.3944472, 3.334057,  87.78929),
-                       polarLuv(356.8126275, 2.787675,  87.81331),
-                       polarLuv(1.1011883  , 15.207073, 78.50223),
-                       polarLuv(0.1313174  , 33.508967, 65.18995),
+                       polarLuv(256.3944472, 3.3340570, 87.78929),
+                       polarLuv(356.8126275, 2.7876750, 87.81331),
+                       polarLuv(1.101188300, 15.207073, 78.50223),
+                       polarLuv(0.131317400, 33.508967, 65.18995),
                        polarLuv(359.8803475, 55.393046, 48.78153),
-                       polarLuv(0.0292239  , 79.930835, 29.90803)]
+                       polarLuv(0.029223900, 79.930835, 29.90803)]
     for i in 0 ..< colors.len:
       check cPolarLuv[i].almostEq(expPolarLuv[i])
 
@@ -352,7 +346,6 @@ suite "functions":
     assert mix(parseHex("FF0000"), parseHex("FF0000")).toHex() == "FF0000"
     assert mix(parseHex("FFFFFF"), parseHex("000000")).toHex() == "7F7F7F"
     assert mix(parseHex("FF0000"), parseHex("00FF00")).toHex() == "7F7F00"
-
 
 when false:
   # example in readme:

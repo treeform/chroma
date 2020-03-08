@@ -89,7 +89,7 @@ type
   # Alias for PolarLUV, as it might be better known as HCL
   ColorHCL* = ColorPolarLUV
 
-  SomeColor* = Color|ColorRGB|ColorRGBA|ColorHSL|ColorHSV|ColorCMY|ColorCMYK|
+  SomeColor* = Color|ColorRGB|ColorRGBA|ColorHSL|ColorHSV|ColorCMY|ColorCMYK |
                ColorYUV|ColorLAB|ColorPolarLAB|ColorLUV|ColorPolarLUV|ColorXYZ
 
   InvalidColor* = object of Exception

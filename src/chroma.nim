@@ -2,21 +2,17 @@
 ## **Everything you want to do with colors.**
 ##
 
-import strutils, tables, hashes, macros
-import chroma / [names, colortypes, transformations]
+import chroma/names, chroma/colortypes, chroma/transformations, hashes, macros, strutils, tables
 export colortypes
 export transformations.color
-
 
 # utility functions
 proc clamp(n, a, b: float32): float32 = min(max(a, n), b)
 proc toHex(a: float32): string = toHex(int(a))
 
-
 proc `$`*(c: Color): string =
   ## Returns colors as "(r, g, b, a)".
   "(" & $c.r & ", " & $c.g & ", " & $c.b & ", " & $c.a & ")"
-
 
 proc hash*(c: Color): Hash =
   ## Hahses a color - used in tables.
@@ -27,14 +23,12 @@ proc hash*(c: Color): Hash =
   h = h !& hash(c.a)
   result = !$h
 
-
 proc almostEqual*(a, b: Color, ep = 0.01): bool =
   ## Returns true if colors are close
   if abs(a.r - b.r) > ep: return false
   if abs(a.g - b.g) > ep: return false
   if abs(a.b - b.b) > ep: return false
   return true
-
 
 proc c2n(hex: string, i: int): int =
   ## Format int as a two diget HEX.
@@ -45,7 +39,6 @@ proc c2n(hex: string, i: int): int =
   of ord('A') .. ord('F'): return 10 + c - ord('A')
   else:
     raise newException(InvalidColor, "format is not hex")
-
 
 proc parseHex*(hex: string): Color =
   ## Parses colors like:
@@ -58,7 +51,6 @@ proc parseHex*(hex: string): Color =
   result.b = float32(c2n(hex, 4) * 16 + c2n(hex, 5)) / 255
   result.a = 1.0
 
-
 proc toHex*(c: Color): string =
   ## Formats color as hex (upper case):
   ## * red -> FF0000
@@ -67,7 +59,6 @@ proc toHex*(c: Color): string =
   proc pair(n: float32): string =
     toHex(n*255)[^2..^1]
   return pair(c.r) & pair(c.g) & pair(c.b)
-
 
 proc parseHexAlpha*(hex: string): Color =
   ## Parses colors like:
@@ -82,7 +73,6 @@ proc parseHexAlpha*(hex: string): Color =
   result.b = float32(c2n(hex, 4) * 16 + c2n(hex, 5)) / 255
   result.a = float32(c2n(hex, 6) * 16 + c2n(hex, 7)) / 255
 
-
 proc toHexAlpha*(c: Color): string =
   ## Formats color as hex (upper case):
   ## * red -> FF0000FF
@@ -94,7 +84,6 @@ proc toHexAlpha*(c: Color): string =
     toHex(n*255)[^2..^1]
   return pair(c.r) & pair(c.g) & pair(c.b) & pair(c.a)
 
-
 proc parseHtmlHex*(hex: string): Color =
   ## Parses colors with leading '#' like::
   ## * #FF0000 -> red
@@ -104,14 +93,12 @@ proc parseHtmlHex*(hex: string): Color =
     raise newException(InvalidColor, "Expected '#'")
   parseHex(hex[1..^1])
 
-
 proc toHtmlHex*(c: Color): string =
   ## Formats color as HTML hex (upper case):
   ## * red -> #FF0000
   ## * blue -> #0000FF
   ## * white -> #FFFFFF
   return '#' & c.toHex()
-
 
 proc parseHtmlHexTiny*(hex: string): Color =
   ## Parses colors with leading '#' and 3 hex numbers like::
@@ -126,7 +113,6 @@ proc parseHtmlHexTiny*(hex: string): Color =
   result.b = float32(c2n(hex, 3)) / 15
   result.a = 1.0
 
-
 proc toHtmlHexTiny*(c: Color): string =
   ## Formats color as HTML 3 hex numbers (upper case):
   ## * red -> #F00
@@ -135,7 +121,6 @@ proc toHtmlHexTiny*(c: Color): string =
   proc pair(n: float32): string =
     toHex(n*15)[^1..^1]
   return '#' & pair(c.r) & pair(c.g) & pair(c.b)
-
 
 proc parseHtmlRgb*(text: string): Color =
   ## Parses colors in html's rgb format:
@@ -156,7 +141,6 @@ proc parseHtmlRgb*(text: string): Color =
   result.b = min(1.0, parseFloat(arr[2]) / 255)
   result.a = 1.0
 
-
 proc toHtmlRgb*(c: Color): string =
   ## Parses colors in html's rgb format:
   ## * red -> rgb(255, 0, 0)
@@ -166,7 +150,6 @@ proc toHtmlRgb*(c: Color): string =
     $int(c.r * 255) & ", " &
     $int(c.g * 255) & ", " &
     $int(c.b * 255) & ")"
-
 
 proc parseHtmlRgba*(text: string): Color =
   ## Parses colors in html's rgba format:
@@ -190,7 +173,6 @@ proc parseHtmlRgba*(text: string): Color =
   result.b = min(1.0, parseFloat(arr[2]) / 255)
   result.a = min(1.0, parseFloat(arr[3]))
 
-
 proc toHtmlRgba*(c: Color): string =
   ## Parses colors in html's rgb format:
   ## * red -> rgb(255, 0, 0)
@@ -201,7 +183,6 @@ proc toHtmlRgba*(c: Color): string =
     $int(c.g * 255) & ", " &
     $int(c.b * 255) & ", " &
     $c.a & ")"
-
 
 proc parseHtmlName*(text: string): Color =
   ## Parses HTML color as as a name:
@@ -356,11 +337,9 @@ proc lighten*(color: Color, amount: float32): Color =
   result = color(hsl)
   result.a = color.a
 
-
 proc darken*(color: Color, amount: float32): Color =
   ## Darkens the color by amount 0-1.
   color.lighten(-amount)
-
 
 proc saturate*(color: Color, amount: float32): Color =
   ## Saturates (makes brighter) the color by amount 0-1.
@@ -370,11 +349,9 @@ proc saturate*(color: Color, amount: float32): Color =
   result = color(hsl)
   result.a = color.a
 
-
 proc desaturate*(color: Color, amount: float32): Color =
   ## Desaturate (makes grayer) the color by amount 0-1.
   color.saturate(-amount)
-
 
 proc spin*(color: Color, degrees: float32): Color =
   ## Rotates the hue of the color by degrees (0-360).
@@ -385,7 +362,6 @@ proc spin*(color: Color, degrees: float32): Color =
   result = color(hsl)
   result.a = color.a
 
-
 proc mix*(a, b: Color): Color =
   ## Mixes two Color colors together using simple avarage.
   var c: Color
@@ -394,7 +370,6 @@ proc mix*(a, b: Color): Color =
   c.b = (a.b + b.b) / 2.0
   c.a = (a.a + b.a) / 2.0
   return c
-
 
 proc mixCMYK*(colorA, colorB: Color): Color =
   ## Mixes two colors together using CMYK.
@@ -407,7 +382,6 @@ proc mixCMYK*(colorA, colorB: Color): Color =
   c.y = (a.y + b.y) / 2
   c.k = (a.k + b.k) / 2
   return c.color
-
 
 proc mix*(a, b: ColorRGBA): ColorRGBA =
   ## Mixes two ColorRGBA colors together using simple avarage.

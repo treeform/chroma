@@ -5,6 +5,7 @@
 ## filter: invert(68%) sepia(100%) saturate(4016%) hue-rotate(82deg) brightness(119%) contrast(124%)
 
 import ../chroma, math, os, print, random, strformat, tables
+
 type ColorMatrix = array[0..8, float]
 
 proc clamp(channel: float): float =

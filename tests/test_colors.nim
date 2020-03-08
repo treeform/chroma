@@ -1,5 +1,5 @@
-import chroma, chroma / transformations, unittest
-import macros, sequtils, strutils
+import unittest, chroma, chroma/transformations, sequtils, macros, strutils
+
 let arr = @[
   color(1, 0, 0),
   color(0, 1, 0),

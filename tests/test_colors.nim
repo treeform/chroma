@@ -1,8 +1,4 @@
-import chroma
-import unittest
-import chroma / transformations
-
-import sequtils, macros, strutils
+import unittest, chroma, chroma/transformations, sequtils, macros, strutils
 
 let arr = @[
   color(1, 0, 0),
@@ -28,7 +24,6 @@ let arrAlpha = @[
   color(0, 0, 0, 0.75),
   color(0, 0, 0, 1.0),
 ]
-
 
 suite "parsers":
   test "hex":
@@ -74,7 +69,6 @@ suite "parsers":
     assert parseHtmlColor("rgb(0,0,255)").toHex() == "0000FF"
     assert parseHtmlColor("rgba(255,255,255,255)").toHex() == "FFFFFF"
     assert parseHtmlColor("black").toHex() == "000000"
-
 
 suite "spaces":
   test "RGB":
@@ -352,7 +346,6 @@ suite "functions":
     assert mix(parseHex("FF0000"), parseHex("FF0000")).toHex() == "FF0000"
     assert mix(parseHex("FFFFFF"), parseHex("000000")).toHex() == "7F7F7F"
     assert mix(parseHex("FF0000"), parseHex("00FF00")).toHex() == "7F7F00"
-
 
 when false:
   # example in readme:

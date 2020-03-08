@@ -77,7 +77,6 @@ proc color*(r, g, b, a = 1.0): Color =
   result.b = b
   result.a = a
 
-
 proc RGB_to_RGB_type*(c: Color): ColorRGB =
   ## Convert Color to ColorRGB
   result.r = uint8(c.r * 255)
@@ -104,7 +103,6 @@ proc RGBA_to_RGB*(c: ColorRGBA): Color =
   result.g = float32(c.g) / 255
   result.b = float32(c.b) / 255
   result.a = float32(c.a) / 255
-
 
 proc RGB_to_HSL*(c: Color): ColorHSL =
   ## convert Color to ColorHSL
@@ -282,7 +280,6 @@ proc CMYK_to_RGB*(color: ColorCMYK): Color =
   result.g = 1 - min(1, m * (1 - k) + k)
   result.b = 1 - min(1, y * (1 - k) + k)
   result.a = 1.0
-
 
 ################################################################################
 ###                      Ported code from colorspaces                        ###

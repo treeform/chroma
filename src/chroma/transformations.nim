@@ -237,9 +237,9 @@ proc RGB_to_YUV*(c: Color): ColorYUV =
 
 proc YUV_to_RGB*(c: ColorYUV): Color =
   ## convert ColorYUV to Color
-  result.r = (c.y * 1) + (c.u * 0) + (c.v * 1.13983);
-  result.g = (c.y * 1) + (c.u * -0.39465) + (c.v * -0.58060);
-  result.b = (c.y * 1) + (c.u * 2.02311) + (c.v * 0);
+  result.r = (c.y * 1) + (c.u * 0) + (c.v * 1.13983)
+  result.g = (c.y * 1) + (c.u * -0.39465) + (c.v * -0.58060)
+  result.b = (c.y * 1) + (c.u * 2.02311) + (c.v * 0)
 
   result.r = clamp(result.r, 0, 1)
   result.g = clamp(result.g, 0, 1)

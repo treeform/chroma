@@ -5,10 +5,10 @@
 import chroma/colortypes, chroma/names, chroma/transformations, hashes, macros,
     strutils, tables
 
-export colortypes
-export transformations.color
-
 # utility functions
+
+export colortypes, transformations.color
+
 proc clamp(n, a, b: float32): float32 = min(max(a, n), b)
 proc toHex(a: float32): string = toHex(int(a))
 

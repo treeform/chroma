@@ -9,21 +9,63 @@ import chroma/colortypes, chroma/names, chroma/transformations, hashes, macros,
 
 export colortypes, transformations.color
 
-proc clamp(n, a, b: float32): float32 = min(max(a, n), b)
 proc toHex(a: float32): string = toHex(int(a))
 
 proc `$`*(c: Color): string =
   ## Returns colors as "(r, g, b, a)".
   "(" & $c.r & ", " & $c.g & ", " & $c.b & ", " & $c.a & ")"
 
-proc hash*(c: Color): Hash =
-  ## Hahses a color - used in tables.
-  var h: Hash = 0
-  h = h !& hash(c.r)
-  h = h !& hash(c.g)
-  h = h !& hash(c.b)
-  h = h !& hash(c.a)
-  result = !$h
+func hash*(c: Color): Hash =
+  ## Hashes a Color - used in tables.
+  hash((c.r, c.g, c.b, c.a))
+
+func hash*(c: ColorRGB): Hash =
+  ## Hashes a ColorRGB - used in tables.
+  hash((c.r, c.g, c.b))
+
+func hash*(c: ColorRGBA): Hash =
+  ## Hashes a ColorRGB - used in tables.
+  hash((c.r, c.g, c.b, c.a))
+
+func hash*(c: ColorCMY): Hash =
+  ## Hashes a ColorCMY - used in tables.
+  hash((c.m, c.y, c.y))
+
+func hash*(c: ColorCMYK): Hash =
+  ## Hashes a ColorCMYK - used in tables.
+  hash((c.m, c.y, c.y, c.k))
+
+func hash*(c: ColorHSL): Hash =
+  ## Hashes a ColorHSL - used in tables.
+  hash((c.h, c.s, c.l))
+
+func hash*(c: ColorHSV): Hash =
+  ## Hashes a ColorHSV - used in tables.
+  hash((c.h, c.s, c.v))
+
+func hash*(c: ColorYUV): Hash =
+  ## Hashes a ColorYUV - used in tables.
+  hash((c.y, c.u, c.v))
+
+func hash*(c: ColorXYZ): Hash =
+  ## Hashes a ColorXYZ - used in tables.
+  hash((c.x, c.y, c.z))
+
+func hash*(c: ColorLAB): Hash =
+  ## Hashes a ColorLAB - used in tables.
+  hash((c.l, c.a, c.b))
+
+func hash*(c: ColorPolarLAB): Hash =
+  ## Hashes a ColorPolarLAB - used in tables.
+  hash((c.l, c.c, c.h))
+
+func hash*(c: ColorLUV): Hash =
+  ## Hashes a ColorLUV - used in tables.
+  hash((c.l, c.u, c.v))
+
+func hash*(c: ColorPolarLUV): Hash =
+  ## Hashes a ColorLUV - used in tables.
+  hash((c.h, c.c, c.l))
 
 proc almostEqual*(a, b: Color, ep = 0.01): bool =
   ## Returns true if colors are close

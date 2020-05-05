@@ -64,7 +64,7 @@ func hash*(c: ColorLUV): Hash =
   hash((c.l, c.u, c.v))
 
 func hash*(c: ColorPolarLUV): Hash =
-  ## Hashes a ColorLUV - used in tables.
+  ## Hashes a ColorPolarLUV - used in tables.
   hash((c.h, c.c, c.l))
 
 proc almostEqual*(a, b: Color, ep = 0.01): bool =

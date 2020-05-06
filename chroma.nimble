@@ -9,6 +9,3 @@ srcDir = "src"
 # Deps
 requires "nim >= 1.0.0"
 requires "mddoc >= 0.0.4"
-
-task test, "run all tests":
-  exec "nim c -r tests/test_colors.nim"

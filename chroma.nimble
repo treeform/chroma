@@ -8,4 +8,3 @@ srcDir = "src"
 
 # Deps
 requires "nim >= 1.0.0"
-requires "mddoc >= 0.0.4"

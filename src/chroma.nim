@@ -2,12 +2,12 @@
 ## **Everything you want to do with colors.**
 ##
 
-import chroma/colortypes, chroma/names, chroma/transformations, hashes, macros,
+import chroma/colortypes, chroma/distance, chroma/names, chroma/transformations, hashes, macros,
     strutils, tables
 
 # utility functions
 
-export colortypes, transformations.color
+export colortypes, transformations.color, distance
 
 proc toHex(a: float32): string = toHex(int(a))
 

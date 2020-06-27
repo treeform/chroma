@@ -1,8 +1,9 @@
 ## Implementation of CIEDE2000 color difference formula
 ## 
-## See: https://en.wikipedia.org/wiki/Color_difference#CIEDE2000
-## 
-## The implementation follows: http://www2.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf
+## See: 
+##
+##   * https://en.wikipedia.org/wiki/Color_difference#CIEDE2000
+##   * http://www2.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf
 
 import colortypes, transformations, math
 
@@ -41,9 +42,9 @@ func deltaE00*(c1, c2: ColorLAB, kL, kC, kH = 1.float32): float32 =
         h2 - h1 - 360
       else:
         h2 - h1 + 360
-    deltaHH = 2 * sqrt(CC1*CC2) * sin(degToRad(0.5 * deltah))
-    LM = 0.5*(c1.l + c2.l)
-    CCM = 0.5*(CC1 + CC2)
+    deltaHH = 2 * sqrt(CC1 * CC2) * sin(degToRad(0.5 * deltah))
+    LM = 0.5 * (c1.l + c2.l)
+    CCM = 0.5 * (CC1 + CC2)
     hM =
       if CC1 == 0 or CC2 == 0:
         h1 + h2
@@ -60,7 +61,7 @@ func deltaE00*(c1, c2: ColorLAB, kL, kC, kH = 1.float32): float32 =
     SL = 1 + (0.015 * (LM - 50)^2)/sqrt(20 + (LM - 50)^2)
     SC = 1 + 0.045 * CCM
     SH = 1 + 0.015 * CCM * T
-    RT = -sin(degToRad(2*deltaTheta))*R_C
+    RT = -sin(degToRad(2 * deltaTheta)) * R_C
   result = sqrt((deltaL/(kL * SL))^2 + (deltaCC/(kC * SC))^2 + (deltaHH/(
       kH * SH))^2 + RT * (deltaCC / (kC * SC)) * (deltaHH/(kH * SH)))
 

@@ -53,14 +53,16 @@ func deltaE00*(c1, c2: ColorLAB, k_L, k_C, k_H = 1.float32): float32 =
         0.5*(h1 + h2 + 360)
       else:
         0.5*(h1 + h2 - 360)
-    T = 1 - 0.17*cos(degToRad(hM - 30)) + 0.24*cos(degToRad(2*hM)) + 0.32*cos(degToRad(3*hM + 6)) - 0.20*cos(degToRad(4*hM - 63))
+    T = 1 - 0.17*cos(degToRad(hM - 30)) + 0.24*cos(degToRad(2*hM)) + 0.32*cos(
+        degToRad(3*hM + 6)) - 0.20*cos(degToRad(4*hM - 63))
     deltaTheta = 30*exp(-1*((hM - 275) / 25)^2)
     R_C = 2*sqrt(CCM^7 / (CCM^7 + twentyfiveToSeventh))
     S_L = 1 + (0.015*(LM - 50)^2)/sqrt(20 + (LM - 50)^2)
     S_C = 1 + 0.045*CCM
     S_H = 1 + 0.015*CCM*T
     R_T = -sin(degToRad(2*deltaTheta))*R_C
-  result = sqrt((deltaL/(k_L*S_L))^2 + (deltaCC/(k_C*S_C))^2 + (deltaHH/(k_H*S_H))^2 + R_T*(deltaCC / (k_C*S_C))*(deltaHH/(k_H*S_H)))
+  result = sqrt((deltaL/(k_L*S_L))^2 + (deltaCC/(k_C*S_C))^2 + (deltaHH/(
+      k_H*S_H))^2 + R_T*(deltaCC / (k_C*S_C))*(deltaHH/(k_H*S_H)))
 
 func distance*(c1, c2: SomeColor): float32 =
   deltaE00(c1.asLAB, c2.asLAB)

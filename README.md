@@ -61,6 +61,14 @@ You can use these to change colors you already have
 * `spin(color, degrees)` Rotates the hue of the color by degrees (0-360)
 * `mix(colorA, colorB)` Mixes two colors together using CMYK
 
+A distance function is provided that implements
+[CIEDE2000 color difference formula](https://en.wikipedia.org/wiki/Color_difference#CIEDE2000)
+* `distance(colorA, colorB)` Distance between two colors
+This distance is designed to be perceptually uniform and it can be used to answer the question:
+"What is a set of colors that are imperceptibly/acceptably close to a given reference?".
+A value of 5.0 is used as reference in [github linguist library](https://github.com/github/linguist/):
+any color with distance less than 5.0 from one of the existing colors is not allowed.
+
 ## Example
 
 ```nim
@@ -706,4 +714,12 @@ Mixes two ColorRGBA colors together using simple avarage.
 
 ```nim
 proc mix(a, b: ColorRGBA): ColorRGBA
+```
+
+## **func** distance
+
+A distance function based on CIEDE2000 color difference formula
+
+```nim
+func distance(c1, c2: SomeColor): float32
 ```

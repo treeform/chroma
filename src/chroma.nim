@@ -435,3 +435,7 @@ proc mix*(a, b: ColorRGBA): ColorRGBA =
   c.b = a.b div 2 + b.b div 2
   c.a = a.a div 2 + b.a div 2
   return c
+
+func distance*(c1, c2: SomeColor): float32 =
+  ## A distance function based on CIEDE2000 color difference formula
+  deltaE00(c1.asLAB, c2.asLAB)

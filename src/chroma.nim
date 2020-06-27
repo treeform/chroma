@@ -7,7 +7,7 @@ import chroma/colortypes, chroma/distance, chroma/names, chroma/transformations,
 
 # utility functions
 
-export colortypes, transformations.color, distance
+export colortypes, distance, transformations.color
 
 proc toHex(a: float32): string = toHex(int(a))
 

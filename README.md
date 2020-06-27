@@ -100,108 +100,12 @@ Returns colors as "(r, g, b, a)".
 proc `$`(c: Color): string
 ```
 
-## **func** hash
+## **proc** hash
 
-Hashes a Color - used in tables.
-
-```nim
-func hash(c: Color): Hash
-```
-
-## **func** hash
-
-Hashes a ColorRGB - used in tables.
+Hahses a color - used in tables.
 
 ```nim
-func hash(c: ColorRGB): Hash
-```
-
-## **func** hash
-
-Hashes a ColorRGB - used in tables.
-
-```nim
-func hash(c: ColorRGBA): Hash
-```
-
-## **func** hash
-
-Hashes a ColorCMY - used in tables.
-
-```nim
-func hash(c: ColorCMY): Hash
-```
-
-## **func** hash
-
-Hashes a ColorCMYK - used in tables.
-
-```nim
-func hash(c: ColorCMYK): Hash
-```
-
-## **func** hash
-
-Hashes a ColorHSL - used in tables.
-
-```nim
-func hash(c: ColorHSL): Hash
-```
-
-## **func** hash
-
-Hashes a ColorHSV - used in tables.
-
-```nim
-func hash(c: ColorHSV): Hash
-```
-
-## **func** hash
-
-Hashes a ColorYUV - used in tables.
-
-```nim
-func hash(c: ColorYUV): Hash
-```
-
-## **func** hash
-
-Hashes a ColorXYZ - used in tables.
-
-```nim
-func hash(c: ColorXYZ): Hash
-```
-
-## **func** hash
-
-Hashes a ColorLAB - used in tables.
-
-```nim
-func hash(c: ColorLAB): Hash
-```
-
-## **func** hash
-
-Hashes a ColorPolarLAB - used in tables.
-
-```nim
-func hash(c: ColorPolarLAB): Hash
-```
-
-## **func** hash
-
-Hashes a ColorLUV - used in tables.
-
-```nim
-func hash(c: ColorLUV): Hash
-```
-
-## **func** hash
-
-Hashes a ColorPolarLUV - used in tables.
-
-```nim
-func hash(c: ColorPolarLUV): Hash
+proc hash(c: Color): Hash
 ```
 
 ## **proc** almostEqual

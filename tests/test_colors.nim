@@ -1,4 +1,4 @@
-import chroma, chroma/transformations, macros, sequtils, strutils, unittest
+import chroma, chroma/transformations, macros, parsecsv, sequtils, strutils, unittest
 
 let arr = @[
   color(1, 0, 0),
@@ -346,6 +346,51 @@ suite "functions":
     assert mix(parseHex("FF0000"), parseHex("FF0000")).toHex() == "FF0000"
     assert mix(parseHex("FFFFFF"), parseHex("000000")).toHex() == "7F7F7F"
     assert mix(parseHex("FF0000"), parseHex("00FF00")).toHex() == "7F7F00"
+
+suite "distance":
+  template checkAlmostEqual(x, y: float32, epsilon = 0.0001): untyped =
+    check abs(x - y) < epsilon
+  test "test vectors":
+    # test vectors taken from: http://www2.ece.rochester.edu/~gsharma/ciede2000/
+    var x: CsvParser
+    x.open("tests/distance_test_vectors.csv")
+    x.readHeaderRow()
+    assert x.headers == @["c1l", "c1a", "c1b", "c2l", "c2a", "c2b", "deltaE00"]
+    var c1, c2: ColorLAB
+    var expectedResult, result: float32
+    while readRow(x):
+      c1 = lab(x.rowEntry("c1l").parseFloat.float32, x.rowEntry(
+          "c1a").parseFloat.float32, x.rowEntry("c1b").parseFloat.float32)
+      c2 = lab(x.rowEntry("c2l").parseFloat.float32, x.rowEntry(
+          "c2a").parseFloat.float32, x.rowEntry("c2b").parseFloat.float32)
+      expectedResult = x.rowEntry("deltaE00").parseFloat.float32
+      result = distance(c1, c2)
+      checkAlmostEqual(expectedResult, result)
+  test "example usage from color-proximity":
+    # color-proximity (ruby gem): https://github.com/gjtorikian/color-proximity
+    # depends on color_difference: https://github.com/mmozuras/color_difference/
+    # note that color_difference does scale between 0 and 1 (clipping to 100 all values > 100)
+    let
+      c0 = "000003".parseHex
+      c1 = "000001".parseHex
+      c2 = "000002".parseHex
+      c3 = "ffffff".parseHex
+      res1 = distance(c0, c1) / 100.0
+      res2 = distance(c0, c2) / 100.0
+      res3 = distance(c0, c3) / 100.0
+      expRes1 = 0.00832.float32
+      expRes2 = 0.00412.float32
+      expRes3 = 0.99948.float32
+    checkAlmostEqual(res1, expRes1)
+    checkAlmostEqual(res2, expRes2)
+    checkAlmostEqual(res3, expRes3)
+  test "example of proximity failure":
+    # color proximity test in linguist: https://github.com/github/linguist/blob/master/test/test_color_proximity.rb
+    let
+      c1 = "FFDF00".parseHex # a color proposal for Nim in linguist
+      c2 = "FFEC25".parseHex # Dafny color
+      result = distance(c1, c2) / 100
+    check result < 0.05 # proximity threshold set in linguist
 
 when false:
   # example in readme:

@@ -13,9 +13,9 @@ proc myAtan(x, y: float32): float32 =
   if x == 0 and y == 0:
     return 0
   elif x >= 0:
-    arctan2(x, y).radToDeg
+    return arctan2(x, y).radToDeg
   else:
-    arctan2(x, y).radToDeg + 360
+    return arctan2(x, y).radToDeg + 360
 
 func deltaE00*(c1, c2: ColorLAB, kL, kC, kH = 1.float32): float32 =
   let

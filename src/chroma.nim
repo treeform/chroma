@@ -407,13 +407,23 @@ proc spin*(color: Color, degrees: float32): Color =
   result.a = color.a
 
 proc mix*(a, b: Color): Color =
-  ## Mixes two Color colors together using simple avarage.
+  ## Mixes two Color colors together using simple average.
   var c: Color
   c.r = (a.r + b.r) / 2.0
   c.g = (a.g + b.g) / 2.0
   c.b = (a.b + b.b) / 2.0
   c.a = (a.a + b.a) / 2.0
   return c
+
+proc lerp(a, b, v: float32): float32 =
+  a * (1.0 - v) + b * v
+
+proc mix*(a, b: Color, v: float32): Color =
+  ## Mixes two Color colors together using simple lerp.
+  result.r = lerp(a.r, b.r, v)
+  result.g = lerp(a.g, b.g, v)
+  result.b = lerp(a.b, b.b, v)
+  result.a = lerp(a.a, b.a, v)
 
 proc mixCMYK*(colorA, colorB: Color): Color =
   ## Mixes two colors together using CMYK.

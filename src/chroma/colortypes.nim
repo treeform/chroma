@@ -92,4 +92,4 @@ type
   SomeColor* = Color|ColorRGB|ColorRGBA|ColorHSL|ColorHSV|ColorCMY|ColorCMYK |
                ColorYUV|ColorLAB|ColorPolarLAB|ColorLUV|ColorPolarLUV|ColorXYZ
 
-  InvalidColor* = object of Exception
+  InvalidColor* = object of ValueError

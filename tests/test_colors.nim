@@ -1,4 +1,6 @@
-import chroma, chroma/transformations, macros, parsecsv, sequtils, strutils, unittest
+import chroma, chroma/transformations, macros, sequtils, strutils, unittest
+when not defined(js):
+  import parsecsv
 
 let arr = @[
   color(1, 0, 0),
@@ -359,21 +361,22 @@ suite "distance":
   template checkAlmostEqual(x, y: float32, epsilon = 0.0001): untyped =
     check abs(x - y) < epsilon
   test "test vectors":
-    # test vectors taken from: http://www2.ece.rochester.edu/~gsharma/ciede2000/
-    var x: CsvParser
-    x.open("tests/distance_test_vectors.csv")
-    x.readHeaderRow()
-    assert x.headers == @["c1l", "c1a", "c1b", "c2l", "c2a", "c2b", "deltaE00"]
-    var c1, c2: ColorLAB
-    var expectedResult, result: float32
-    while readRow(x):
-      c1 = lab(x.rowEntry("c1l").parseFloat.float32, x.rowEntry(
-          "c1a").parseFloat.float32, x.rowEntry("c1b").parseFloat.float32)
-      c2 = lab(x.rowEntry("c2l").parseFloat.float32, x.rowEntry(
-          "c2a").parseFloat.float32, x.rowEntry("c2b").parseFloat.float32)
-      expectedResult = x.rowEntry("deltaE00").parseFloat.float32
-      result = distance(c1, c2)
-      checkAlmostEqual(expectedResult, result)
+    when not defined(js):
+      # test vectors taken from: http://www2.ece.rochester.edu/~gsharma/ciede2000/
+      var x: CsvParser
+      x.open("tests/distance_test_vectors.csv")
+      x.readHeaderRow()
+      assert x.headers == @["c1l", "c1a", "c1b", "c2l", "c2a", "c2b", "deltaE00"]
+      var c1, c2: ColorLAB
+      var expectedResult, result: float32
+      while readRow(x):
+        c1 = lab(x.rowEntry("c1l").parseFloat.float32, x.rowEntry(
+            "c1a").parseFloat.float32, x.rowEntry("c1b").parseFloat.float32)
+        c2 = lab(x.rowEntry("c2l").parseFloat.float32, x.rowEntry(
+            "c2a").parseFloat.float32, x.rowEntry("c2b").parseFloat.float32)
+        expectedResult = x.rowEntry("deltaE00").parseFloat.float32
+        result = distance(c1, c2)
+        checkAlmostEqual(expectedResult, result)
   test "example usage from color-proximity":
     # color-proximity (ruby gem): https://github.com/gjtorikian/color-proximity
     # depends on color_difference: https://github.com/mmozuras/color_difference/

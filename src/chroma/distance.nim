@@ -5,7 +5,7 @@
 ##   * https://en.wikipedia.org/wiki/Color_difference#CIEDE2000
 ##   * http://www2.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf
 
-import colortypes, math, transformations
+import colortypes, math
 
 const twentyfiveToSeventh = 6103515625.float32 # 25^7
 

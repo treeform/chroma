@@ -1,5 +1,5 @@
 # Package
-version = "0.1.1"
+version = "0.1.2"
 author = "Andre von Houck"
 description = "Everything you want to do with colors"
 license = "MIT"

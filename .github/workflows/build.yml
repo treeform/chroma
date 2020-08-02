@@ -24,3 +24,4 @@ jobs:
     - uses: jiro4989/setup-nim-action@v1.0.2
 
     - run: nimble test -y
+    - run: nim js .\tests\test_colors.nim

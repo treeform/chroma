@@ -1,13 +1,13 @@
 ## Implementation of CIEDE2000 color difference formula
-## 
-## See: 
+##
+## See:
 ##
 ##   * https://en.wikipedia.org/wiki/Color_difference#CIEDE2000
 ##   * http://www2.ece.rochester.edu/~gsharma/ciede2000/ciede2000noteCRNA.pdf
 
 import colortypes, math, transformations
 
-const twentyfiveToSeventh = (25^7).float32
+const twentyfiveToSeventh = 6103515625.float32 # 25^7
 
 proc myAtan(x, y: float32): float32 =
   if x == 0 and y == 0:

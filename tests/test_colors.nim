@@ -347,6 +347,14 @@ suite "functions":
     assert mix(parseHex("FFFFFF"), parseHex("000000")).toHex() == "7F7F7F"
     assert mix(parseHex("FF0000"), parseHex("00FF00")).toHex() == "7F7F00"
 
+    #assert lerp(1, 0, 0.0677) == 0.9322999715805054
+    assert mix(
+      ColorRGB(r: 255, g: 168, b: 85).color,
+      ColorRGB(r: 255, g: 63, b: 63).color,
+      0.06756756454706192
+    ) == color(1.0, 0.6310015916824341, 0.3275039792060852, 1.0)
+
+
 suite "distance":
   template checkAlmostEqual(x, y: float32, epsilon = 0.0001): untyped =
     check abs(x - y) < epsilon

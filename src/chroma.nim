@@ -438,13 +438,13 @@ proc mixCMYK*(colorA, colorB: Color): Color =
   return c.color
 
 proc mix*(a, b: ColorRGB): ColorRGB =
-  ## Mixes two ColorRGB colors together using simple avarage.
+  ## Mixes two ColorRGB colors together using simple average.
   result.r = a.r div 2 + b.r div 2
   result.g = a.g div 2 + b.g div 2
   result.b = a.b div 2 + b.b div 2
 
 proc mix*(a, b: ColorRGBA): ColorRGBA =
-  ## Mixes two ColorRGBA colors together using simple avarage.
+  ## Mixes two ColorRGBA colors together using simple average.
   result.r = a.r div 2 + b.r div 2
   result.g = a.g div 2 + b.g div 2
   result.b = a.b div 2 + b.b div 2

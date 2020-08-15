@@ -437,14 +437,18 @@ proc mixCMYK*(colorA, colorB: Color): Color =
   c.k = (a.k + b.k) / 2
   return c.color
 
+proc mix*(a, b: ColorRGB): ColorRGB =
+  ## Mixes two ColorRGB colors together using simple average.
+  result.r = a.r div 2 + b.r div 2
+  result.g = a.g div 2 + b.g div 2
+  result.b = a.b div 2 + b.b div 2
+
 proc mix*(a, b: ColorRGBA): ColorRGBA =
-  ## Mixes two ColorRGBA colors together using simple avarage.
-  var c: ColorRGBA
-  c.r = a.r div 2 + b.r div 2
-  c.g = a.g div 2 + b.g div 2
-  c.b = a.b div 2 + b.b div 2
-  c.a = a.a div 2 + b.a div 2
-  return c
+  ## Mixes two ColorRGBA colors together using simple average.
+  result.r = a.r div 2 + b.r div 2
+  result.g = a.g div 2 + b.g div 2
+  result.b = a.b div 2 + b.b div 2
+  result.a = a.a div 2 + b.a div 2
 
 func distance*(c1, c2: SomeColor): float32 =
   ## A distance function based on CIEDE2000 color difference formula

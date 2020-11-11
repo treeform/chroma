@@ -149,8 +149,6 @@ proc mix*(blendMode: BlendMode, target, blend: Color): Color =
   if blend.a == 0: return target
   if target.a == 0: return blend
 
-  let finalAlpha = blend.a + target.a * (1.0 - blend.a)
-
   result = case blendMode
   of Normal:       target * (1 - blend.a) + blend * blend.a
   of Darken:       min(target, blend)
@@ -172,5 +170,19 @@ proc mix*(blendMode: BlendMode, target, blend: Color): Color =
   of Color:        min(target, blend)
   of Luminosity:   min(target, blend)
 
-  result.a = 1.0
-  result = result / finalAlpha
+  result.a = (blend.a + target.a * (1.0 - blend.a))
+
+var blendCount*: int
+
+proc mix*(blendMode: BlendMode, target, blend: ColorRGBA): ColorRGBA =
+  if blendMode == Normal:
+    # Fast pass
+    # target * (1 - blend.a) + blend * blend.a
+    if target.a == 0: return blend
+    result.r = ((target.r.uint16 * (255 - blend.a.uint16) + blend.r.uint16 * blend.a.uint16) div 255).uint8
+    result.g = ((target.g.uint16 * (255 - blend.a.uint16) + blend.g.uint16 * blend.a.uint16) div 255).uint8
+    result.b = ((target.b.uint16 * (255 - blend.a.uint16) + blend.b.uint16 * blend.a.uint16) div 255).uint8
+    result.a = (blend.a.uint16 + (target.a.uint16 * (255 - blend.a.uint16)) div 255).uint8
+    inc blendCount
+  else:
+    return blendMode.mix(target.color, blend.color).rgba

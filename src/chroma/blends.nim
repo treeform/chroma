@@ -20,6 +20,8 @@ type BlendMode* = enum
   Saturation
   Color
   Luminosity
+  Mask  ## Special blend mode that is used for masking
+  Copy  ## Special that does not blend but copies the pixels from target.
 
 
 proc parseBlendMode*(s: string): BlendMode =
@@ -42,6 +44,8 @@ proc parseBlendMode*(s: string): BlendMode =
     of "SATURATION": Saturation
     of "COLOR": Color
     of "LUMINOSITY": Luminosity
+    of "MASK": Mask
+    of "COPY": Copy
     else: Normal
 
 proc min*(target, blend: Color): Color =
@@ -107,12 +111,6 @@ proc `/`*(target: Color, v: float32): Color =
   result.b = target.b / v
   result.a = target.a / v
 
-# converter floatToColor(v: float32): Color =
-#   result.r = v
-#   result.g = v
-#   result.b = v
-#   result.a = v
-
 proc `-`*(v: float32, color: Color): Color =
   result.r = v - color.r
   result.g = v - color.g
@@ -137,14 +135,16 @@ proc `<=`*(color: Color, v: float32): Color =
   result.b = if color.b <= v: 1.0 else: 0.0
   result.a = if color.a <= v: 1.0 else: 0.0
 
-# proc normal(target, blend: Color): Color =
-#   let a = blend.a
-#   result.r = target.r * (1-a) + blend.r * a
-#   result.g = target.g * (1-a) + blend.g * a
-#   result.b = target.b * (1-a) + blend.b * a
-#   result.a = max(target.a, blend.a)
-
 proc mix*(blendMode: BlendMode, target, blend: Color): Color =
+
+  if blendMode == Mask:
+    result.r = target.r
+    result.g = target.g
+    result.b = target.b
+    result.a = min(target.a, blend.a)
+    return
+  elif blendMode == Copy:
+    result = target
 
   if blend.a == 0: return target
   if target.a == 0: return blend
@@ -170,12 +170,17 @@ proc mix*(blendMode: BlendMode, target, blend: Color): Color =
   of Color:        min(target, blend)
   of Luminosity:   min(target, blend)
 
+  of Mask:         target
+  of Copy:         target
+
   result.a = (blend.a + target.a * (1.0 - blend.a))
 
 var blendCount*: int
 
 proc mix*(blendMode: BlendMode, target, blend: ColorRGBA): ColorRGBA =
   if blendMode == Normal:
+    # Fast pass
+    # target * (1 - blend.a) + blend * blend.a
     if target.a == 0: return blend
     let blendAComp = 255 - blend.a
     result.r = ((target.r.uint16 * blendAComp + blend.r.uint16 * blend.a) div 255).uint8
@@ -183,5 +188,12 @@ proc mix*(blendMode: BlendMode, target, blend: ColorRGBA): ColorRGBA =
     result.b = ((target.b.uint16 * blendAComp + blend.b.uint16 * blend.a) div 255).uint8
     result.a = (blend.a.uint16 + (target.a.uint16 * blendAComp) div 255).uint8
     inc blendCount
+  elif blendMode == Mask:
+    result.r = target.r
+    result.g = target.g
+    result.b = target.b
+    result.a = min(target.a, blend.a)
+  elif blendMode == COPY:
+    result = target
   else:
     return blendMode.mix(target.color, blend.color).rgba

@@ -176,13 +176,12 @@ var blendCount*: int
 
 proc mix*(blendMode: BlendMode, target, blend: ColorRGBA): ColorRGBA =
   if blendMode == Normal:
-    # Fast pass
-    # target * (1 - blend.a) + blend * blend.a
     if target.a == 0: return blend
-    result.r = ((target.r.uint16 * (255 - blend.a.uint16) + blend.r.uint16 * blend.a.uint16) div 255).uint8
-    result.g = ((target.g.uint16 * (255 - blend.a.uint16) + blend.g.uint16 * blend.a.uint16) div 255).uint8
-    result.b = ((target.b.uint16 * (255 - blend.a.uint16) + blend.b.uint16 * blend.a.uint16) div 255).uint8
-    result.a = (blend.a.uint16 + (target.a.uint16 * (255 - blend.a.uint16)) div 255).uint8
+    let blendAComp = 255 - blend.a
+    result.r = ((target.r.uint16 * blendAComp + blend.r.uint16 * blend.a) div 255).uint8
+    result.g = ((target.g.uint16 * blendAComp + blend.g.uint16 * blend.a) div 255).uint8
+    result.b = ((target.b.uint16 * blendAComp + blend.b.uint16 * blend.a) div 255).uint8
+    result.a = (blend.a.uint16 + (target.a.uint16 * blendAComp) div 255).uint8
     inc blendCount
   else:
     return blendMode.mix(target.color, blend.color).rgba

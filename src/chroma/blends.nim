@@ -1,5 +1,5 @@
 ## Blending modes.
-import chroma, math
+import chroma, math, algorithm
 
 type BlendMode* = enum
   Normal
@@ -213,16 +213,32 @@ proc mix2*(blendMode: BlendMode, target, blend: Color): Color =
     if Cs <= 0.5: multiply(Cb, 2 * Cs)
     else: screen(Cb, 2 * Cs - 1)
 
-  proc softLight(Cb, Cs: float32): float32 =
-    proc D(cb: float32): float32 =
-      if Cb <= 0.25:
-        ((16 * Cb - 12) * Cb + 4) * Cb
-      else:
-        sqrt(Cb)
-    if Cs <= 0.5:
-      return Cb - (1 - 2 * Cs) * Cb * (1 - Cb)
-    else:
-      return Cb + (2 * Cs - 1) * (D(Cb) - Cb)
+  # proc softLight(Cb, Cs: float32): float32 =
+  #   ## W3C
+  #   proc D(cb: float32): float32 =
+  #     if Cb <= 0.25:
+  #       ((16 * Cb - 12) * Cb + 4) * Cb
+  #     else:
+  #       sqrt(Cb)
+  #   if Cs <= 0.5:
+  #     return Cb - (1 - 2 * Cs) * Cb * (1 - Cb)
+  #   else:
+  #     return Cb + (2 * Cs - 1) * (D(Cb) - Cb)
+
+  # proc softLight(a, b: float32): float32 =
+  #   ## Photoshop
+  #   if b < 0.5:
+  #     2 * a * b + a ^ 2 * (1 - 2 * b)
+  #   else:
+  #     2 * a * (1 - b) + sqrt(a) * (2 * b - 1)
+
+  proc softLight(a, b: float32): float32 =
+    ## Pegtop
+    (1 - 2 * b) * a ^ 2 + 2 * b * a
+
+  # proc softLight(a, b: float32): float32 =
+  #   ## Illusions.hu
+  #   pow(a, pow(2, (2 * (0.5 - b))))
 
   proc Lum(C: Color): float32 =
     0.3 * C.r + 0.59 * C.g + 0.11 * C.b
@@ -251,18 +267,42 @@ proc mix2*(blendMode: BlendMode, target, blend: Color): Color =
   proc Sat(C: Color): float32 =
     max([C.r, C.g, C.b]) - min([C.r, C.g, C.b])
 
-  # proc SetSat(C: Color, s: float32): Color =
-  #   let
-  #     Cmax = max([C.r, C.g, C.b])
-  #     Cmin = min([C.r, C.g, C.b])
-  #   if Cmax > Cmin:
-  #     let
-  #       Cmid = (((Cmid - Cmin) x s) / (Cmax - Cmin))
-  #       Cmax = s
-  #   else
-  #       Cmid = Cmax = 0
-  #   Cmin = 0
-  #   return C
+  proc SetSat(C: Color, s: float32): Color =
+    var arr = [(C.r, 0), (C.g, 1), (C.b, 2)]
+    arr.sort()
+    var
+      Cmin = arr[0][0]
+      Cmid = arr[1][0]
+      Cmax = arr[2][0]
+    if Cmax > Cmin:
+      Cmid = (((Cmid - Cmin) * s) / (Cmax - Cmin))
+      Cmax = s
+    else:
+      Cmid = 0
+      Cmax = 0
+    Cmin = 0
+
+    if arr[0][1] == 0:
+      result.r = Cmin
+    if arr[1][1] == 0:
+      result.r = Cmid
+    if arr[2][1] == 0:
+      result.r = Cmax
+
+    if arr[0][1] == 1:
+      result.g = Cmin
+    if arr[1][1] == 1:
+      result.g = Cmid
+    if arr[2][1] == 1:
+      result.g = Cmax
+
+    if arr[0][1] == 2:
+      result.b = Cmin
+    if arr[1][1] == 2:
+      result.b = Cmid
+    if arr[2][1] == 2:
+      result.b = Cmax
+
 
   proc blendChannel(blendMode: BlendMode, Cb, Cs: float32): float32 =
     result = case blendMode
@@ -298,9 +338,11 @@ proc mix2*(blendMode: BlendMode, target, blend: Color): Color =
     mixed = SetLum(Cb, Lum(Cs))
     #mixed = hsl(Cs.hsl.h, Cs.hsl.s, Cb.hsl.l).color
   elif blendMode == Hue:
-    mixed = hsl(Cs.hsl.h, Cb.hsl.s, Cb.hsl.l).color
+    mixed = SetLum(SetSat(Cs, Sat(Cb)), Lum(Cb))
+    #mixed = hsl(Cs.hsl.h, Cb.hsl.s, Cb.hsl.l).color
   elif blendMode == Saturation:
-    mixed = hsl(Cb.hsl.h, Cs.hsl.s, Cb.hsl.l).color
+    mixed = SetLum(SetSat(Cb, Sat(Cs)), Lum(Cb))
+    #mixed = hsl(Cb.hsl.h, Cs.hsl.s, Cb.hsl.l).color
   else:
     mixed.r = blendMode.blendChannel(Cb.r, Cs.r)
     mixed.g = blendMode.blendChannel(Cb.g, Cs.g)

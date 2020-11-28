@@ -1,4 +1,5 @@
 import chroma, chroma/transformations, macros, sequtils, strutils, unittest
+
 when not defined(js):
   import parsecsv
 
@@ -281,7 +282,6 @@ suite "functions":
       ColorRGB(r: 255, g: 63, b: 63).color,
       0.06756756454706192
     ) == color(1.0, 0.6310015916824341, 0.3275039792060852, 1.0)
-
 
 suite "distance":
   template checkAlmostEqual(x, y: float32, epsilon = 0.0001): untyped =

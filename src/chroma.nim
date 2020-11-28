@@ -2,12 +2,12 @@
 ## **Everything you want to do with colors.**
 ##
 
-import chroma/colortypes, chroma/distance, chroma/names, chroma/transformations, hashes, macros,
-    strutils, tables
+import chroma/colortypes, chroma/distance, chroma/names, chroma/transformations,
+    hashes, strutils, tables
 
 # utility functions
 
-export colortypes, distance, transformations.color
+export colortypes, distance, transformations
 
 proc toHex(a: float32): string = toHex(int(a))
 
@@ -263,114 +263,6 @@ proc parseHtmlColor*(colorText: string): Color =
   else:
     return parseHtmlName(text)
 
-proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T =
-  ## Allows conversion of transformation of a color in any
-  ## colorspace into any other colorspace.
-  when toColor is Color:
-    result = c.asRGB
-  elif toColor is ColorRGB:
-    result = c.asRGB_type
-  elif toColor is ColorRGBA:
-    result = c.asRGBA
-  elif toColor is ColorHSL:
-    result = c.asHSL
-  elif toColor is ColorHSV:
-    result = c.asHSV
-  elif toColor is ColorYUV:
-    result = c.asYUV
-  elif toColor is ColorCMY:
-    result = c.asCMY
-  elif toColor is ColorCMYK:
-    result = c.asCMYK
-  elif toColor is ColorXYZ:
-    result = c.asXYZ
-  elif toColor is ColorLAB:
-    result = c.asLAB
-  elif toColor is ColorPolarLAB:
-    result = c.asPolarLab
-  elif toColor is ColorLUV:
-    result = c.asLUV
-  elif toColor is ColorPolarLUV | ColorHCL:
-    result = c.asPolarLUV
-
-proc genColorFromFieldsProc(spaceName, typeName: NimNode): NimNode =
-  ## this generates a proc to create a Color<ColorSpace> object from the fields
-  ## directly, without requiring to define a `Color` object beforehand.
-  let dtype = typeName.getTypeImpl
-  var fieldsTypes = newSeq[(NimNode, NimNode)]()
-  for field in dtype[2]: # RecList
-    fieldsTypes.add (ident(field[0].strVal), ident(field[1].strVal))
-  # given fields and types generate both argument list as well as
-  # type creation
-  var obj = nnkObjConstr.newTree(ident(typeName.strVal))
-  var params = nnkFormalParams.newTree(ident(typeName.strVal))
-  for (field, dtype) in fieldsTypes:
-    params.add nnkIdentDefs.newTree(field, dtype, newEmptyNode())
-    # argument variables are named after the fields, thus field: field
-    obj.add nnkExprColonExpr.newTree(field, field)
-  let resIdent = ident"result"
-  let body = quote do:
-    `resIdent` = `obj`
-  result = nnkProcDef.newTree(nnkPostFix.newTree(ident"*", spaceName),
-                              newEmptyNode(),
-                              newEmptyNode(),
-                              params,
-                              newEmptyNode(),
-                              newEmptyNode(),
-                              body)
-
-proc generateColorProcs(typeName: NimNode): NimNode =
-  ## Generates the convenience procs from a given `typeName` that is
-  ## part of `SomeColor`.
-  ## One proc to convert from `Color` to `typeName`:
-  ##
-  ## `proc <colorSpaceName>(c: Color): Color<ColorSpaceName>`
-  ## e.g.
-  ##
-  ## `proc hsl(c: Color): ColorHSL`
-  ## the inverse:
-  ##
-  ## `proc color(c: Color<ColorSpaceName>): Color`
-  ## e.g.
-  ##
-  ## `proc color(c: ColorHSL): Color`
-  ## where `<ColorSpaceName>` refers to the latter part of the `typeName`,
-  ## e.g. `HSL` for `ColorHSL`.
-  ## and lastly a proc to generate a color from the fields:
-  ##
-  ## `proc <colorSpaceName>(<fieldName1>: <fieldType, ...): Color<ColorSpaceName>`
-  ## e.g.
-  ##
-  ## `proc hsl(h: float32, s: float32, l: float32): ColorHSL`
-  let typeId = ident(typeName.strVal)
-  # remove the `Color` prefix and convert to lower ascii
-  let spaceName = ident(typeName.strVal.replace("Color", "").toLowerAscii)
-  let argName = ident"c"
-
-  result = quote do:
-    # generate the procs using the `to` proc
-    proc color*(`argName`: `typeId`): Color = `argName`.to(Color)
-    proc `spaceName`*(`argName`: Color): `typeId` = `argName`.to(`typeId`)
-  # finally add a proc to generate a color of a specific space directly from the
-  # fields
-  result.add genColorFromFieldsProc(spaceName, typeName)
-
-macro generateConvenienceProcs(): untyped =
-  ## Generates all convenience procs to convert from and to Color to
-  ## any other colorspace, e.g. `hsl`, `hsv`, `rgb` and the inverse
-  ## `color` procs.
-  let types = getType(SomeColor)
-  result = newStmtList()
-  for t in types:
-    # work on all types, which are more than `Color` and skip the `or` node
-    if "Color" in t.strVal and t.strVal != "Color":
-      let p1 = generateColorProcs(t)
-      result.add p1
-generateConvenienceProcs()
-# add an alias for polarLUV, since `hcl` may be more well known
-proc hcl*(c: Color): ColorHCL = polarLUV(c)
-proc hcl*(h, c, l: float32): ColorHCL = ColorHCL(h: h, c: c, l: l)
-
 # Color Functions
 
 proc lighten*(color: Color, amount: float32): Color =
@@ -452,4 +344,4 @@ proc mix*(a, b: ColorRGBA): ColorRGBA =
 
 func distance*(c1, c2: SomeColor): float32 =
   ## A distance function based on CIEDE2000 color difference formula
-  deltaE00(c1.asLAB, c2.asLAB)
+  deltaE00(c1.to(ColorLAB), c2.to(ColorLAB))

@@ -1,22 +1,3 @@
-## This file contains the "low level" transformations between different
-## color spaces. The transformations to be used by the user are defined
-## in `chroma.nim`.
-
-## The lowest procs are the simple `*_to_*` procs. They are called
-## by the `as*` procs for a more unified interface. The user facing
-## proc `to` is defined in `chroma.nim` and makes use of the `as*` procs.
-
-## Note, that the term `RGB` as used in the `*_to_*` procs refers to the
-## main color object `Color`, not the explicit `ColorRGB` using `uint8` to
-## represent the values!
-
-## For the simple of `RGB_to_XXX`, a proc named `xxx` is defined in
-## chroma.nim of signature
-## `proc xxx(c: Color): ColorXXX`
-## and a `color` proc for the inverse transformation:
-## `proc color(c: ColorXXX): Color`.
-## However, for some colorspaces those transformations are not implemneted,
-## a transformation via some other colorspace is necessary.
 
 ## The code for the transformations of
 ## - LAB
@@ -32,78 +13,37 @@
 
 import colortypes, math
 
-################################################################################
-###                          Code from chroma.nim                            ###
-################################################################################
-
-proc min3(a, b, c: float32): float32 = min(a, min(b, c))
-proc max3(a, b, c: float32): float32 = max(a, max(b, c))
-
-func fixupColor[T: int | float32](r, g, b: var T): bool =
-  ## performs a fixup of the given r, g, b values and returnes whether
-  ## any of the values was modified.
-  ## This func works on integers or floats. It is only used within the
-  ## conversion of `Color -> ColorHCL` (on integers) and `ColorHCL -> Color`
-  ## (on floats).
-  template fixC(c: untyped): untyped =
-    if c < T(0):
-      c = T(0)
-      result = true
-    when T is int:
-      if c > 255:
-        c = 255
-        result = true
-    else:
-      if c > 1.0:
-        c = 1.0
-        result = true
-  fixC(r)
-  fixC(g)
-  fixC(b)
-# overload working on `var Color`. It's `discardable`, because in our usage
-# here we do not really care whether a value was modified.
-func fixupColor(c: var Color): bool {.discardable.} = fixupColor(c.r, c.g, c.b)
-
-proc color*(r, g, b, a = 1.0): Color =
-  ## Creates from floats like:
-  ## * color(1,0,0) -> red
-  ## * color(0,1,0) -> green
-  ## * color(0,0,1) -> blue
-  ## * color(0,0,0,1) -> opaque  black
-  ## * color(0,0,0,0) -> transparent black
-  result.r = r
-  result.g = g
-  result.b = b
-  result.a = a
-
-proc RGB_to_RGB_type*(c: Color): ColorRGB =
+proc rgb*(c: Color): ColorRGB {.inline.} =
   ## Convert Color to ColorRGB
   result.r = uint8(c.r * 255)
   result.g = uint8(c.g * 255)
   result.b = uint8(c.b * 255)
 
-proc RGB_type_to_RGB*(c: ColorRGB): Color =
+proc color*(c: ColorRGB): Color {.inline.} =
   ## Convert ColorRGB to Color
   result.r = float32(c.r) / 255
   result.g = float32(c.g) / 255
   result.b = float32(c.b) / 255
   result.a = 1.0
 
-proc RGB_to_RGBA*(c: Color): ColorRGBA =
+proc rgba*(c: Color): ColorRGBA {.inline.} =
   ## Convert Color to ColorRGBA
   result.r = uint8(c.r * 255)
   result.g = uint8(c.g * 255)
   result.b = uint8(c.b * 255)
   result.a = uint8(c.a * 255)
 
-proc RGBA_to_RGB*(c: ColorRGBA): Color =
+proc color*(c: ColorRGBA): Color {.inline.} =
   ## Convert ColorRGBA to Color
   result.r = float32(c.r) / 255
   result.g = float32(c.g) / 255
   result.b = float32(c.b) / 255
   result.a = float32(c.a) / 255
 
-proc RGB_to_HSL*(c: Color): ColorHSL =
+proc min3(a, b, c: float32): float32 {.inline.} = min(a, min(b, c))
+proc max3(a, b, c: float32): float32 {.inline.} = max(a, max(b, c))
+
+proc hsl*(c: Color): ColorHSL =
   ## convert Color to ColorHSL
   let
     min = min3(c.r, c.g, c.b)
@@ -134,7 +74,33 @@ proc RGB_to_HSL*(c: Color): ColorHSL =
   result.s *= 100
   result.l *= 100
 
-proc HSL_to_RGB*(c: ColorHSL): Color =
+func fixupColor[T: int | float32](r, g, b: var T): bool =
+  ## performs a fixup of the given r, g, b values and returnes whether
+  ## any of the values was modified.
+  ## This func works on integers or floats. It is only used within the
+  ## conversion of `Color -> ColorHCL` (on integers) and `ColorHCL -> Color`
+  ## (on floats).
+  template fixC(c: untyped): untyped =
+    if c < T(0):
+      c = T(0)
+      result = true
+    when T is int:
+      if c > 255:
+        c = 255
+        true
+    else:
+      if c > 1.0:
+        c = 1.0
+        result = true
+  fixC(r)
+  fixC(g)
+  fixC(b)
+# overload working on `var Color`. It's `discardable`, because in our usage
+# here we do not really care whether a value was modified.
+func fixupColor(c: var Color): bool {.discardable.} =
+  fixupColor(c.r, c.g, c.b)
+
+proc color*(c: ColorHSL): Color =
   ## convert ColorHSL to Color
   let
     h = c.h / 360
@@ -175,7 +141,7 @@ proc HSL_to_RGB*(c: ColorHSL): Color =
   fixupColor(result)
   result
 
-proc RGB_to_HSV*(c: Color): ColorHSV =
+proc hsv*(c: Color): ColorHSV =
   ## convert Color to ColorHSV
   let
     min = min3(c.r, c.g, c.b)
@@ -202,7 +168,7 @@ proc RGB_to_HSV*(c: Color): ColorHSV =
 
   result.v = max * 100
 
-proc HSV_to_RGB*(c: ColorHSV): Color =
+proc color*(c: ColorHSV): Color =
   ## convert ColorHSV to Color
   let
     h = c.h / 60
@@ -229,13 +195,13 @@ proc HSV_to_RGB*(c: ColorHSV): Color =
   result.a = 1.0
   result.fixupColor
 
-proc RGB_to_YUV*(c: Color): ColorYUV =
+proc yuv*(c: Color): ColorYUV {.inline.} =
   ## convert Color to ColorYUV
   result.y = (c.r * 0.299) + (c.g * 0.587) + (c.b * 0.114)
   result.u = (c.r * -0.14713) + (c.g * -0.28886) + (c.b * 0.436)
   result.v = (c.r * 0.615) + (c.g * -0.51499) + (c.b * -0.10001)
 
-proc YUV_to_RGB*(c: ColorYUV): Color =
+proc color*(c: ColorYUV): Color {.inline.} =
   ## convert ColorYUV to Color
   result.r = (c.y * 1) + (c.u * 0) + (c.v * 1.13983)
   result.g = (c.y * 1) + (c.u * -0.39465) + (c.v * -0.58060)
@@ -246,20 +212,20 @@ proc YUV_to_RGB*(c: ColorYUV): Color =
   result.b = clamp(result.b, 0, 1)
   result.a = 1.0
 
-proc RGB_to_CMY*(c: Color): ColorCMY =
+proc cmy*(c: Color): ColorCMY {.inline.} =
   ## convert Color to ColorCMY
   result.c = (1 - c.r) * 100.0
   result.m = (1 - c.g) * 100.0
   result.y = (1 - c.b) * 100.0
 
-proc CMY_to_RGB*(c: ColorCMY): Color =
+proc color*(c: ColorCMY): Color {.inline.} =
   ## convert ColorCMY to Color
   result.r = 1 - c.c / 100.0
   result.g = 1 - c.m / 100.0
   result.b = 1 - c.y / 100.0
   result.a = 1.0
 
-proc RGB_to_CMYK*(c: Color): ColorCMYK =
+proc cmyk*(c: Color): ColorCMYK {.inline.} =
   ## convert Color to ColorCMYK
   let k = min3(1 - c.r, 1 - c.g, 1 - c.b)
   result.k = k * 100.0
@@ -268,7 +234,7 @@ proc RGB_to_CMYK*(c: Color): ColorCMYK =
     result.m = (1 - c.g - k) / (1 - k) * 100.0
     result.y = (1 - c.b - k) / (1 - k) * 100.0
 
-proc CMYK_to_RGB*(color: ColorCMYK): Color =
+proc color*(color: ColorCMYK): Color {.inline.} =
   ## convert ColorCMYK to Color
   let
     k = color.k / 100.0
@@ -327,21 +293,21 @@ const
 ##
 ##
 
-proc ftrans(u, gamma: float32): float32 =
+proc ftrans(u, gamma: float32): float32 {.inline.} =
   if u > 0.03928:
-    result = pow((u + 0.055) / 1.055, gamma)
+    pow((u + 0.055) / 1.055, gamma)
   else:
-    result = u / 12.92
+    u / 12.92
 
-func gtrans(u: float32): float32 =
+func gtrans(u: float32): float32 {.inline.} =
   # Standard CRT Gamma
   const GAMMA = 2.4
   if u > 0.00304:
-    result = 1.055 * pow(u, (1.0 / GAMMA)) - 0.055
+    1.055 * pow(u, (1.0 / GAMMA)) - 0.055
   else:
-    result = 12.92 * u
+    12.92 * u
 
-func RGB_to_XYZ*(c: Color): ColorXYZ =
+func xyz*(c: Color): ColorXYZ {.inline.} =
   let
     r = ftrans(c.r, 2.4)
     g = ftrans(c.g, 2.4)
@@ -350,23 +316,23 @@ func RGB_to_XYZ*(c: Color): ColorXYZ =
   result.y = WhiteY * (0.212671 * r + 0.71516 * g + 0.072169 * b)
   result.z = WhiteY * (0.019334 * r + 0.119193 * g + 0.950227 * b)
 
-proc XYZ_to_RGB*(c: ColorXYZ): Color =
+proc color*(c: ColorXYZ): Color {.inline.} =
   result.r = gtrans((3.240479 * c.x - 1.53715 * c.y - 0.498535 * c.z) / WhiteY)
   result.g = gtrans((-(0.969256 * c.x) + 1.875992 * c.y + 0.041556 * c.z) / WhiteY)
   result.b = gtrans((0.055648 * c.x - 0.204043 * c.y + 1.057311 * c.z) / WhiteY)
   result.fixupColor
   result.a = 1.0
 
-const kappa*: cdouble = 24389.0 / 27.0
+const kappa*: float32 = 24389.0 / 27.0
 
 ##  Often approximated as 0.08856
 
-const epsilon*: cdouble = 216.0 / 24389.0
+const epsilon*: float32 = 216.0 / 24389.0
 
 ##  Also, instead of the oft-used approximation 7.787, below uses
 ##    (kappa / 116)
 
-proc LAB_to_XYZ*(c: ColorLAB): ColorXYZ =
+proc xyz*(c: ColorLAB): ColorXYZ =
   var
     fx: float
     fy: float
@@ -394,13 +360,13 @@ proc LAB_to_XYZ*(c: ColorLAB): ColorXYZ =
   else:
     result.z = WhiteZ * pow(fz, 3.0)
 
-proc f*(t: float): float =
-  result = if t > epsilon:
-             pow(t, 1.0 / 3.0)
-           else:
-             (kappa / 116.0) * t + 16.0 / 116.0
+proc f*(t: float): float {.inline.} =
+  if t > epsilon:
+    pow(t, 1.0 / 3.0)
+  else:
+    (kappa / 116.0) * t + 16.0 / 116.0
 
-proc XYZ_to_LAB*(c: ColorXYZ): ColorLAB =
+proc lab*(c: ColorXYZ): ColorLAB =
   var
     xr: float
     yr: float
@@ -421,7 +387,7 @@ proc XYZ_to_LAB*(c: ColorXYZ): ColorLAB =
   result.a = 500.0 * (xt - yt)
   result.b = 200.0 * (yt - zt)
 
-proc LAB_to_polarLAB*(c: ColorLAB): ColorPolarLAB =
+proc polarLAB*(c: ColorLAB): ColorPolarLAB =
   var vH: float
   vH = radToDeg(arctan2(c.b, c.a))
   while vH > 360.0:
@@ -432,12 +398,12 @@ proc LAB_to_polarLAB*(c: ColorLAB): ColorPolarLAB =
   result.c = sqrt(c.a * c.a + c.b * c.b)
   result.h = vH
 
-proc polarLAB_to_LAB*(c: ColorPolarLab): ColorLAB =
+proc lab*(c: ColorPolarLab): ColorLAB {.inline.} =
   result.l = c.l
   result.a = cos(degToRad(c.h)) * c.c
   result.b = sin(degToRad(c.h)) * c.c
 
-proc XYZ_to_uv*(c: ColorXYZ): tuple[u, v: float32] =
+proc uv*(c: ColorXYZ): tuple[u, v: float32] =
   var
     t: float
     x: float
@@ -452,21 +418,21 @@ proc XYZ_to_uv*(c: ColorXYZ): tuple[u, v: float32] =
   result.u = 2.0 * x / (6.0 * y - x + 1.5)
   result.v = 4.5 * y / (6.0 * y - x + 1.5)
 
-proc XYZ_to_LUV*(c: ColorXYZ): ColorLUV =
+proc luv*(c: ColorXYZ): ColorLUV =
   var
     u: float
     v: float
     uN: float
     vN: float
     y: float
-  (u, v) = XYZ_to_uv(c)
-  (uN, vN) = XYZ_to_uv(ColorXYZ(x: WhiteX, y: WhiteY, z: WhiteZ))
+  (u, v) = uv(c)
+  (uN, vN) = uv(ColorXYZ(x: WhiteX, y: WhiteY, z: WhiteZ))
   y = c.y / WhiteY
   result.l = if (y > epsilon): 116.0 * pow(y, 1.0 / 3.0) - 16.0 else: kappa * y
   result.u = 13.0 * result.l * (u - uN)
   result.v = 13.0 * result.l * (v - vN)
 
-proc LUV_to_XYZ*(c: ColorLUV): ColorXYZ =
+proc xyz*(c: ColorLUV): ColorXYZ =
   var
     u: float
     v: float
@@ -482,7 +448,7 @@ proc LUV_to_XYZ*(c: ColorLUV): ColorXYZ =
       result.y = WhiteY * pow((c.l + 16.0) / 116.0, 3.0)
     else:
       result.y = WhiteY * c.l / kappa
-    (uN, vN) = XYZ_to_uv(ColorXYZ(x: WhiteX, y: WhiteY, z: WhiteZ))
+    (uN, vN) = uv(ColorXYZ(x: WhiteX, y: WhiteY, z: WhiteZ))
     ##  Avoid division by zero if L = 0
     if c.l == 0.0:
       u = uN
@@ -493,7 +459,7 @@ proc LUV_to_XYZ*(c: ColorLUV): ColorXYZ =
     result.x = 9.0 * result.y * u / (4.0 * v)
     result.z = -result.x / 3.0 - 5.0 * result.y + 3.0 * result.y / v
 
-proc LUV_to_polarLUV*(c: ColorLUV): ColorPolarLUV =
+proc polarLUV*(c: ColorLUV): ColorPolarLUV =
   result.l = c.l
   result.c = sqrt(c.u * c.u + c.v * c.v)
   result.h = radToDeg(arctan2(c.v, c.u))
@@ -502,142 +468,82 @@ proc LUV_to_polarLUV*(c: ColorLUV): ColorPolarLUV =
   while result.h < 0.0:
     result.h = result.h + 360.0
 
-proc polarLUV_to_LUV*(c: ColorPolarLUV): ColorLUV =
+proc luv*(c: ColorPolarLUV): ColorLUV {.inline.} =
   let hrad = degToRad(c.h)
   result.l = c.l
   result.u = c.c * cos(hrad)
   result.v = c.c * sin(hrad)
 
-################################################################################
-###                  End of ported code from colorspaces                     ###
-################################################################################
+proc lab*(c: Color): ColorLAB {.inline.} =
+  c.xyz.lab
 
-proc asRGB*[T: SomeColor](c: T): Color =
-  when T is Color:
-    result = c
-  elif T is ColorRGB:
-    result = c.RGB_type_to_RGB
-  elif T is ColorRGBA:
-    result = c.RGBA_to_RGB
-  elif T is ColorHSL:
-    result = c.HSL_to_RGB
-  elif T is ColorHSV:
-    result = c.HSV_to_RGB
-  elif T is ColorYUV:
-    result = c.YUV_to_RGB
-  elif T is ColorCMYK:
-    result = c.CMYK_to_RGB
-  elif T is ColorCMY:
-    result = c.CMY_to_RGB
-  elif T is ColorXYZ:
-    result = c.XYZ_to_RGB
-  else:
-    result = c.asXYZ.XYZ_to_RGB
+proc color*(c: ColorLab): Color {.inline.} =
+  c.xyz.color
 
-proc asRGB_type*[T: SomeColor](c: T): ColorRGB =
-  when T is Color:
-    result = c.RGB_to_RGB_type
-  elif T is ColorRGB:
-    result = c
-  else:
-    result = c.asRGB.RGB_to_RGB_type
+proc polarLAB*(c: Color): ColorPolarLAB {.inline.} =
+  c.lab.polarLAB
 
-proc asRGBA*[T: SomeColor](c: T): ColorRGBA =
-  when T is Color:
-    result = c.RGB_to_RGBA
-  elif T is ColorRGBA:
-    result = c
-  else:
-    result = c.asRGB.RGB_to_RGBA
+proc color*(c: ColorPolarLAB): Color {.inline.} =
+  c.lab.color
 
-proc asHSL*[T: SomeColor](c: T): ColorHSL =
-  when T is Color:
-    result = c.RGB_to_HSL
-  elif T is ColorHSL:
-    result = c
-  else:
-    result = c.asRGB.RGB_to_HSL
+proc luv*(c: Color): ColorLUV {.inline.} =
+  c.xyz.luv
 
-proc asHSV*[T: SomeColor](c: T): ColorHSV =
-  when T is Color:
-    result = c.RGB_to_HSV
-  elif T is ColorHSV:
-    result = c
-  else:
-    result = c.asRGB.RGB_to_HSV
+proc color*(c: ColorLUV): Color {.inline.} =
+  c.xyz.color
 
-proc asYUV*[T: SomeColor](c: T): ColorYUV =
-  when T is Color:
-    result = c.RGB_to_YUV
-  elif T is ColorYUV:
-    result = c
-  else:
-    result = c.asRGB.RGB_to_YUV
+proc polarLUV*(c: Color): ColorPolarLUV {.inline.} =
+  c.luv.polarLUV
 
-proc asCMYK*[T: SomeColor](c: T): ColorCMYK =
-  when T is Color:
-    result = c.RGB_to_CMYK
-  elif T is ColorCMYK:
-    result = c
-  else:
-    result = c.asRGB.RGB_to_CMYK
+proc color*(c: ColorPolarLUV): Color {.inline.} =
+  c.luv.color
 
-proc asCMY*[T: SomeColor](c: T): ColorCMY =
-  when T is Color:
-    result = c.RGB_to_CMY
-  elif T is ColorCMY:
-    result = c
-  else:
-    result = c.asRGB.RGB_to_CMY
+proc color*(c: Color): Color {.inline.} =
+  c
 
-proc asXYZ*[T: SomeColor](c: T): ColorXYZ =
-  when T is Color:
-    result = c.RGB_to_XYZ
-  elif T is ColorXYZ:
-    result = c
-  elif T is ColorLAB:
-    result = c.LAB_to_XYZ
-  elif T is ColorPolarLAB:
-    result = c.asLAB.LAB_to_XYZ
-  elif T is ColorLUV:
-    result = c.LUV_to_XYZ
-  elif T is ColorPolarLUV:
-    result = c.asLUV.LUV_to_XYZ
+proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T {.inline.} =
+  ## Allows conversion of transformation of a color in any
+  ## colorspace into any other colorspace.
+  when type(c) is T:
+    c
   else:
-    result = c.asRGB.RGB_to_XYZ
+    when toColor is Color:
+      c.color
+    elif toColor is ColorRGB:
+      c.color.rgb
+    elif toColor is ColorRGBA:
+      c.color.rgba
+    elif toColor is ColorHSL:
+      c.color.hsl
+    elif toColor is ColorHSV:
+      c.color.hsv
+    elif toColor is ColorYUV:
+      c.color.yuv
+    elif toColor is ColorCMY:
+      c.color.cmy
+    elif toColor is ColorCMYK:
+      c.color.cmyk
+    elif toColor is ColorXYZ:
+      c.color.xyz
+    elif toColor is ColorLAB:
+      c.color.lab
+    elif toColor is ColorPolarLAB:
+      c.color.polarLab
+    elif toColor is ColorLUV:
+      c.color.luv
+    elif toColor is ColorPolarLUV:
+      c.color.polarLuv
 
-proc asLAB*[T: SomeColor](c: T): ColorLAB =
-  when T is ColorXYZ:
-    result = c.XYZ_to_LAB
-  elif T is ColorLAB:
-    result = c
-  elif T is ColorPolarLAB:
-    result = c.polarLAB_to_LAB
-  else:
-    result = c.asXYZ.XYZ_to_LAB
-
-proc asPolarLAB*[T: SomeColor](c: T): ColorPolarLAB =
-  when T is ColorLab:
-    result = c.LAB_to_polarLAB
-  elif T is ColorPolarLAB:
-    result = c
-  else:
-    result = c.asLAB.LAB_to_polarLAB
-
-proc asLUV*[T: SomeColor](c: T): ColorLUV =
-  when T is ColorXYZ:
-    result = c.XYZ_to_LUV
-  elif T is ColorLUV:
-    result = c
-  elif T is ColorPolarLUV:
-    result = c.polarLUV_to_LUV
-  else:
-    result = c.asXYZ.XYZ_to_LUV
-
-proc asPolarLUV*[T: SomeColor](c: T): ColorPolarLUV =
-  when T is ColorLab:
-    result = c.LUV_to_polarLUV
-  elif T is ColorPolarLUV:
-    result = c
-  else:
-    result = c.asLUV.LUV_to_polarLUV
+proc asColor*(c: SomeColor): Color {.inline.} = c.to(Color)
+proc asRgb*(c: SomeColor): ColorRGB {.inline.} = c.to(ColorRGB)
+proc asRgba*(c: SomeColor): ColorRGBA {.inline.} = c.to(ColorRGBA)
+proc asCmy*(c: SomeColor): ColorCMY {.inline.} = c.to(ColorCMY)
+proc asCmyk*(c: SomeColor): ColorCMYK {.inline.} = c.to(ColorCMYK)
+proc asHsl*(c: SomeColor): ColorHSL {.inline.} = c.to(ColorHSL)
+proc asHsv*(c: SomeColor): ColorHSV {.inline.} = c.to(ColorHSV)
+proc asYuv*(c: SomeColor): ColorYUV {.inline.} = c.to(ColorYUV)
+proc asXyz*(c: SomeColor): ColorXYZ {.inline.} = c.to(ColorXYZ)
+proc asLab*(c: SomeColor): ColorLAB {.inline.} = c.to(ColorLAB)
+proc asPolarLAB*(c: SomeColor): ColorPolarLAB {.inline.} = c.to(ColorPolarLAB)
+proc asLuv*(c: SomeColor): ColorLUV {.inline.} = c.to(ColorLUV)
+proc asPolarLuv*(c: SomeColor): ColorPolarLUV {.inline.} = c.to(ColorPolarLUV)

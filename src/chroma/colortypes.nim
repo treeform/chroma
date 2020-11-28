@@ -51,7 +51,7 @@ type
     v*: float32 ## value 0 to 100
 
   ColorYUV* = object
-    ## YUV origially a television color format, still used in digital movies
+    ## YUV originally a television color format, still used in digital movies
     y*: float32 ## 0 to 1
     u*: float32 ## -0.5 to 0.5
     v*: float32 ## -0.5 to 0.5
@@ -93,3 +93,60 @@ type
                ColorYUV|ColorLAB|ColorPolarLAB|ColorLUV|ColorPolarLUV|ColorXYZ
 
   InvalidColor* = object of ValueError
+
+## Less typing constructors:
+
+proc color*(r, g, b: float32, a: float32 = 1.0): Color {.inline.} =
+  ## Creates from floats like:
+  ## * color(1,0,0) -> red
+  ## * color(0,1,0) -> green
+  ## * color(0,0,1) -> blue
+  ## * color(0,0,0,1) -> opaque  black
+  ## * color(0,0,0,0) -> transparent black
+  Color(r:r, g:g, b:b, a:a)
+
+proc rgb*(r, g, b: uint8): ColorRGB {.inline.} =
+  ## Creates from uint8s like:
+  ## * rgba(255,0,0) -> red
+  ## * rgba(0,255,0) -> green
+  ## * rgba(0,0,255) -> blue
+  ColorRGB(r:r, g:g, b:b)
+
+proc rgba*(r, g, b, a: uint8): ColorRGBA {.inline.} =
+  ## Creates from uint8s like:
+  ## * rgba(255,0,0) -> red
+  ## * rgba(0,255,0) -> green
+  ## * rgba(0,0,255) -> blue
+  ## * rgba(0,0,0,255) -> opaque  black
+  ## * rgba(0,0,0,0) -> transparent black
+  ColorRGBA(r:r, g:g, b:b, a:a)
+
+proc cmy*(c, m, y: float32): ColorCMY {.inline.} =
+  ColorCMY(c:c, m:m, y:y)
+
+proc cmyk*(c, m, y, k: float32): ColorCMYK {.inline.} =
+  ColorCMYK(c:c, m:m, y:y, k:k)
+
+proc hsl*(h, s, l: float32): ColorHSL {.inline.} =
+  ColorHSL(h:h, s:s, l:l)
+
+proc hsv*(h, s, v: float32): ColorHSV {.inline.} =
+  ColorHSV(h:h, s:s, v:v)
+
+proc yuv*(y, u, v: float32): ColorYUV {.inline.} =
+  ColorYUV(y:y, u:u, v:v)
+
+proc xyz*(x, y, z: float32): ColorXYZ {.inline.} =
+  ColorXYZ(x:x, y:y, z:z)
+
+proc lab*(l, a, b: float32): ColorLAB {.inline.} =
+  ColorLAB(l:l, a:a, b:b)
+
+proc polarLAB*(l, c, h: float32): ColorPolarLAB {.inline.} =
+  ColorPolarLAB(l:l, c:c, h:h)
+
+proc luv*(l, u, v: float32): ColorLUV {.inline.} =
+  ColorLUV(l:l, u:u, v:v)
+
+proc polarLUV*(h, c, l: float32): ColorPolarLUV {.inline.} =
+  ColorPolarLUV(h:h, c:c, l:l)

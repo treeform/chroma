@@ -94,6 +94,7 @@ func fixupColor[T: int | float32](r, g, b: var T): bool =
   fixC(r)
   fixC(g)
   fixC(b)
+
 # overload working on `var Color`. It's `discardable`, because in our usage
 # here we do not really care whether a value was modified.
 func fixupColor(c: var Color): bool {.discardable.} =
@@ -266,7 +267,7 @@ proc color*(color: ColorCMYK): Color {.inline.} =
 ##        products derived from this software without specific prior written
 ##        permission.
 ##
-##  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS''
+##  THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ''AS IS''
 ##  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
 ##  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
 ##  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ROSS IHAKA BE LIABLE FOR
@@ -284,13 +285,11 @@ const
   WhiteY = 100.000
   WhiteZ = 108.883
 
-##  ----- CIE-XYZ <-> Device independent RGB -----
+## CIE-XYZ <-> Device independent RGB
 ##
-##   R, G, and B give the levels of red, green and blue as values
-##   in the interval [0,1].  X, Y and Z give the CIE chromaticies.
-##   XN, YN, ZN gives the chromaticity of the white point.
-##
-##
+## R, G, and B give the levels of red, green and blue as values
+## in the interval [0,1].  X, Y and Z give the CIE chromaticies.
+## XN, YN, ZN gives the chromaticity of the white point.
 
 proc ftrans(u, gamma: float32): float32 {.inline.} =
   if u > 0.03928:
@@ -501,8 +500,8 @@ proc color*(c: Color): Color {.inline.} =
   c
 
 proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T {.inline.} =
-  ## Allows conversion of transformation of a color in any
-  ## colorspace into any other colorspace.
+  ## Allows conversion of transformation of a color in any color space into any
+  ## other color space.
   when type(c) is T:
     c
   else:

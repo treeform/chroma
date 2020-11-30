@@ -90,6 +90,380 @@ echo mix(a, b)
 import chroma
 ```
 
+## **proc** `$`
+
+Returns colors as "(r, g, b, a)".
+
+```nim
+proc `$`(c: Color): string
+```
+
+## **func** hash
+
+Hashes a Color - used in tables.
+
+```nim
+func hash(c: Color): Hash
+```
+
+## **func** hash
+
+Hashes a ColorRGB - used in tables.
+
+```nim
+func hash(c: ColorRGB): Hash
+```
+
+## **func** hash
+
+Hashes a ColorRGB - used in tables.
+
+```nim
+func hash(c: ColorRGBA): Hash
+```
+
+## **func** hash
+
+Hashes a ColorCMY - used in tables.
+
+```nim
+func hash(c: ColorCMY): Hash
+```
+
+## **func** hash
+
+Hashes a ColorCMYK - used in tables.
+
+```nim
+func hash(c: ColorCMYK): Hash
+```
+
+## **func** hash
+
+Hashes a ColorHSL - used in tables.
+
+```nim
+func hash(c: ColorHSL): Hash
+```
+
+## **func** hash
+
+Hashes a ColorHSV - used in tables.
+
+```nim
+func hash(c: ColorHSV): Hash
+```
+
+## **func** hash
+
+Hashes a ColorYUV - used in tables.
+
+```nim
+func hash(c: ColorYUV): Hash
+```
+
+## **func** hash
+
+Hashes a ColorXYZ - used in tables.
+
+```nim
+func hash(c: ColorXYZ): Hash
+```
+
+## **func** hash
+
+Hashes a ColorLAB - used in tables.
+
+```nim
+func hash(c: ColorLAB): Hash
+```
+
+## **func** hash
+
+Hashes a ColorPolarLAB - used in tables.
+
+```nim
+func hash(c: ColorPolarLAB): Hash
+```
+
+## **func** hash
+
+Hashes a ColorLUV - used in tables.
+
+```nim
+func hash(c: ColorLUV): Hash
+```
+
+## **func** hash
+
+Hashes a ColorPolarLUV - used in tables.
+
+```nim
+func hash(c: ColorPolarLUV): Hash
+```
+
+## **proc** almostEqual
+
+Returns true if colors are close
+
+```nim
+proc almostEqual(a, b: Color; ep = 0.01): bool
+```
+
+## **proc** parseHex
+
+Parses colors like:
+ * FF0000 -> red
+ * 0000FF -> blue
+ * FFFFFF -> white
+
+```nim
+proc parseHex(hex: string): Color {.raises: [InvalidColor].}
+```
+
+## **proc** toHex
+
+Formats color as hex (upper case):
+ * red -> FF0000
+ * blue -> 0000FF
+ * white -> FFFFFF
+
+```nim
+proc toHex(c: Color): string
+```
+
+## **proc** parseHexAlpha
+
+Parses colors like:
+ * FF0000FF -> red
+ * 0000FFFF -> blue
+ * FFFFFFFF -> white
+ * 000000FF -> opaque  black
+ * 00000000 -> transparent black
+
+```nim
+proc parseHexAlpha(hex: string): Color {.raises: [InvalidColor].}
+```
+
+## **proc** toHexAlpha
+
+Formats color as hex (upper case):
+ * red -> FF0000FF
+ * blue -> 0000FFFF
+ * white -> FFFFFFFF
+ * opaque  black -> 000000FF
+ * transparent black -> 00000000
+
+```nim
+proc toHexAlpha(c: Color): string
+```
+
+## **proc** parseHtmlHex
+
+Parses colors with leading '#' like::
+ * #FF0000 -> red
+ * #0000ff -> blue
+ * #ffffff -> white
+
+```nim
+proc parseHtmlHex(hex: string): Color {.raises: [InvalidColor].}
+```
+
+## **proc** toHtmlHex
+
+Formats color as HTML hex (upper case):
+ * red -> #FF0000
+ * blue -> #0000FF
+ * white -> #FFFFFF
+
+```nim
+proc toHtmlHex(c: Color): string
+```
+
+## **proc** parseHtmlHexTiny
+
+Parses colors with leading '#' and 3 hex numbers like::
+ * #F00 -> red
+ * #0ff -> blue
+ * #fff -> white
+
+```nim
+proc parseHtmlHexTiny(hex: string): Color {.raises: [InvalidColor].}
+```
+
+## **proc** toHtmlHexTiny
+
+Formats color as HTML 3 hex numbers (upper case):
+ * red -> #F00
+ * blue -> #00F
+ * white -> #FFF
+
+```nim
+proc toHtmlHexTiny(c: Color): string
+```
+
+## **proc** parseHtmlRgb
+
+Parses colors in html's rgb format:
+ * rgb(255, 0, 0) -> red
+ * rgb(0,0,255) -> blue
+ * rgb(255,255,255) -> white
+
+```nim
+proc parseHtmlRgb(text: string): Color {.raises: [InvalidColor, ValueError].}
+```
+
+## **proc** toHtmlRgb
+
+Parses colors in html's rgb format:
+ * red -> rgb(255, 0, 0)
+ * blue -> rgb(0,0,255)
+ * white -> rgb(255,255,255)
+
+```nim
+proc toHtmlRgb(c: Color): string
+```
+
+## **proc** parseHtmlRgba
+
+Parses colors in html's rgba format:
+ * rgba(255, 0, 0, 1.0) -> red
+ * rgba(0,0,255, 1.0) -> blue
+ * rgba(255,255,255, 1.0) -> white
+ * rgba(0,0,0,1.0) -> opaque  black
+ * rgba(0,0,0,0.0) -> transparent black
+
+<p>Note: rgb is 0-255, while alpha is 0 to 1.</p>
+
+```nim
+proc parseHtmlRgba(text: string): Color {.raises: [InvalidColor, ValueError].}
+```
+
+## **proc** toHtmlRgba
+
+Parses colors in html's rgb format:
+ * red -> rgb(255, 0, 0)
+ * blue -> rgb(0,0,255)
+ * white -> rgb(255,255,255)
+
+```nim
+proc toHtmlRgba(c: Color): string
+```
+
+## **proc** parseHtmlName
+
+Parses HTML color as as a name:
+ * "red"
+ * "blue"
+ * "white"
+ * "amber"
+ * "Lavender Gray"
+
+```nim
+proc parseHtmlName(text: string): Color {.raises: [InvalidColor, KeyError].}
+```
+
+## **proc** parseHtmlColor
+
+Parses HTML color any any of the formats:
+ * #FFF
+ * #FFFFFF
+ * rgb(255, 255, 255)
+ * rgba(255, 255, 255, 1.0)
+ * white
+
+```nim
+proc parseHtmlColor(colorText: string): Color {.raises: [InvalidColor, ValueError, KeyError].}
+```
+
+## **proc** lighten
+
+Lightens the color by amount 0-1.
+
+```nim
+proc lighten(color: Color; amount: float32): Color
+```
+
+## **proc** darken
+
+Darkens the color by amount 0-1.
+
+```nim
+proc darken(color: Color; amount: float32): Color
+```
+
+## **proc** saturate
+
+Saturates (makes brighter) the color by amount 0-1.
+
+```nim
+proc saturate(color: Color; amount: float32): Color
+```
+
+## **proc** desaturate
+
+Desaturate (makes grayer) the color by amount 0-1.
+
+```nim
+proc desaturate(color: Color; amount: float32): Color
+```
+
+## **proc** spin
+
+Rotates the hue of the color by degrees (0-360).
+
+```nim
+proc spin(color: Color; degrees: float32): Color
+```
+
+## **proc** mix
+
+Mixes two Color colors together using simple average.
+
+```nim
+proc mix(a, b: Color): Color
+```
+
+## **proc** mix
+
+Mixes two Color colors together using simple lerp.
+
+```nim
+proc mix(a, b: Color; v: float32): Color
+```
+
+## **proc** mixCMYK
+
+Mixes two colors together using CMYK.
+
+```nim
+proc mixCMYK(colorA, colorB: Color): Color
+```
+
+## **proc** mix
+
+Mixes two ColorRGB colors together using simple average.
+
+```nim
+proc mix(a, b: ColorRGB): ColorRGB
+```
+
+## **proc** mix
+
+Mixes two ColorRGBA colors together using simple average.
+
+```nim
+proc mix(a, b: ColorRGBA): ColorRGBA
+```
+
+## **func** distance
+
+A distance function based on CIEDE2000 color difference formula
+
+```nim
+func distance(c1, c2: SomeColor): float32
+```
+
 ## **type** Color
 
 Main color type, float32 points
@@ -744,378 +1118,4 @@ proc asLuv(c: SomeColor): ColorLUV {.inline.}
 
 ```nim
 proc asPolarLuv(c: SomeColor): ColorPolarLUV {.inline.}
-```
-
-## **proc** `$`
-
-Returns colors as "(r, g, b, a)".
-
-```nim
-proc `$`(c: Color): string
-```
-
-## **func** hash
-
-Hashes a Color - used in tables.
-
-```nim
-func hash(c: Color): Hash
-```
-
-## **func** hash
-
-Hashes a ColorRGB - used in tables.
-
-```nim
-func hash(c: ColorRGB): Hash
-```
-
-## **func** hash
-
-Hashes a ColorRGB - used in tables.
-
-```nim
-func hash(c: ColorRGBA): Hash
-```
-
-## **func** hash
-
-Hashes a ColorCMY - used in tables.
-
-```nim
-func hash(c: ColorCMY): Hash
-```
-
-## **func** hash
-
-Hashes a ColorCMYK - used in tables.
-
-```nim
-func hash(c: ColorCMYK): Hash
-```
-
-## **func** hash
-
-Hashes a ColorHSL - used in tables.
-
-```nim
-func hash(c: ColorHSL): Hash
-```
-
-## **func** hash
-
-Hashes a ColorHSV - used in tables.
-
-```nim
-func hash(c: ColorHSV): Hash
-```
-
-## **func** hash
-
-Hashes a ColorYUV - used in tables.
-
-```nim
-func hash(c: ColorYUV): Hash
-```
-
-## **func** hash
-
-Hashes a ColorXYZ - used in tables.
-
-```nim
-func hash(c: ColorXYZ): Hash
-```
-
-## **func** hash
-
-Hashes a ColorLAB - used in tables.
-
-```nim
-func hash(c: ColorLAB): Hash
-```
-
-## **func** hash
-
-Hashes a ColorPolarLAB - used in tables.
-
-```nim
-func hash(c: ColorPolarLAB): Hash
-```
-
-## **func** hash
-
-Hashes a ColorLUV - used in tables.
-
-```nim
-func hash(c: ColorLUV): Hash
-```
-
-## **func** hash
-
-Hashes a ColorPolarLUV - used in tables.
-
-```nim
-func hash(c: ColorPolarLUV): Hash
-```
-
-## **proc** almostEqual
-
-Returns true if colors are close
-
-```nim
-proc almostEqual(a, b: Color; ep = 0.01): bool
-```
-
-## **proc** parseHex
-
-Parses colors like:
- * FF0000 -> red
- * 0000FF -> blue
- * FFFFFF -> white
-
-```nim
-proc parseHex(hex: string): Color {.raises: [InvalidColor].}
-```
-
-## **proc** toHex
-
-Formats color as hex (upper case):
- * red -> FF0000
- * blue -> 0000FF
- * white -> FFFFFF
-
-```nim
-proc toHex(c: Color): string
-```
-
-## **proc** parseHexAlpha
-
-Parses colors like:
- * FF0000FF -> red
- * 0000FFFF -> blue
- * FFFFFFFF -> white
- * 000000FF -> opaque  black
- * 00000000 -> transparent black
-
-```nim
-proc parseHexAlpha(hex: string): Color {.raises: [InvalidColor].}
-```
-
-## **proc** toHexAlpha
-
-Formats color as hex (upper case):
- * red -> FF0000FF
- * blue -> 0000FFFF
- * white -> FFFFFFFF
- * opaque  black -> 000000FF
- * transparent black -> 00000000
-
-```nim
-proc toHexAlpha(c: Color): string
-```
-
-## **proc** parseHtmlHex
-
-Parses colors with leading '#' like::
- * #FF0000 -> red
- * #0000ff -> blue
- * #ffffff -> white
-
-```nim
-proc parseHtmlHex(hex: string): Color {.raises: [InvalidColor].}
-```
-
-## **proc** toHtmlHex
-
-Formats color as HTML hex (upper case):
- * red -> #FF0000
- * blue -> #0000FF
- * white -> #FFFFFF
-
-```nim
-proc toHtmlHex(c: Color): string
-```
-
-## **proc** parseHtmlHexTiny
-
-Parses colors with leading '#' and 3 hex numbers like::
- * #F00 -> red
- * #0ff -> blue
- * #fff -> white
-
-```nim
-proc parseHtmlHexTiny(hex: string): Color {.raises: [InvalidColor].}
-```
-
-## **proc** toHtmlHexTiny
-
-Formats color as HTML 3 hex numbers (upper case):
- * red -> #F00
- * blue -> #00F
- * white -> #FFF
-
-```nim
-proc toHtmlHexTiny(c: Color): string
-```
-
-## **proc** parseHtmlRgb
-
-Parses colors in html's rgb format:
- * rgb(255, 0, 0) -> red
- * rgb(0,0,255) -> blue
- * rgb(255,255,255) -> white
-
-```nim
-proc parseHtmlRgb(text: string): Color {.raises: [InvalidColor, ValueError].}
-```
-
-## **proc** toHtmlRgb
-
-Parses colors in html's rgb format:
- * red -> rgb(255, 0, 0)
- * blue -> rgb(0,0,255)
- * white -> rgb(255,255,255)
-
-```nim
-proc toHtmlRgb(c: Color): string
-```
-
-## **proc** parseHtmlRgba
-
-Parses colors in html's rgba format:
- * rgba(255, 0, 0, 1.0) -> red
- * rgba(0,0,255, 1.0) -> blue
- * rgba(255,255,255, 1.0) -> white
- * rgba(0,0,0,1.0) -> opaque  black
- * rgba(0,0,0,0.0) -> transparent black
-
-<p>Note: rgb is 0-255, while alpha is 0 to 1.</p>
-
-```nim
-proc parseHtmlRgba(text: string): Color {.raises: [InvalidColor, ValueError].}
-```
-
-## **proc** toHtmlRgba
-
-Parses colors in html's rgb format:
- * red -> rgb(255, 0, 0)
- * blue -> rgb(0,0,255)
- * white -> rgb(255,255,255)
-
-```nim
-proc toHtmlRgba(c: Color): string
-```
-
-## **proc** parseHtmlName
-
-Parses HTML color as as a name:
- * "red"
- * "blue"
- * "white"
- * "amber"
- * "Lavender Gray"
-
-```nim
-proc parseHtmlName(text: string): Color {.raises: [InvalidColor, KeyError].}
-```
-
-## **proc** parseHtmlColor
-
-Parses HTML color any any of the formats:
- * #FFF
- * #FFFFFF
- * rgb(255, 255, 255)
- * rgba(255, 255, 255, 1.0)
- * white
-
-```nim
-proc parseHtmlColor(colorText: string): Color {.raises: [InvalidColor, ValueError, KeyError].}
-```
-
-## **proc** lighten
-
-Lightens the color by amount 0-1.
-
-```nim
-proc lighten(color: Color; amount: float32): Color
-```
-
-## **proc** darken
-
-Darkens the color by amount 0-1.
-
-```nim
-proc darken(color: Color; amount: float32): Color
-```
-
-## **proc** saturate
-
-Saturates (makes brighter) the color by amount 0-1.
-
-```nim
-proc saturate(color: Color; amount: float32): Color
-```
-
-## **proc** desaturate
-
-Desaturate (makes grayer) the color by amount 0-1.
-
-```nim
-proc desaturate(color: Color; amount: float32): Color
-```
-
-## **proc** spin
-
-Rotates the hue of the color by degrees (0-360).
-
-```nim
-proc spin(color: Color; degrees: float32): Color
-```
-
-## **proc** mix
-
-Mixes two Color colors together using simple average.
-
-```nim
-proc mix(a, b: Color): Color
-```
-
-## **proc** mix
-
-Mixes two Color colors together using simple lerp.
-
-```nim
-proc mix(a, b: Color; v: float32): Color
-```
-
-## **proc** mixCMYK
-
-Mixes two colors together using CMYK.
-
-```nim
-proc mixCMYK(colorA, colorB: Color): Color
-```
-
-## **proc** mix
-
-Mixes two ColorRGB colors together using simple average.
-
-```nim
-proc mix(a, b: ColorRGB): ColorRGB
-```
-
-## **proc** mix
-
-Mixes two ColorRGBA colors together using simple average.
-
-```nim
-proc mix(a, b: ColorRGBA): ColorRGBA
-```
-
-## **func** distance
-
-A distance function based on CIEDE2000 color difference formula
-
-```nim
-func distance(c1, c2: SomeColor): float32
 ```

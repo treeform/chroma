@@ -3,7 +3,8 @@
 ##
 
 import chroma/names, hashes, strutils, tables
-include chroma/colortypes, chroma/distance, chroma/transformations
+import chroma/colortypes, chroma/distance, chroma/transformations
+export colortypes, distance, transformations
 
 proc toHex(a: float32): string = toHex(int(a))
 

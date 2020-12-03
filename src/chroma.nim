@@ -9,7 +9,7 @@ import chroma/colortypes, chroma/distance, chroma/names, chroma/transformations,
 
 export colortypes, distance, transformations
 
-proc toHex(a: float32): string = toHex(int(a))
+proc toHex(a: float32): string {.inline.} = toHex(int(a))
 
 proc `$`*(c: Color): string =
   ## Returns colors as "(r, g, b, a)".
@@ -100,9 +100,9 @@ proc toHex*(c: Color): string =
   ## * red -> FF0000
   ## * blue -> 0000FF
   ## * white -> FFFFFF
-  proc pair(n: float32): string =
+  template pair(n: float32): string =
     toHex(n*255)[^2..^1]
-  return pair(c.r) & pair(c.g) & pair(c.b)
+  pair(c.r) & pair(c.g) & pair(c.b)
 
 proc parseHexAlpha*(hex: string): Color =
   ## Parses colors like:
@@ -124,9 +124,9 @@ proc toHexAlpha*(c: Color): string =
   ## * white -> FFFFFFFF
   ## * opaque  black -> 000000FF
   ## * transparent black -> 00000000
-  proc pair(n: float32): string =
+  template pair(n: float32): string =
     toHex(n*255)[^2..^1]
-  return pair(c.r) & pair(c.g) & pair(c.b) & pair(c.a)
+  pair(c.r) & pair(c.g) & pair(c.b) & pair(c.a)
 
 proc parseHtmlHex*(hex: string): Color =
   ## Parses colors with leading '#' like::
@@ -142,7 +142,7 @@ proc toHtmlHex*(c: Color): string =
   ## * red -> #FF0000
   ## * blue -> #0000FF
   ## * white -> #FFFFFF
-  return '#' & c.toHex()
+  '#' & c.toHex()
 
 proc parseHtmlHexTiny*(hex: string): Color =
   ## Parses colors with leading '#' and 3 hex numbers like::
@@ -190,10 +190,11 @@ proc toHtmlRgb*(c: Color): string =
   ## * red -> rgb(255, 0, 0)
   ## * blue -> rgb(0,0,255)
   ## * white -> rgb(255,255,255)
-  return "rgb(" &
+  "rgb(" &
     $int(c.r * 255) & ", " &
     $int(c.g * 255) & ", " &
-    $int(c.b * 255) & ")"
+    $int(c.b * 255) &
+  ")"
 
 proc parseHtmlRgba*(text: string): Color =
   ## Parses colors in html's rgba format:
@@ -222,11 +223,12 @@ proc toHtmlRgba*(c: Color): string =
   ## * red -> rgb(255, 0, 0)
   ## * blue -> rgb(0,0,255)
   ## * white -> rgb(255,255,255)
-  return "rgba(" &
+  "rgba(" &
     $int(c.r * 255) & ", " &
     $int(c.g * 255) & ", " &
     $int(c.b * 255) & ", " &
-    $c.a & ")"
+    $c.a &
+  ")"
 
 proc parseHtmlName*(text: string): Color =
   ## Parses HTML color as as a name:
@@ -300,12 +302,10 @@ proc spin*(color: Color, degrees: float32): Color =
 
 proc mix*(a, b: Color): Color =
   ## Mixes two Color colors together using simple average.
-  var c: Color
-  c.r = (a.r + b.r) / 2.0
-  c.g = (a.g + b.g) / 2.0
-  c.b = (a.b + b.b) / 2.0
-  c.a = (a.a + b.a) / 2.0
-  return c
+  result.r = (a.r + b.r) / 2.0
+  result.g = (a.g + b.g) / 2.0
+  result.b = (a.b + b.b) / 2.0
+  result.a = (a.a + b.a) / 2.0
 
 proc lerp(a, b, v: float32): float32 =
   a * (1.0 - v) + b * v
@@ -327,7 +327,7 @@ proc mixCMYK*(colorA, colorB: Color): Color =
   c.m = (a.m + b.m) / 2
   c.y = (a.y + b.y) / 2
   c.k = (a.k + b.k) / 2
-  return c.color
+  c.color
 
 proc mix*(a, b: ColorRGB): ColorRGB =
   ## Mixes two ColorRGB colors together using simple average.

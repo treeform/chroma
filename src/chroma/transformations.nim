@@ -86,7 +86,7 @@ func fixupColor[T: int | float32](r, g, b: var T): bool =
     when T is int:
       if c > 255:
         c = 255
-        true
+        result = true
     else:
       if c > 1.0:
         c = 1.0
@@ -97,7 +97,7 @@ func fixupColor[T: int | float32](r, g, b: var T): bool =
 
 # overload working on `var Color`. It's `discardable`, because in our usage
 # here we do not really care whether a value was modified.
-func fixupColor(c: var Color): bool {.discardable.} =
+func fixupColor(c: var Color): bool {.inline, discardable.} =
   fixupColor(c.r, c.g, c.b)
 
 proc color*(c: ColorHSL): Color =
@@ -332,9 +332,9 @@ const epsilon*: float32 = 216.0 / 24389.0
 
 proc xyz*(c: ColorLAB): ColorXYZ =
   var
-    fx: float
-    fy: float
-    fz: float
+    fx: float32
+    fy: float32
+    fz: float32
   if c.l <= 0:
     result.y = 0.0
   elif c.l <= 8.0:
@@ -358,7 +358,7 @@ proc xyz*(c: ColorLAB): ColorXYZ =
   else:
     result.z = WhiteZ * pow(fz, 3.0)
 
-proc f*(t: float): float {.inline.} =
+proc f*(t: float32): float32 {.inline.} =
   if t > epsilon:
     pow(t, 1.0 / 3.0)
   else:
@@ -366,12 +366,12 @@ proc f*(t: float): float {.inline.} =
 
 proc lab*(c: ColorXYZ): ColorLAB =
   var
-    xr: float
-    yr: float
-    zr: float
-    xt: float
-    yt: float
-    zt: float
+    xr: float32
+    yr: float32
+    zr: float32
+    xt: float32
+    yt: float32
+    zt: float32
   xr = c.x / WhiteX
   yr = c.y / WhiteY
   zr = c.z / WhiteZ
@@ -386,7 +386,7 @@ proc lab*(c: ColorXYZ): ColorLAB =
   result.b = 200.0 * (yt - zt)
 
 proc polarLAB*(c: ColorLAB): ColorPolarLAB =
-  var vH: float
+  var vH: float32
   vH = radToDeg(arctan2(c.b, c.a))
   while vH > 360.0:
     vh = vh - 360.0
@@ -403,9 +403,9 @@ proc lab*(c: ColorPolarLab): ColorLAB {.inline.} =
 
 proc uv*(c: ColorXYZ): tuple[u, v: float32] =
   var
-    t: float
-    x: float
-    y: float
+    t: float32
+    x: float32
+    y: float32
   t = c.x + c.y + c.z
   if t == 0.0:
     x = 0.0
@@ -418,11 +418,11 @@ proc uv*(c: ColorXYZ): tuple[u, v: float32] =
 
 proc luv*(c: ColorXYZ): ColorLUV =
   var
-    u: float
-    v: float
-    uN: float
-    vN: float
-    y: float
+    u: float32
+    v: float32
+    uN: float32
+    vN: float32
+    y: float32
   (u, v) = uv(c)
   (uN, vN) = uv(ColorXYZ(x: WhiteX, y: WhiteY, z: WhiteZ))
   y = c.y / WhiteY
@@ -432,10 +432,10 @@ proc luv*(c: ColorXYZ): ColorLUV =
 
 proc xyz*(c: ColorLUV): ColorXYZ =
   var
-    u: float
-    v: float
-    uN: float
-    vN: float
+    u: float32
+    v: float32
+    uN: float32
+    vN: float32
   if c.l <= 0.0 and c.u == 0.0 and c.v == 0.0:
     result.x = 0.0
     result.y = 0.0

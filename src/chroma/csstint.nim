@@ -4,11 +4,11 @@
 ## is
 ## filter: invert(68%) sepia(100%) saturate(4016%) hue-rotate(82deg) brightness(119%) contrast(124%)
 
-import ../chroma, math, os, print, random, strformat, tables
+import chroma, math, print, random, strformat
 
-type ColorMatrix = array[0..8, float]
+type ColorMatrix = array[0..8, float32]
 
-proc clamp(channel: float): float =
+proc clamp(channel: float32): float32 {.inline.} =
   clamp(channel, 0, 1.0)
 
 proc `*`*(color: Color, matrix: ColorMatrix): Color =
@@ -16,12 +16,13 @@ proc `*`*(color: Color, matrix: ColorMatrix): Color =
   result.g = clamp(color.r * matrix[3] + color.g * matrix[4] + color.b * matrix[5])
   result.b = clamp(color.r * matrix[6] + color.g * matrix[7] + color.b * matrix[8])
 
-proc hueRotate*(color: Color, angle: float): Color =
-  var angle = angle / 180 * PI
-  let sin = sin(angle)
-  let cos = cos(angle)
+proc hueRotate*(color: Color, angle: float32): Color =
+  let
+    angle = angle / 180 * PI
+    sin = sin(angle).float32
+    cos = cos(angle).float32
   color * [
-    0.213 + cos * 0.787 - sin * 0.213,
+    0.213.float32 + cos * 0.787.float32 - sin * 0.213.float32,
     0.715 - cos * 0.715 - sin * 0.715,
     0.072 - cos * 0.072 + sin * 0.928,
     0.213 - cos * 0.213 + sin * 0.143,
@@ -32,10 +33,10 @@ proc hueRotate*(color: Color, angle: float): Color =
     0.072 + cos * 0.928 + sin * 0.072,
   ]
 
-proc grayscale*(color: Color, value: float): Color =
-  let value = value / 100.0
+proc grayscale*(color: Color, value: float32): Color =
+  let value = value / 100.0.float32
   color * [
-    0.2126 + 0.7874 * (1 - value),
+    0.2126.float32 + 0.7874.float32 * (1 - value),
     0.7152 - 0.7152 * (1 - value),
     0.0722 - 0.0722 * (1 - value),
     0.2126 - 0.2126 * (1 - value),
@@ -46,10 +47,10 @@ proc grayscale*(color: Color, value: float): Color =
     0.0722 + 0.9278 * (1 - value),
   ]
 
-proc sepia*(color: Color, value: float): Color =
-  let value = value / 100.0
+proc sepia*(color: Color, value: float32): Color =
+  let value = value / 100.0.float32
   color * [
-    0.393 + 0.607 * (1 - value),
+    0.393.float32 + 0.607.float32 * (1 - value),
     0.769 - 0.769 * (1 - value),
     0.189 - 0.189 * (1 - value),
     0.349 - 0.349 * (1 - value),
@@ -60,10 +61,10 @@ proc sepia*(color: Color, value: float): Color =
     0.131 + 0.869 * (1 - value),
   ]
 
-proc saturate*(color: Color, value: float): Color =
-  let value = value / 100.0
+proc saturate*(color: Color, value: float32): Color =
+  let value = value / 100.0.float32
   color * [
-    0.213 + 0.787 * value,
+    0.213.float32 + 0.787.float32 * value,
     0.715 - 0.715 * value,
     0.072 - 0.072 * value,
     0.213 - 0.213 * value,
@@ -74,38 +75,38 @@ proc saturate*(color: Color, value: float): Color =
     0.072 + 0.928 * value,
   ]
 
-proc linear*(color: Color, slope: float, intercept: float): Color =
+proc linear*(color: Color, slope, intercept: float32): Color =
   result.r = clamp(color.r * slope + intercept)
   result.g = clamp(color.g * slope + intercept)
   result.b = clamp(color.b * slope + intercept)
 
-proc brightness*(color: Color, value: float): Color =
+proc brightness*(color: Color, value: float32): Color =
   let value = value / 100.0
   color.linear(value, 0.0)
 
-proc contrast*(color: Color, value: float): Color =
+proc contrast*(color: Color, value: float32): Color =
   let value = value / 100.0
   color.linear(value, -(0.5 * value) + 0.5)
 
-proc invert*(color: Color, value: float = 1): Color =
+proc invert*(color: Color, value: float32 = 1): Color =
   let value = value / 100
   result.r = clamp(value + color.r * (1 - 2 * value))
   result.g = clamp(value + color.g * (1 - 2 * value))
   result.b = clamp(value + color.b * (1 - 2 * value))
 
-proc dist(a, b: Color): float =
+proc dist(a, b: Color): float32 =
   let
     r = a.r - b.r
     g = a.g - b.g
     b = a.b - b.b
-  sqrt(r*r + g*g + b*b)
+  sqrt(r * r + g * g + b * b)
 
 type Guess = object
-  invert, sepia, saturate, hueRotate, brightness, contrast: float
-  error: float
+  invert, sepia, saturate, hueRotate, brightness, contrast: float32
+  error: float32
 
 proc filter(guess: Guess): string =
-  return fmt"""invert({(guess.invert)}%) sepia({(guess.sepia)}%) saturate({(guess.saturate)}%) hue-rotate({(guess.hueRotate)}deg) brightness({(guess.brightness)}%) contrast({(guess.contrast)}%)"""
+  fmt"""invert({(guess.invert)}%) sepia({(guess.sepia)}%) saturate({(guess.saturate)}%) hue-rotate({(guess.hueRotate)}deg) brightness({(guess.brightness)}%) contrast({(guess.contrast)}%)"""
 
 proc computeColor(guess: Guess): Color =
   color(0.0, 0.0, 0.0, 0.0)
@@ -133,12 +134,12 @@ proc cssTintFilterGuess(color: Color, accuracy: int): Guess =
     for i in 0..accuracy:
       var s = bestGuess.error * 0.5
       var guess = bestGuess
-      guess.invert += float(rand(-100..100)) * s
-      guess.sepia += float(rand(-100..100)) * s
-      guess.saturate += float(rand(-2000..2000)) * s
-      guess.hueRotate += float(rand(-360..360)) * s
-      guess.brightness += float(rand(-100..100)) * s
-      guess.contrast += float(rand(-100..100)) * s
+      guess.invert += float32(rand(-100..100)) * s
+      guess.sepia += float32(rand(-100..100)) * s
+      guess.saturate += float32(rand(-2000..2000)) * s
+      guess.hueRotate += float32(rand(-360..360)) * s
+      guess.brightness += float32(rand(-100..100)) * s
+      guess.contrast += float32(rand(-100..100)) * s
 
       guess.invert = clamp(guess.invert, 0, 1E10)
       guess.sepia = clamp(guess.sepia, 0, 1E10)

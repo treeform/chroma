@@ -255,12 +255,11 @@ proc parseHtmlColor*(colorText: string): Color =
       return parseHtmlHex(text)
     else:
       raise newException(InvalidColor, "HTML color invalid.")
-  elif text[0..3] == "rgba":
+  if text.len > 4 and text[0..3] == "rgba":
     return parseHtmlRgba(text)
-  elif text[0..2] == "rgb":
+  if text.len > 3 and text[0..2] == "rgb":
     return parseHtmlRgb(text)
-  else:
-    return parseHtmlName(text)
+  parseHtmlName(text)
 
 # Color Functions
 

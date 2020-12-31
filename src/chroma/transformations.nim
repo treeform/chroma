@@ -538,6 +538,9 @@ proc polarOklab*(c: ColorOklab): ColorPolarOklab =
   result.C = sqrt(c.a * c.a + c.b * c.b)
   result.h = vH
 
+proc color*(c: ColorPolarOklab): Color {.inline.} =
+  c.oklab.color
+
 proc polarOklab*(c: Color): ColorPolarOklab =
   c.oklab.polarOklab
 

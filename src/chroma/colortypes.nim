@@ -89,6 +89,11 @@ type
   # Alias for PolarLUV, as it might be better known as HCL
   ColorHCL* = ColorPolarLUV
 
+  ColorOklab* = object
+    L*: float32
+    a*: float32
+    b*: float32
+
   SomeColor* = Color|ColorRGB|ColorRGBA|ColorHSL|ColorHSV|ColorCMY|ColorCMYK |
                ColorYUV|ColorLAB|ColorPolarLAB|ColorLUV|ColorPolarLUV|ColorXYZ
 

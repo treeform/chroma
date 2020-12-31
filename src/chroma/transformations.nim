@@ -5,6 +5,7 @@
 ## - PolarLUV
 ## - XYZ
 ## - Oklab
+## - PolarOklab
 ## were ported from the C code of the R colorspaces package, which is licensed
 ## under the 3-clause BSD license.
 ## - http://colorspace.r-forge.r-project.org/
@@ -520,6 +521,26 @@ proc color*(c: ColorOklab): Color {.inline.} =
   result.g = - 1.2681437731f*l + 2.6093323231f*m - 0.3411344290f*s
   result.b = - 0.0041119885f*l - 0.7034763098f*m + 1.7068625689f*s
 
+proc oklab*(c: ColorPolarOklab): ColorOklab {.inline.} =
+  let hrad = degToRad(c.h)
+  result.L = c.L
+  result.a = c.C * cos(hrad)
+  result.b = c.C * sin(hrad)
+
+proc polarOklab*(c: ColorOklab): ColorPolarOklab =
+  var vH: float32
+  vH = radToDeg(arctan2(c.b, c.a))
+  while vH > 360.0:
+    vh = vh - 360.0
+  while vH < 0.0:
+    vH = vH + 360.0
+  result.L = c.L
+  result.C = sqrt(c.a * c.a + c.b * c.b)
+  result.h = vH
+
+proc polarOklab*(c: Color): ColorPolarOklab =
+  c.oklab.polarOklab
+
 proc color*(c: Color): Color {.inline.} =
   c
 
@@ -555,6 +576,10 @@ proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T {.inline.} =
       c.color.luv
     elif toColor is ColorPolarLUV:
       c.color.polarLuv
+    elif toColor is ColorOklab:
+      c.color.oklab
+    elif toColor is ColorPolarOklab:
+      c.color.polarOklab
 
 proc asColor*(c: SomeColor): Color {.inline.} = c.to(Color)
 proc asRgb*(c: SomeColor): ColorRGB {.inline.} = c.to(ColorRGB)
@@ -569,3 +594,5 @@ proc asLab*(c: SomeColor): ColorLAB {.inline.} = c.to(ColorLAB)
 proc asPolarLAB*(c: SomeColor): ColorPolarLAB {.inline.} = c.to(ColorPolarLAB)
 proc asLuv*(c: SomeColor): ColorLUV {.inline.} = c.to(ColorLUV)
 proc asPolarLuv*(c: SomeColor): ColorPolarLUV {.inline.} = c.to(ColorPolarLUV)
+proc asOklab*(c: SomeColor): ColorOklab {.inline.} = c.to(ColorOklab)
+proc asPolarOklab*(c: SomeColor): ColorPolarOklab {.inline.} = c.to(ColorPolarOklab)

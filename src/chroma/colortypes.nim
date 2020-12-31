@@ -90,12 +90,18 @@ type
   ColorHCL* = ColorPolarLUV
 
   ColorOklab* = object
-    L*: float32
-    a*: float32
-    b*: float32
+    L*: float32 ## perceived lightness
+    a*: float32 ## greenless/redness
+    b*: float32 ## blueless/yellowless
+  
+  ColorPolarOklab* = object
+    L*: float32 ## perceived lightness
+    C*: float32 ## chroma
+    h*: float32 ## hue
 
   SomeColor* = Color|ColorRGB|ColorRGBA|ColorHSL|ColorHSV|ColorCMY|ColorCMYK |
-               ColorYUV|ColorLAB|ColorPolarLAB|ColorLUV|ColorPolarLUV|ColorXYZ
+               ColorYUV|ColorLAB|ColorPolarLAB|ColorLUV|ColorPolarLUV|ColorXYZ |
+               ColorOklab|ColorPolarOklab
 
   InvalidColor* = object of ValueError
 
@@ -155,3 +161,9 @@ proc luv*(l, u, v: float32): ColorLUV {.inline.} =
 
 proc polarLUV*(h, c, l: float32): ColorPolarLUV {.inline.} =
   ColorPolarLUV(h: h, c: c, l: l)
+
+proc oklab*(L, a, b: float32): ColorOklab {.inline.} =
+  ColorOklab(L: L, a: a, b: b)
+
+proc polarOklab*(L, C, h: float32): ColorPolarOklab {.inline.} =
+  ColorPolarOklab(L: L, C: C, h: h)

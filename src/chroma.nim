@@ -64,6 +64,14 @@ func hash*(c: ColorPolarLUV): Hash =
   ## Hashes a ColorPolarLUV - used in tables.
   hash((c.h, c.c, c.l))
 
+func hash*(c: ColorOklab): Hash =
+  ## Hashes a ColorOklab - used in tables.
+  hash((c.L, c.a, c.b))
+
+func hash*(c: ColorPolarOklab): Hash =
+  ## Hashes a ColorOklab - used in tables.
+  hash((c.L, c.C, c.h))
+
 proc almostEqual*(a, b: Color, ep = 0.01): bool =
   ## Returns true if colors are close
   if abs(a.r - b.r) > ep: return false

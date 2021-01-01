@@ -4,6 +4,8 @@
 ## - PolarLAB
 ## - PolarLUV
 ## - XYZ
+## - Oklab
+## - PolarOklab
 ## were ported from the C code of the R colorspaces package, which is licensed
 ## under the 3-clause BSD license.
 ## - http://colorspace.r-forge.r-project.org/
@@ -496,6 +498,52 @@ proc polarLUV*(c: Color): ColorPolarLUV {.inline.} =
 proc color*(c: ColorPolarLUV): Color {.inline.} =
   c.luv.color
 
+proc oklab*(c: Color): ColorOklab {.inline.} =
+  ## convert Color to ColorOklab
+  let
+    l = cbrt(0.4121656120f * c.r + 0.5362752080f * c.g + 0.0514575653f * c.b)
+    m = cbrt(0.2118591070f * c.r + 0.6807189584f * c.g + 0.1074065790f * c.b)
+    s = cbrt(0.0883097947f * c.r + 0.2818474174f * c.g + 0.6302613616f * c.b)
+  result.L = 0.2104542553f*l + 0.7936177850f*m - 0.0040720468f*s
+  result.a = 1.9779984951f*l - 2.4285922050f*m + 0.4505937099f*s
+  result.b = 0.0259040371f*l + 0.7827717662f*m - 0.8086757660f*s
+
+proc color*(c: ColorOklab): Color {.inline.} =
+  ## convert ColorOklab to Color
+  let
+    l = c.L + 0.3963377774f * c.a + 0.2158037573f * c.b
+    m = c.L - 0.1055613458f * c.a - 0.0638541728f * c.b
+    s = c.L - 0.0894841775f * c.a - 1.2914855480f * c.b
+    l3 = l*l*l
+    m3 = m*m*m
+    s3 = s*s*s
+  result.r = + 4.0767245293f*l - 3.3072168827f*m + 0.2307590544f*s
+  result.g = - 1.2681437731f*l + 2.6093323231f*m - 0.3411344290f*s
+  result.b = - 0.0041119885f*l - 0.7034763098f*m + 1.7068625689f*s
+
+proc oklab*(c: ColorPolarOklab): ColorOklab {.inline.} =
+  let hrad = degToRad(c.h)
+  result.L = c.L
+  result.a = c.C * cos(hrad)
+  result.b = c.C * sin(hrad)
+
+proc polarOklab*(c: ColorOklab): ColorPolarOklab =
+  var vH: float32
+  vH = radToDeg(arctan2(c.b, c.a))
+  while vH > 360.0:
+    vh = vh - 360.0
+  while vH < 0.0:
+    vH = vH + 360.0
+  result.L = c.L
+  result.C = sqrt(c.a * c.a + c.b * c.b)
+  result.h = vH
+
+proc color*(c: ColorPolarOklab): Color {.inline.} =
+  c.oklab.color
+
+proc polarOklab*(c: Color): ColorPolarOklab =
+  c.oklab.polarOklab
+
 proc color*(c: Color): Color {.inline.} =
   c
 
@@ -531,6 +579,10 @@ proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T {.inline.} =
       c.color.luv
     elif toColor is ColorPolarLUV:
       c.color.polarLuv
+    elif toColor is ColorOklab:
+      c.color.oklab
+    elif toColor is ColorPolarOklab:
+      c.color.polarOklab
 
 proc asColor*(c: SomeColor): Color {.inline.} = c.to(Color)
 proc asRgb*(c: SomeColor): ColorRGB {.inline.} = c.to(ColorRGB)
@@ -545,3 +597,5 @@ proc asLab*(c: SomeColor): ColorLAB {.inline.} = c.to(ColorLAB)
 proc asPolarLAB*(c: SomeColor): ColorPolarLAB {.inline.} = c.to(ColorPolarLAB)
 proc asLuv*(c: SomeColor): ColorLUV {.inline.} = c.to(ColorLUV)
 proc asPolarLuv*(c: SomeColor): ColorPolarLUV {.inline.} = c.to(ColorPolarLUV)
+proc asOklab*(c: SomeColor): ColorOklab {.inline.} = c.to(ColorOklab)
+proc asPolarOklab*(c: SomeColor): ColorPolarOklab {.inline.} = c.to(ColorPolarOklab)

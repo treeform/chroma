@@ -31,6 +31,7 @@ Conversion from and to these colors spaces:
   point is assumed)
 * CIELCH, LUV in polar coordinates (type: `ColorPolarLUV`), often
   called HCL
+* Oklab (https://bottosson.github.io/posts/oklab/)
 
 The default type is an RGB based type using `float32` as its base type
 (with values ranging from 0 to 1) and is called `Color`. All the above

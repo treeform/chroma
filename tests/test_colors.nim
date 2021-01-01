@@ -204,6 +204,34 @@ suite "spaces":
     for i in 0 ..< colors.len:
       check cPolarLab[i].almostEq(expPolarLab[i])
 
+    let cOklab = colors.mapIt(it.to(ColorOklab))
+    let expOklab = [oklab(0.6059127, -0.0618687, -0.132093335),
+                    oklab(0.7673618,  0.0031948, -0.056107075),
+                    oklab(0.8522680,  0.0036528, -0.029817891),
+                    oklab(0.9129040,  0.0019834, -0.012930225),
+                    oklab(0.9521403,  0.0002312, -0.002724297),
+                    oklab(0.9524956,  0.0026390,  3.44801e-05),
+                    oklab(0.9144257,  0.0145511,  0.001537969),
+                    oklab(0.8536680,  0.0347748,  0.002470664),
+                    oklab(0.7624759,  0.0678392,  0.001605107),
+                    oklab(0.5607032,  0.2017071, -0.033859189)]
+    for i in 0 ..< colors.len:
+      check cOklab[i].almostEq(expOklab[i])
+
+    let cPolarOklab = colors.mapIt(it.to(ColorPolarOklab))
+    let expPolarOklab = [polarOklab(0.60591274, 0.14580541, 244.8921356),
+                         polarOklab(0.76736181, 0.05619394, 273.2592468),
+                         polarOklab(0.85226809, 0.03002440, 276.9880981),
+                         polarOklab(0.91290402, 0.01315032, 278.6747741),
+                         polarOklab(0.95214039, 0.00271021, 274.8944396),
+                         polarOklab(0.95249563, 0.00263925,   0.7479323),
+                         polarOklab(0.91442573, 0.01463048,   5.9677457),
+                         polarOklab(0.85366809, 0.03486439,   4.1069898),
+                         polarOklab(0.76247590, 0.06785918,   1.3892900),
+                         polarOklab(0.56070321, 0.20453040, 350.4690856)]
+    for i in 0 ..< colors.len:
+      check cPolarOklab[i].almostEq(expPolarOklab[i])
+
     let cLuv = colors.mapIt(it.to(ColorLUV))
     let expLuv = [luv(30.11593, -13.9580496, -78.86780920),
                   luv(48.95426, -9.5461094, -53.36486065),

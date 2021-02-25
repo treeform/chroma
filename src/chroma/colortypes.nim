@@ -21,6 +21,13 @@ type
     b*: uint8 ## Blue 0-255
     a*: uint8 ## Alpha 0-255
 
+  ColorRGBX* = object
+    ## Premultiplied alpha RGBA color stored as 4 uint8s
+    r*: uint8 ## Red 0-a
+    g*: uint8 ## Green 0-a
+    b*: uint8 ## Blue 0-a
+    a*: uint8 ## Alpha 0-255
+
   # Color Space: cmy
   ColorCMY* = object
     ## CMY colors are reverse of rgb and as 100%
@@ -93,7 +100,7 @@ type
     L*: float32 ## perceived lightness
     a*: float32 ## greenless/redness
     b*: float32 ## blueless/yellowless
-  
+
   ColorPolarOklab* = object
     L*: float32 ## perceived lightness
     C*: float32 ## chroma
@@ -125,12 +132,21 @@ proc rgb*(r, g, b: uint8): ColorRGB {.inline.} =
 
 proc rgba*(r, g, b, a: uint8): ColorRGBA {.inline.} =
   ## Creates from uint8s like:
-  ## * rgba(255,0,0) -> red
-  ## * rgba(0,255,0) -> green
-  ## * rgba(0,0,255) -> blue
+  ## * rgba(255,0,0,255) -> red
+  ## * rgba(0,255,0,255) -> green
+  ## * rgba(0,0,255,255) -> blue
   ## * rgba(0,0,0,255) -> opaque  black
   ## * rgba(0,0,0,0) -> transparent black
   ColorRGBA(r: r, g: g, b: b, a: a)
+
+proc rgbx*(r, g, b, a: uint8): ColorRGBX {.inline.} =
+  ## Creates from uint8s like:
+  ## * rgbx(255,0,0,255) -> red
+  ## * rgbx(0,255,0,255) -> green
+  ## * rgbx(0,0,255,255) -> blue
+  ## * rgbx(0,0,0,255) -> opaque  black
+  ## * rgbx(0,0,0,0) -> transparent black
+  ColorRGBX(r: r, g: g, b: b, a: a)
 
 proc cmy*(c, m, y: float32): ColorCMY {.inline.} =
   ColorCMY(c: c, m: m, y: y)

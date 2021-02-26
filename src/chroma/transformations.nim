@@ -496,6 +496,9 @@ proc luv*(c: ColorPolarLUV): ColorLUV {.inline.} =
 proc lab*(c: Color): ColorLAB {.inline.} =
   c.xyz.lab
 
+proc rgbx*(c: Color): ColorRGBX {.inline.} =
+  result = c.rgba
+
 proc color*(c: ColorLab): Color {.inline.} =
   c.xyz.color
 
@@ -565,6 +568,10 @@ proc polarOklab*(c: Color): ColorPolarOklab =
 
 proc color*(c: Color): Color {.inline.} =
   c
+
+proc color*(rgbx: ColorRGBX): Color {.inline.} =
+  var rgba: ColorRGBA = rgbx
+  rgba.color
 
 proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T {.inline.} =
   ## Allows conversion of transformation of a color in any color space into any

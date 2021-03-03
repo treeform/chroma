@@ -14,7 +14,7 @@
 
 import colortypes, math
 
-converter toStraightAlpha*(c: ColorRGBX): ColorRGBA {.inline.} =
+proc toStraightAlpha*(c: ColorRGBX): ColorRGBA {.inline.} =
   ## Convert a paremultiplied alpha RGBA to a straight alpha RGBA.
   result.r = c.r
   result.g = c.g
@@ -26,7 +26,7 @@ converter toStraightAlpha*(c: ColorRGBX): ColorRGBA {.inline.} =
     result.g = ((result.g.uint32 * multiplier) div 255).uint8
     result.b = ((result.b.uint32 * multiplier) div 255).uint8
 
-converter toPremultipliedAlpha*(c: ColorRGBA): ColorRGBX {.inline.} =
+proc toPremultipliedAlpha*(c: ColorRGBA): ColorRGBX {.inline.} =
   ## Convert a straight alpha RGBA to a premultiplied alpha RGBA.
   result.r = ((c.r.uint32 * c.a.uint32) div 255).uint8
   result.g = ((c.g.uint32 * c.a.uint32) div 255).uint8
@@ -497,7 +497,7 @@ proc lab*(c: Color): ColorLAB {.inline.} =
   c.xyz.lab
 
 proc rgbx*(c: Color): ColorRGBX {.inline.} =
-  result = c.rgba
+  result = c.rgba.toPremultipliedAlpha()
 
 proc color*(c: ColorLab): Color {.inline.} =
   c.xyz.color
@@ -570,7 +570,7 @@ proc color*(c: Color): Color {.inline.} =
   c
 
 proc color*(rgbx: ColorRGBX): Color {.inline.} =
-  var rgba: ColorRGBA = rgbx
+  var rgba = rgbx.toStraightAlpha()
   rgba.color
 
 proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T {.inline.} =

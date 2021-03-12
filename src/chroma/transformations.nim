@@ -608,6 +608,8 @@ proc to*[T: SomeColor](c: SomeColor, toColor: typedesc[T]): T {.inline.} =
       c.color.oklab
     elif toColor is ColorPolarOklab:
       c.color.polarOklab
+    elif toColor is ColorRGBX:
+      c.color.rgbx
 
 proc asColor*(c: SomeColor): Color {.inline.} = c.to(Color)
 proc asRgb*(c: SomeColor): ColorRGB {.inline.} = c.to(ColorRGB)
@@ -624,3 +626,10 @@ proc asLuv*(c: SomeColor): ColorLUV {.inline.} = c.to(ColorLUV)
 proc asPolarLuv*(c: SomeColor): ColorPolarLUV {.inline.} = c.to(ColorPolarLUV)
 proc asOklab*(c: SomeColor): ColorOklab {.inline.} = c.to(ColorOklab)
 proc asPolarOklab*(c: SomeColor): ColorPolarOklab {.inline.} = c.to(ColorPolarOklab)
+proc asRgbx*(c: SomeColor): ColorRGBX {.inline.} =
+  when type(c) is ColorRGBX:
+    c
+  elif compiles(c.rgbx):
+    c.rgbx
+  else:
+    c.color.rgbx

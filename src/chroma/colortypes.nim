@@ -108,7 +108,7 @@ type
 
   SomeColor* = Color|ColorRGB|ColorRGBA|ColorHSL|ColorHSV|ColorCMY|ColorCMYK |
                ColorYUV|ColorLAB|ColorPolarLAB|ColorLUV|ColorPolarLUV|ColorXYZ |
-               ColorOklab|ColorPolarOklab
+               ColorOklab|ColorPolarOklab|ColorRGBX
 
   InvalidColor* = object of ValueError
 

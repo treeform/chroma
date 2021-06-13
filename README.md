@@ -2,7 +2,7 @@
 
 # Chroma - Everything you want to do with colors.
 
-See API Reference: https://nimdocs.com/treeform/bumpy/bumpy.html
+See API Reference: https://nimdocs.com/treeform/chroma/chroma.html
 
 ## Parse/Format
 

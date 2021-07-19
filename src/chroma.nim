@@ -246,7 +246,7 @@ proc parseHtmlName*(text: string): Color =
   if lowerName in colorNames:
     return parseHex(colorNames[lowerName])
   else:
-    raise newException(InvalidColor, "Not a valid color name.")
+    raise newException(InvalidColor, "Not a valid color name: " & text)
 
 proc parseHtmlColor*(colorText: string): Color =
   ## Parses HTML color any any of the formats:
@@ -262,7 +262,7 @@ proc parseHtmlColor*(colorText: string): Color =
     elif text.len == 7:
       return parseHtmlHex(text)
     else:
-      raise newException(InvalidColor, "HTML color invalid.")
+      raise newException(InvalidColor, "HTML color invalid: " & colorText)
   if text.len > 4 and text[0..3] == "rgba":
     return parseHtmlRgba(text)
   if text.len > 3 and text[0..2] == "rgb":

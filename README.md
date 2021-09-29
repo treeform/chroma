@@ -2,6 +2,8 @@
 
 # Chroma - Everything you want to do with colors.
 
+`nimble install chroma`
+
 See API Reference: https://nimdocs.com/treeform/chroma/chroma.html
 
 ## Parse/Format

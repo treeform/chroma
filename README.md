@@ -4,7 +4,15 @@
 
 `nimble install chroma`
 
-See API Reference: https://nimdocs.com/treeform/chroma/chroma.html
+![Github Actions](https://github.com/treeform/chroma/workflows/Github%20Actions/badge.svg)
+
+[API reference](https://nimdocs.com/treeform/chroma)
+
+This library has no dependencies other than the Nim standard libarary.
+
+## About
+
+This library works with colors and color spaces. Easly parse and transform colors. Many different color spaces. Optimized, fast and consistant.
 
 ## Parse/Format
 

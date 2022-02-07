@@ -542,6 +542,7 @@ proc color*(c: ColorOklab): Color {.inline.} =
   result.r = + 4.0767245293f*l - 3.3072168827f*m + 0.2307590544f*s
   result.g = - 1.2681437731f*l + 2.6093323231f*m - 0.3411344290f*s
   result.b = - 0.0041119885f*l - 0.7034763098f*m + 1.7068625689f*s
+  result.a = 1.0
 
 proc oklab*(c: ColorPolarOklab): ColorOklab {.inline.} =
   let hrad = degToRad(c.h)

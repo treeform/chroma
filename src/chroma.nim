@@ -90,10 +90,14 @@ proc c2n(hex: string, i: int): int =
     raise newException(InvalidColor, "format is not hex")
 
 proc parseHex*(hex: string): Color =
-  ## Parses colors like:
+  ## Parses colors like (it can start with a hash):
   ## * FF0000 -> red
   ## * 0000FF -> blue
-  ## * FFFFFF -> white
+  ## * #FFFFFF -> white
+  var hex = hex
+  if hex[0] == '#':
+    hex = hex[1..hex.high]
+
   assert hex.len == 6
   result.r = float32(c2n(hex, 0) * 16 + c2n(hex, 1)) / 255
   result.g = float32(c2n(hex, 2) * 16 + c2n(hex, 3)) / 255

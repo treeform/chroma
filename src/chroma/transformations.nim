@@ -15,7 +15,7 @@
 import colortypes, math
 
 proc rgba*(c: ColorRGBX): ColorRGBA {.inline.} =
-  ## Convert a paremultiplied alpha RGBA to a straight alpha RGBA.
+  ## Convert a premultiplied alpha RGBA to a straight alpha RGBA.
   result.r = c.r
   result.g = c.g
   result.b = c.b
@@ -32,6 +32,13 @@ proc rgbx*(c: ColorRGBA): ColorRGBX {.inline.} =
   result.g = ((c.g.uint32 * c.a.uint32) div 255).uint8
   result.b = ((c.b.uint32 * c.a.uint32) div 255).uint8
   result.a = c.a
+
+proc rgbx*(c: ColorRGB): ColorRGBX {.inline.} =
+  ## Convert an RGB to a premultiplied alpha RGBA.
+  result.r = c.r
+  result.g = c.g
+  result.b = c.b
+  result.a = 255
 
 proc rgb*(c: Color): ColorRGB {.inline.} =
   ## Convert Color to ColorRGB

@@ -1,4 +1,4 @@
-import math, colortypes
+import colortypes, math
 
 proc slopeUp(k, a, b, c, d, e: float): float =
   let kp = k + e

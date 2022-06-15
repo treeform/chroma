@@ -357,6 +357,24 @@ suite "distance":
       result = distance(c1, c2) / 100
     check result < 0.05 # proximity threshold set in linguist
 
+suite "temperature":
+  test "compute":
+    doAssert fromTemperature(1700).almostEqual(color(1.0, 0.4728460609912872, 0.0, 1.0))  # Match flame, low pressure sodium lamps (LPS/SOX)
+    doAssert fromTemperature(1850).almostEqual(color(1.0, 0.5075678825378418, 0.0, 1.0))  # Candle flame, sunset/sunrise
+    doAssert fromTemperature(2400).almostEqual(color(1.0, 0.6151175498962402, 0.2489356100559235, 1.0))  # Standard incandescent lamps
+    doAssert fromTemperature(2550).almostEqual(color(1.0, 0.640208899974823, 0.2967877089977264, 1.0))  # Soft white incandescent lamps
+    doAssert fromTemperature(2700).almostEqual(color(1.0, 0.6637818813323975, 0.3408890664577484, 1.0))  # "Soft white" compact fluorescent and LED lamps
+    doAssert fromTemperature(3000).almostEqual(color(1.0, 0.7068109512329102, 0.4213423728942871, 1.0))  # Warm white compact fluorescent and LED lamps
+    doAssert fromTemperature(3200).almostEqual(color(1.0, 0.7327497601509094, 0.4705604314804077, 1.0))  # Studio lamps, photofloods, etc.
+    doAssert fromTemperature(3350).almostEqual(color(1.0, 0.7509022951126099, 0.5055340528488159, 1.0))  # Studio "CP" light
+    doAssert fromTemperature(5000).almostEqual(color(1.0, 0.8959282636642456, 0.8083687424659729, 1.0))  # Horizon daylight
+    doAssert fromTemperature(5000).almostEqual(color(1.0, 0.8959282636642456, 0.8083687424659729, 1.0))  # Tubular fluorescent lamps or cool white
+    doAssert fromTemperature(5500).almostEqual(color(1.0, 0.9261417388916016, 0.8775315284729004, 1.0))  # Vertical daylight, electronic flash
+    doAssert fromTemperature(6200).almostEqual(color(1.0, 0.9618642926216126, 0.9614840745925903, 1.0))  # Xenon short-arc lamp [2]
+    doAssert fromTemperature(6500).almostEqual(color(1.0, 0.9753435850143433, 0.9935365319252014, 1.0))  # Daylight, overcast
+    doAssert fromTemperature(6500).almostEqual(color(1.0, 0.9753435850143433, 0.9935365319252014, 1.0))  # LCD or CRT screen
+    doAssert fromTemperature(15000).almostEqual(color(0.7009154558181763, 0.7981580495834351, 1.0, 1.0))  # Clear blue poleward sky
+
 when false:
   # example in readme:
   import chroma

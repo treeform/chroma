@@ -1,4 +1,4 @@
-import chroma, chroma/transformations, macros, sequtils, strutils, unittest
+import chroma, chroma/transformations, std/macros, std/sequtils, std/strutils, std/unittest, std/math
 
 when not defined(js):
   import parsecsv
@@ -396,6 +396,57 @@ suite "temperature":
     doAssert fromTemperature(6500).almostEqual(color(1.0, 0.9753435850143433, 0.9935365319252014, 1.0))  # Daylight, overcast
     doAssert fromTemperature(6500).almostEqual(color(1.0, 0.9753435850143433, 0.9935365319252014, 1.0))  # LCD or CRT screen
     doAssert fromTemperature(15000).almostEqual(color(0.7009154558181763, 0.7981580495834351, 1.0, 1.0))  # Clear blue poleward sky
+
+suite "premultiplied alpha":
+  test "rgba -> rgbx":
+    var
+      rgbas: seq[ColorRGBA]
+      rgbxs: seq[ColorRGBX]
+    for a in 0.uint8 .. 255:
+      for r in 0.uint8 .. 255:
+        let
+          rgba = rgba(r, 0, 0, a)
+          color = rgba.color()
+          premul = color(color.r * color.a, 0, 0, color.a)
+          rgbx = rgbx(
+            round(premul.r * 255).uint8,
+            0,
+            0,
+            round(premul.a * 255).uint8
+          )
+        rgbas.add(rgba)
+        rgbxs.add(rgbx)
+
+    for i, rgba in rgbas:
+      doAssert rgba.rgbx() == rgbxs[i]
+
+  test "rgbx -> rgba":
+    var
+      rgbxs: seq[ColorRGBX]
+      rgbas: seq[ColorRGBA]
+    for a in 0.uint8 .. 255:
+      for r in 0.uint8 .. 255:
+        let
+          color = rgba(r, 0, 0, a).color()
+          premul = color(color.r * color.a, 0, 0, color.a)
+          rgbx = rgbx(
+            round(premul.r * 255).uint8,
+            0,
+            0,
+            round(premul.a * 255).uint8
+          )
+          multiplier = round((255 / rgbx.a.float32) * 255).uint32
+          rgba = rgba(
+            ((rgbx.r * multiplier + 127) div 255).uint8,
+            0,
+            0,
+            rgbx.a.uint8
+          )
+        rgbxs.add(rgbx)
+        rgbas.add(rgba)
+
+    for i, rgbx in rgbxs:
+      doAssert rgbx.rgba() == rgbas[i]
 
 when false:
   # example in readme:

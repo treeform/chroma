@@ -399,54 +399,27 @@ suite "temperature":
 
 suite "premultiplied alpha":
   test "rgba -> rgbx":
-    var
-      rgbas: seq[ColorRGBA]
-      rgbxs: seq[ColorRGBX]
     for a in 0.uint8 .. 255:
       for r in 0.uint8 .. 255:
-        let
-          rgba = rgba(r, 0, 0, a)
-          color = rgba.color()
-          premul = color(color.r * color.a, 0, 0, color.a)
-          rgbx = rgbx(
-            round(premul.r * 255).uint8,
-            0,
-            0,
-            round(premul.a * 255).uint8
-          )
-        rgbas.add(rgba)
-        rgbxs.add(rgbx)
-
-    for i, rgba in rgbas:
-      doAssert rgba.rgbx() == rgbxs[i]
+        doAssert rgba(r, 0, 0, a).rgbx == rgbx(
+          round(r.float32 * a.float32 / 255).uint8,
+          0,
+          0,
+          a
+        )
 
   test "rgbx -> rgba":
-    var
-      rgbxs: seq[ColorRGBX]
-      rgbas: seq[ColorRGBA]
     for a in 0.uint8 .. 255:
       for r in 0.uint8 .. 255:
         let
-          color = rgba(r, 0, 0, a).color()
-          premul = color(color.r * color.a, 0, 0, color.a)
-          rgbx = rgbx(
-            round(premul.r * 255).uint8,
-            0,
-            0,
-            round(premul.a * 255).uint8
-          )
+          rgbx = rgba(r, 0, 0, a).rgbx
           multiplier = round((255 / rgbx.a.float32) * 255).uint32
-          rgba = rgba(
-            ((rgbx.r * multiplier + 127) div 255).uint8,
-            0,
-            0,
-            rgbx.a.uint8
-          )
-        rgbxs.add(rgbx)
-        rgbas.add(rgba)
-
-    for i, rgbx in rgbxs:
-      doAssert rgbx.rgba() == rgbas[i]
+        doAssert rgbx.rgba == rgba(
+          ((rgbx.r * multiplier + 127) div 255).uint8,
+          0,
+          0,
+          rgbx.a.uint8
+        )
 
 when false:
   # example in readme:

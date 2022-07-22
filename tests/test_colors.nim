@@ -1,4 +1,4 @@
-import chroma, chroma/transformations, macros, sequtils, strutils, unittest
+import chroma, chroma/transformations, std/macros, std/sequtils, std/strutils, std/unittest, std/math
 
 when not defined(js):
   import parsecsv
@@ -396,6 +396,30 @@ suite "temperature":
     doAssert fromTemperature(6500).almostEqual(color(1.0, 0.9753435850143433, 0.9935365319252014, 1.0))  # Daylight, overcast
     doAssert fromTemperature(6500).almostEqual(color(1.0, 0.9753435850143433, 0.9935365319252014, 1.0))  # LCD or CRT screen
     doAssert fromTemperature(15000).almostEqual(color(0.7009154558181763, 0.7981580495834351, 1.0, 1.0))  # Clear blue poleward sky
+
+suite "premultiplied alpha":
+  test "rgba -> rgbx":
+    for a in 0.uint8 .. 255:
+      for r in 0.uint8 .. 255:
+        doAssert rgba(r, 0, 0, a).rgbx == rgbx(
+          round(r.float32 * a.float32 / 255).uint8,
+          0,
+          0,
+          a
+        )
+
+  test "rgbx -> rgba":
+    for a in 0.uint8 .. 255:
+      for r in 0.uint8 .. 255:
+        let
+          rgbx = rgba(r, 0, 0, a).rgbx
+          multiplier = round((255 / rgbx.a.float32) * 255).uint32
+        doAssert rgbx.rgba == rgba(
+          ((rgbx.r * multiplier + 127) div 255).uint8,
+          0,
+          0,
+          rgbx.a.uint8
+        )
 
 when false:
   # example in readme:

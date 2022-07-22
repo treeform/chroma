@@ -12,7 +12,7 @@
 ## and link to a mirror of the C file:
 ## - https://github.com/cran/colorspace/blob/master/src/colorspace.c
 
-import colortypes, math
+import colortypes, std/math
 
 proc rgba*(c: ColorRGBX): ColorRGBA {.inline.} =
   ## Convert a premultiplied alpha RGBA to a straight alpha RGBA.
@@ -21,16 +21,16 @@ proc rgba*(c: ColorRGBX): ColorRGBA {.inline.} =
   result.b = c.b
   result.a = c.a
   if result.a != 0 and result.a != 255:
-    let multiplier = ((255 / c.a.float32) * 255).uint32
-    result.r = ((result.r.uint32 * multiplier) div 255).uint8
-    result.g = ((result.g.uint32 * multiplier) div 255).uint8
-    result.b = ((result.b.uint32 * multiplier) div 255).uint8
+    let multiplier = round((255 / c.a.float32) * 255).uint32
+    result.r = ((result.r.uint32 * multiplier + 127) div 255).uint8
+    result.g = ((result.g.uint32 * multiplier + 127) div 255).uint8
+    result.b = ((result.b.uint32 * multiplier + 127) div 255).uint8
 
 proc rgbx*(c: ColorRGBA): ColorRGBX {.inline.} =
   ## Convert a straight alpha RGBA to a premultiplied alpha RGBA.
-  result.r = ((c.r.uint32 * c.a.uint32) div 255).uint8
-  result.g = ((c.g.uint32 * c.a.uint32) div 255).uint8
-  result.b = ((c.b.uint32 * c.a.uint32) div 255).uint8
+  result.r = ((c.r.uint32 * c.a.uint32 + 127) div 255).uint8
+  result.g = ((c.g.uint32 * c.a.uint32 + 127) div 255).uint8
+  result.b = ((c.b.uint32 * c.a.uint32 + 127) div 255).uint8
   result.a = c.a
 
 proc rgbx*(c: ColorRGB): ColorRGBX {.inline.} =
@@ -42,9 +42,9 @@ proc rgbx*(c: ColorRGB): ColorRGBX {.inline.} =
 
 proc rgb*(c: Color): ColorRGB {.inline.} =
   ## Convert Color to ColorRGB
-  result.r = uint8(c.r * 255)
-  result.g = uint8(c.g * 255)
-  result.b = uint8(c.b * 255)
+  result.r = round(c.r * 255).uint8
+  result.g = round(c.g * 255).uint8
+  result.b = round(c.b * 255).uint8
 
 proc color*(c: ColorRGB): Color {.inline.} =
   ## Convert ColorRGB to Color
@@ -55,10 +55,10 @@ proc color*(c: ColorRGB): Color {.inline.} =
 
 proc rgba*(c: Color): ColorRGBA {.inline.} =
   ## Convert Color to ColorRGBA
-  result.r = uint8(c.r * 255)
-  result.g = uint8(c.g * 255)
-  result.b = uint8(c.b * 255)
-  result.a = uint8(c.a * 255)
+  result.r = round(c.r * 255).uint8
+  result.g = round(c.g * 255).uint8
+  result.b = round(c.b * 255).uint8
+  result.a = round(c.a * 255).uint8
 
 proc color*(c: ColorRGBA): Color {.inline.} =
   ## Convert ColorRGBA to Color

@@ -3,7 +3,7 @@
 ##
 
 import chroma/colortypes, chroma/distance, chroma/names, chroma/temperature,
-    chroma/transformations, hashes, strutils, tables
+    chroma/transformations, std/hashes, std/math, std/strutils, std/tables
 
 export colortypes, distance, temperature, transformations
 
@@ -197,9 +197,9 @@ proc toHtmlRgb*(c: Color): string =
   ## * blue -> rgb(0,0,255)
   ## * white -> rgb(255,255,255)
   "rgb(" &
-    $int(c.r * 255) & ", " &
-    $int(c.g * 255) & ", " &
-    $int(c.b * 255) &
+    $round(c.r * 255).int & ", " &
+    $round(c.g * 255).int & ", " &
+    $round(c.b * 255).int &
   ")"
 
 proc parseHtmlRgba*(text: string): Color =
@@ -230,9 +230,9 @@ proc toHtmlRgba*(c: Color): string =
   ## * blue -> rgb(0,0,255)
   ## * white -> rgb(255,255,255)
   "rgba(" &
-    $int(c.r * 255) & ", " &
-    $int(c.g * 255) & ", " &
-    $int(c.b * 255) & ", " &
+    $round(c.r * 255).int & ", " &
+    $round(c.g * 255).int & ", " &
+    $round(c.b * 255).int & ", " &
     $c.a &
   ")"
 
@@ -336,16 +336,16 @@ proc mixCMYK*(colorA, colorB: Color): Color =
 
 proc mix*(a, b: ColorRGB): ColorRGB =
   ## Mixes two ColorRGB colors together using simple average.
-  result.r = a.r div 2 + b.r div 2
-  result.g = a.g div 2 + b.g div 2
-  result.b = a.b div 2 + b.b div 2
+  result.r = ((a.r.uint32 + b.r) div 2).uint8
+  result.g = ((a.g.uint32 + b.g) div 2).uint8
+  result.b = ((a.b.uint32 + b.b) div 2).uint8
 
 proc mix*(a, b: ColorRGBA): ColorRGBA =
   ## Mixes two ColorRGBA colors together using simple average.
-  result.r = a.r div 2 + b.r div 2
-  result.g = a.g div 2 + b.g div 2
-  result.b = a.b div 2 + b.b div 2
-  result.a = a.a div 2 + b.a div 2
+  result.r = ((a.r.uint32 + b.r) div 2).uint8
+  result.g = ((a.g.uint32 + b.g) div 2).uint8
+  result.b = ((a.b.uint32 + b.b) div 2).uint8
+  result.a = ((a.a.uint32 + b.a) div 2).uint8
 
 func distance*(c1, c2: SomeColor): float32 =
   ## A distance function based on CIEDE2000 color difference formula

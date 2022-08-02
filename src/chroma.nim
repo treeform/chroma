@@ -2,10 +2,11 @@
 ## **Everything you want to do with colors.**
 ##
 
-import chroma/colortypes, chroma/distance, chroma/names, chroma/temperature,
-    chroma/transformations, std/hashes, std/math, std/strutils, std/tables
+import chroma/colortypes, chroma/blends, chroma/distance, chroma/names,
+    chroma/temperature, chroma/transformations, std/hashes, std/math,
+    std/strutils, std/tables
 
-export colortypes, distance, temperature, transformations
+export colortypes, distance, temperature, transformations, blends
 
 proc toHex(a: float32): string {.inline.} = toHex(int(a))
 

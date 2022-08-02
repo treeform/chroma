@@ -1,4 +1,4 @@
-version = "0.2.6"
+version = "0.2.7"
 author = "Andre von Houck"
 description = "Everything you want to do with colors"
 license = "MIT"

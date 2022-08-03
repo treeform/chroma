@@ -1,4 +1,4 @@
-import colortypes, math
+import colortypes, std/math
 
 proc `*`*(c: Color, v: float32): Color {.inline.} =
   ## Multiply color by a value.
@@ -49,12 +49,12 @@ proc softLight(backdrop, source: float32): float32 {.inline.} =
   ## Pegtop
   (1 - 2 * source) * backdrop ^ 2 + 2 * source * backdrop
 
-proc Lum(C: Color): float32 {.inline.} =
+proc lum(C: Color): float32 {.inline.} =
   0.3 * C.r + 0.59 * C.g + 0.11 * C.b
 
-proc ClipColor(C: var Color) {.inline.} =
+proc clipColor(C: var Color) {.inline.} =
   let
-    L = Lum(C)
+    L = lum(C)
     n = min([C.r, C.g, C.b])
     x = max([C.r, C.g, C.b])
   if n < 0:
@@ -62,18 +62,18 @@ proc ClipColor(C: var Color) {.inline.} =
   if x > 1:
       C = L + (((C - L) * (1 - L)) / (x - L))
 
-proc SetLum(C: Color, l: float32): Color {.inline.} =
-  let d = l - Lum(C)
+proc setLum(C: Color, l: float32): Color {.inline.} =
+  let d = l - lum(C)
   result.r = C.r + d
   result.g = C.g + d
   result.b = C.b + d
-  ClipColor(result)
+  clipColor(result)
 
-proc Sat(C: Color): float32 {.inline.} =
+proc sat(C: Color): float32 {.inline.} =
   max([C.r, C.g, C.b]) - min([C.r, C.g, C.b])
 
-proc SetSat(C: Color, s: float32): Color {.inline.} =
-  let satC = Sat(C)
+proc setSat(C: Color, s: float32): Color {.inline.} =
+  let satC = sat(C)
   if satC > 0:
     result = (C - min([C.r, C.g, C.b])) * s / satC
 
@@ -194,17 +194,17 @@ proc blendExclusion*(backdrop, source: Color): Color {.inline.} =
   result = alphaFix(backdrop, source, result)
 
 proc blendColor*(backdrop, source: Color): Color {.inline.} =
-  result = SetLum(source, Lum(backdrop))
+  result = setLum(source, lum(backdrop))
   result = alphaFix(backdrop, source, result)
 
 proc blendLuminosity*(backdrop, source: Color): Color {.inline.} =
-  result = SetLum(backdrop, Lum(source))
+  result = setLum(backdrop, lum(source))
   result = alphaFix(backdrop, source, result)
 
 proc blendHue*(backdrop, source: Color): Color {.inline.} =
-  result = SetLum(SetSat(source, Sat(backdrop)), Lum(backdrop))
+  result = setLum(setSat(source, sat(backdrop)), lum(backdrop))
   result = alphaFix(backdrop, source, result)
 
 proc blendSaturation*(backdrop, source: Color): Color {.inline.} =
-  result = SetLum(SetSat(backdrop, Sat(source)), Lum(backdrop))
+  result = setLum(setSat(backdrop, sat(source)), lum(backdrop))
   result = alphaFix(backdrop, source, result)

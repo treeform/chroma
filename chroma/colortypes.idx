@@ -1,0 +1,35 @@
+Color	chroma/colortypes.html#Color	colortypes: Color	
+ColorRGB	chroma/colortypes.html#ColorRGB	colortypes: ColorRGB	
+ColorRGBA	chroma/colortypes.html#ColorRGBA	colortypes: ColorRGBA	
+ColorRGBX	chroma/colortypes.html#ColorRGBX	colortypes: ColorRGBX	
+ColorCMY	chroma/colortypes.html#ColorCMY	colortypes: ColorCMY	
+ColorCMYK	chroma/colortypes.html#ColorCMYK	colortypes: ColorCMYK	
+ColorHSL	chroma/colortypes.html#ColorHSL	colortypes: ColorHSL	
+ColorHSV	chroma/colortypes.html#ColorHSV	colortypes: ColorHSV	
+ColorYUV	chroma/colortypes.html#ColorYUV	colortypes: ColorYUV	
+ColorXYZ	chroma/colortypes.html#ColorXYZ	colortypes: ColorXYZ	
+ColorLAB	chroma/colortypes.html#ColorLAB	colortypes: ColorLAB	
+ColorPolarLAB	chroma/colortypes.html#ColorPolarLAB	colortypes: ColorPolarLAB	
+ColorLUV	chroma/colortypes.html#ColorLUV	colortypes: ColorLUV	
+ColorPolarLUV	chroma/colortypes.html#ColorPolarLUV	colortypes: ColorPolarLUV	
+ColorHCL	chroma/colortypes.html#ColorHCL	colortypes: ColorHCL	
+ColorOklab	chroma/colortypes.html#ColorOklab	colortypes: ColorOklab	
+ColorPolarOklab	chroma/colortypes.html#ColorPolarOklab	colortypes: ColorPolarOklab	
+SomeColor	chroma/colortypes.html#SomeColor	colortypes: SomeColor	
+InvalidColor	chroma/colortypes.html#InvalidColor	colortypes: InvalidColor	
+color	chroma/colortypes.html#color,float32,float32,float32,float32	colortypes: color(r, g, b: float32; a: float32 = 1.0): Color	
+rgb	chroma/colortypes.html#rgb,uint8,uint8,uint8	colortypes: rgb(r, g, b: uint8): ColorRGB	
+rgba	chroma/colortypes.html#rgba,uint8,uint8,uint8,uint8	colortypes: rgba(r, g, b, a: uint8): ColorRGBA	
+rgbx	chroma/colortypes.html#rgbx,uint8,uint8,uint8,uint8	colortypes: rgbx(r, g, b, a: uint8): ColorRGBX	
+cmy	chroma/colortypes.html#cmy,float32,float32,float32	colortypes: cmy(c, m, y: float32): ColorCMY	
+cmyk	chroma/colortypes.html#cmyk,float32,float32,float32,float32	colortypes: cmyk(c, m, y, k: float32): ColorCMYK	
+hsl	chroma/colortypes.html#hsl,float32,float32,float32	colortypes: hsl(h, s, l: float32): ColorHSL	
+hsv	chroma/colortypes.html#hsv,float32,float32,float32	colortypes: hsv(h, s, v: float32): ColorHSV	
+yuv	chroma/colortypes.html#yuv,float32,float32,float32	colortypes: yuv(y, u, v: float32): ColorYUV	
+xyz	chroma/colortypes.html#xyz,float32,float32,float32	colortypes: xyz(x, y, z: float32): ColorXYZ	
+lab	chroma/colortypes.html#lab,float32,float32,float32	colortypes: lab(l, a, b: float32): ColorLAB	
+polarLAB	chroma/colortypes.html#polarLAB,float32,float32,float32	colortypes: polarLAB(l, c, h: float32): ColorPolarLAB	
+luv	chroma/colortypes.html#luv,float32,float32,float32	colortypes: luv(l, u, v: float32): ColorLUV	
+polarLUV	chroma/colortypes.html#polarLUV,float32,float32,float32	colortypes: polarLUV(h, c, l: float32): ColorPolarLUV	
+oklab	chroma/colortypes.html#oklab,float32,float32,float32	colortypes: oklab(L, a, b: float32): ColorOklab	
+polarOklab	chroma/colortypes.html#polarOklab,float32,float32,float32	colortypes: polarOklab(L, C, h: float32): ColorPolarOklab	

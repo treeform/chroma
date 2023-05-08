@@ -1,0 +1,42 @@
+`$`	chroma.html#$,Color	chroma: `$`(c: Color): string	
+hash	chroma.html#hash,Color	chroma: hash(c: Color): Hash	
+hash	chroma.html#hash,ColorRGB	chroma: hash(c: ColorRGB): Hash	
+hash	chroma.html#hash,ColorRGBA	chroma: hash(c: ColorRGBA): Hash	
+hash	chroma.html#hash,ColorCMY	chroma: hash(c: ColorCMY): Hash	
+hash	chroma.html#hash,ColorCMYK	chroma: hash(c: ColorCMYK): Hash	
+hash	chroma.html#hash,ColorHSL	chroma: hash(c: ColorHSL): Hash	
+hash	chroma.html#hash,ColorHSV	chroma: hash(c: ColorHSV): Hash	
+hash	chroma.html#hash,ColorYUV	chroma: hash(c: ColorYUV): Hash	
+hash	chroma.html#hash,ColorXYZ	chroma: hash(c: ColorXYZ): Hash	
+hash	chroma.html#hash,ColorLAB	chroma: hash(c: ColorLAB): Hash	
+hash	chroma.html#hash,ColorPolarLAB	chroma: hash(c: ColorPolarLAB): Hash	
+hash	chroma.html#hash,ColorLUV	chroma: hash(c: ColorLUV): Hash	
+hash	chroma.html#hash,ColorPolarLUV	chroma: hash(c: ColorPolarLUV): Hash	
+hash	chroma.html#hash,ColorOklab	chroma: hash(c: ColorOklab): Hash	
+hash	chroma.html#hash,ColorPolarOklab	chroma: hash(c: ColorPolarOklab): Hash	
+almostEqual	chroma.html#almostEqual,Color,Color,float	chroma: almostEqual(a, b: Color; ep = 0.01): bool	
+parseHex	chroma.html#parseHex,string	chroma: parseHex(hex: string): Color	
+toHex	chroma.html#toHex,Color	chroma: toHex(c: Color): string	
+parseHexAlpha	chroma.html#parseHexAlpha,string	chroma: parseHexAlpha(hex: string): Color	
+toHexAlpha	chroma.html#toHexAlpha,Color	chroma: toHexAlpha(c: Color): string	
+parseHtmlHex	chroma.html#parseHtmlHex,string	chroma: parseHtmlHex(hex: string): Color	
+toHtmlHex	chroma.html#toHtmlHex,Color	chroma: toHtmlHex(c: Color): string	
+parseHtmlHexTiny	chroma.html#parseHtmlHexTiny,string	chroma: parseHtmlHexTiny(hex: string): Color	
+toHtmlHexTiny	chroma.html#toHtmlHexTiny,Color	chroma: toHtmlHexTiny(c: Color): string	
+parseHtmlRgb	chroma.html#parseHtmlRgb,string	chroma: parseHtmlRgb(text: string): Color	
+toHtmlRgb	chroma.html#toHtmlRgb,Color	chroma: toHtmlRgb(c: Color): string	
+parseHtmlRgba	chroma.html#parseHtmlRgba,string	chroma: parseHtmlRgba(text: string): Color	
+toHtmlRgba	chroma.html#toHtmlRgba,Color	chroma: toHtmlRgba(c: Color): string	
+parseHtmlName	chroma.html#parseHtmlName,string	chroma: parseHtmlName(text: string): Color	
+parseHtmlColor	chroma.html#parseHtmlColor,string	chroma: parseHtmlColor(colorText: string): Color	
+lighten	chroma.html#lighten,Color,float32	chroma: lighten(color: Color; amount: float32): Color	
+darken	chroma.html#darken,Color,float32	chroma: darken(color: Color; amount: float32): Color	
+saturate	chroma.html#saturate,Color,float32	chroma: saturate(color: Color; amount: float32): Color	
+desaturate	chroma.html#desaturate,Color,float32	chroma: desaturate(color: Color; amount: float32): Color	
+spin	chroma.html#spin,Color,float32	chroma: spin(color: Color; degrees: float32): Color	
+mix	chroma.html#mix,Color,Color	chroma: mix(a, b: Color): Color	
+mix	chroma.html#mix,Color,Color,float32	chroma: mix(a, b: Color; v: float32): Color	
+mixCMYK	chroma.html#mixCMYK,Color,Color	chroma: mixCMYK(colorA, colorB: Color): Color	
+mix	chroma.html#mix,ColorRGB,ColorRGB	chroma: mix(a, b: ColorRGB): ColorRGB	
+mix	chroma.html#mix,ColorRGBA,ColorRGBA	chroma: mix(a, b: ColorRGBA): ColorRGBA	
+distance	chroma.html#distance,SomeColor,SomeColor	chroma: distance(c1, c2: SomeColor): float32	

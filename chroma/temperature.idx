@@ -1,0 +1,1 @@
+fromTemperature	chroma/temperature.html#fromTemperature,float	temperature: fromTemperature(kelvin: float): Color	

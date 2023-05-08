@@ -1,0 +1,24 @@
+`*`	chroma/blends.html#*,Color,float32	blends: `*`(c: Color; v: float32): Color	
+`/`	chroma/blends.html#/,Color,float32	blends: `/`(c: Color; v: float32): Color	
+`+`	chroma/blends.html#+,Color,float32	blends: `+`(c: Color; v: float32): Color	
+`+`	chroma/blends.html#+,float32,Color	blends: `+`(v: float32; c: Color): Color	
+`-`	chroma/blends.html#-,Color,float32	blends: `-`(c: Color; v: float32): Color	
+`-`	chroma/blends.html#-,float32,Color	blends: `-`(v: float32; c: Color): Color	
+blendNormal	chroma/blends.html#blendNormal,Color,Color	blends: blendNormal(backdrop, source: Color): Color	
+blendDarken	chroma/blends.html#blendDarken,Color,Color	blends: blendDarken(backdrop, source: Color): Color	
+blendMultiply	chroma/blends.html#blendMultiply,Color,Color	blends: blendMultiply(backdrop, source: Color): Color	
+blendLinearBurn	chroma/blends.html#blendLinearBurn,Color,Color	blends: blendLinearBurn(backdrop, source: Color): Color	
+blendColorBurn	chroma/blends.html#blendColorBurn,Color,Color	blends: blendColorBurn(backdrop, source: Color): Color	
+blendLighten	chroma/blends.html#blendLighten,Color,Color	blends: blendLighten(backdrop, source: Color): Color	
+blendScreen	chroma/blends.html#blendScreen,Color,Color	blends: blendScreen(backdrop, source: Color): Color	
+blendLinearDodge	chroma/blends.html#blendLinearDodge,Color,Color	blends: blendLinearDodge(backdrop, source: Color): Color	
+blendColorDodge	chroma/blends.html#blendColorDodge,Color,Color	blends: blendColorDodge(backdrop, source: Color): Color	
+blendOverlay	chroma/blends.html#blendOverlay,Color,Color	blends: blendOverlay(backdrop, source: Color): Color	
+blendHardLight	chroma/blends.html#blendHardLight,Color,Color	blends: blendHardLight(backdrop, source: Color): Color	
+blendSoftLight	chroma/blends.html#blendSoftLight,Color,Color	blends: blendSoftLight(backdrop, source: Color): Color	
+blendDifference	chroma/blends.html#blendDifference,Color,Color	blends: blendDifference(backdrop, source: Color): Color	
+blendExclusion	chroma/blends.html#blendExclusion,Color,Color	blends: blendExclusion(backdrop, source: Color): Color	
+blendColor	chroma/blends.html#blendColor,Color,Color	blends: blendColor(backdrop, source: Color): Color	
+blendLuminosity	chroma/blends.html#blendLuminosity,Color,Color	blends: blendLuminosity(backdrop, source: Color): Color	
+blendHue	chroma/blends.html#blendHue,Color,Color	blends: blendHue(backdrop, source: Color): Color	
+blendSaturation	chroma/blends.html#blendSaturation,Color,Color	blends: blendSaturation(backdrop, source: Color): Color	

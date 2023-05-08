@@ -17,8 +17,8 @@ jobs:
           nim-version: ${{ env.nim-version }}
       - run: nimble install -Y
       - run: nimble doc --index:on --project --out:${{ env.deploy-dir }} ${{ env.nim-src }}
-      - name: "Rename to index.html"
-        run: mv ${{ env.deploy-dir }}/${{ github.event.repository.name }}.html ${{ env.deploy-dir }}/index.html
+      - name: "Copy to index.html"
+        run: cp ${{ env.deploy-dir }}/${{ github.event.repository.name }}.html ${{ env.deploy-dir }}/index.html
       - name: Deploy documents
         uses: peaceiris/actions-gh-pages@v3
         with:

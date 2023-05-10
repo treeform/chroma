@@ -6,7 +6,7 @@
 
 ![Github Actions](https://github.com/treeform/chroma/workflows/Github%20Actions/badge.svg)
 
-[API reference](https://nimdocs.com/treeform/chroma)
+[API reference](https://treeform.github.io/chroma)
 
 This library has no dependencies other than the Nim standard library.
 

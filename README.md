@@ -12,7 +12,9 @@ This library has no dependencies other than the Nim standard library.
 
 ## About
 
-This library works with colors and color spaces. Easly parse and transform colors. Many different color spaces. Optimized, fast and consistant.
+This library works with colors and color spaces.
+Easily parse and transform colors.
+Many different color spaces. Optimized, fast and consistent.
 
 ## Parse/Format
 
@@ -35,16 +37,14 @@ Conversion from and to these colors spaces:
 * CMYK colors are used in printing
 * HSL attempts to resemble more perceptual color models
 * HSV models the way paints of different colors mix together
-* YUV origially a television color format, still used in digital
-  movies
+* YUV origially a television color format, still used in digital movies
 * XYZ (CIE `XYZ`; CIE 1931 color space)
 * LAB (CIE `L*a*b*`, CIELAB), derived from XYZ (Note: a fixed white
   point is assumed)
 * CIELCh, LAB in polar coordinates (type: `ColorPolarLAB`)
 * LUV (CIE `L*u*v*`, CIELUV), derived from XYZ (Note: a fixed white
   point is assumed)
-* CIELCH, LUV in polar coordinates (type: `ColorPolarLUV`), often
-  called HCL
+* CIELCH, LUV in polar coordinates (type: `ColorPolarLUV`), often called HCL
 * Oklab (https://bottosson.github.io/posts/oklab/)
 
 The default type is an RGB based type using `float32` as its base type

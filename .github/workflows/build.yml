@@ -1,18 +1,74 @@
-name: Github Actions
-on: [push, pull_request]
+name: GitHub Actions
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
+        nim-version: ['1.2.0', '2.0.2']
 
     runs-on: ${{ matrix.os }}
 
     steps:
+
     - uses: actions/checkout@v3
-    - uses: jiro4989/setup-nim-action@v1
       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - run: nimble test -y
-    - run: nim js ./tests/test_colors.nim
+        path: "${{ github.event.repository.name }}"
+
+    - name: Install Choosenim
+      run: |
+        curl -O https://nim-lang.org/choosenim/init.sh
+        sh init.sh -y
+
+    - name: Add Nim to PATH (linux)
+      if: runner.os == 'Linux'
+      run: echo "/home/runner/.nimble/bin" >> $GITHUB_PATH
+
+    - name: Add Nim to PATH (windows)
+      if: runner.os == 'Windows'
+      run: |
+        echo "C:\Users\runneradmin\.nimble\bin" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
+      shell: pwsh
+
+    - name: Install Atlas
+      run: |
+        git clone https://github.com/nim-lang/atlas.git
+        cd atlas
+        git checkout cbba9fa77fa837931bf3c58e20c1f8cb15a22919
+        nim c src/atlas.nim
+
+    - name: Add Atlas to PATH (linux)
+      if: runner.os == 'Linux'
+      run: mv atlas/src/atlas /home/runner/.nimble/bin
+
+    - name: Add Atlas to PATH (windows)
+      if: runner.os == 'Windows'
+      run: mv atlas/src/atlas.exe C:\Users\runneradmin\.nimble\bin
+      shell: pwsh
+
+    - name: Init Atlas
+      run: atlas init
+
+    - name: Install this Commit
+      run: atlas use file://${{ github.event.repository.name }}
+
+    - name: List nim.cfg
+      run: cat nim.cfg
+
+    - name: Install Version
+      run: choosenim ${{ matrix.nim-version }}
+
+    - name: Run tests
+      run: |
+        cd "${{ github.event.repository.name }}"
+        # List test files here
+
+        nim c -r tests/test_colors.nim

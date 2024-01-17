@@ -2,7 +2,8 @@
 
 # Chroma - Everything you want to do with colors.
 
-`nimble install chroma`
+* `atlas use chroma`
+* `nimble install chroma`
 
 ![Github Actions](https://github.com/treeform/chroma/workflows/Github%20Actions/badge.svg)
 

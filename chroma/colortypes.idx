@@ -1,35 +1,36 @@
-Color	chroma/colortypes.html#Color	colortypes: Color	
-ColorRGB	chroma/colortypes.html#ColorRGB	colortypes: ColorRGB	
-ColorRGBA	chroma/colortypes.html#ColorRGBA	colortypes: ColorRGBA	
-ColorRGBX	chroma/colortypes.html#ColorRGBX	colortypes: ColorRGBX	
-ColorCMY	chroma/colortypes.html#ColorCMY	colortypes: ColorCMY	
-ColorCMYK	chroma/colortypes.html#ColorCMYK	colortypes: ColorCMYK	
-ColorHSL	chroma/colortypes.html#ColorHSL	colortypes: ColorHSL	
-ColorHSV	chroma/colortypes.html#ColorHSV	colortypes: ColorHSV	
-ColorYUV	chroma/colortypes.html#ColorYUV	colortypes: ColorYUV	
-ColorXYZ	chroma/colortypes.html#ColorXYZ	colortypes: ColorXYZ	
-ColorLAB	chroma/colortypes.html#ColorLAB	colortypes: ColorLAB	
-ColorPolarLAB	chroma/colortypes.html#ColorPolarLAB	colortypes: ColorPolarLAB	
-ColorLUV	chroma/colortypes.html#ColorLUV	colortypes: ColorLUV	
-ColorPolarLUV	chroma/colortypes.html#ColorPolarLUV	colortypes: ColorPolarLUV	
-ColorHCL	chroma/colortypes.html#ColorHCL	colortypes: ColorHCL	
-ColorOklab	chroma/colortypes.html#ColorOklab	colortypes: ColorOklab	
-ColorPolarOklab	chroma/colortypes.html#ColorPolarOklab	colortypes: ColorPolarOklab	
-SomeColor	chroma/colortypes.html#SomeColor	colortypes: SomeColor	
-InvalidColor	chroma/colortypes.html#InvalidColor	colortypes: InvalidColor	
-color	chroma/colortypes.html#color,float32,float32,float32,float32	colortypes: color(r, g, b: float32; a: float32 = 1.0): Color	
-rgb	chroma/colortypes.html#rgb,uint8,uint8,uint8	colortypes: rgb(r, g, b: uint8): ColorRGB	
-rgba	chroma/colortypes.html#rgba,uint8,uint8,uint8,uint8	colortypes: rgba(r, g, b, a: uint8): ColorRGBA	
-rgbx	chroma/colortypes.html#rgbx,uint8,uint8,uint8,uint8	colortypes: rgbx(r, g, b, a: uint8): ColorRGBX	
-cmy	chroma/colortypes.html#cmy,float32,float32,float32	colortypes: cmy(c, m, y: float32): ColorCMY	
-cmyk	chroma/colortypes.html#cmyk,float32,float32,float32,float32	colortypes: cmyk(c, m, y, k: float32): ColorCMYK	
-hsl	chroma/colortypes.html#hsl,float32,float32,float32	colortypes: hsl(h, s, l: float32): ColorHSL	
-hsv	chroma/colortypes.html#hsv,float32,float32,float32	colortypes: hsv(h, s, v: float32): ColorHSV	
-yuv	chroma/colortypes.html#yuv,float32,float32,float32	colortypes: yuv(y, u, v: float32): ColorYUV	
-xyz	chroma/colortypes.html#xyz,float32,float32,float32	colortypes: xyz(x, y, z: float32): ColorXYZ	
-lab	chroma/colortypes.html#lab,float32,float32,float32	colortypes: lab(l, a, b: float32): ColorLAB	
-polarLAB	chroma/colortypes.html#polarLAB,float32,float32,float32	colortypes: polarLAB(l, c, h: float32): ColorPolarLAB	
-luv	chroma/colortypes.html#luv,float32,float32,float32	colortypes: luv(l, u, v: float32): ColorLUV	
-polarLUV	chroma/colortypes.html#polarLUV,float32,float32,float32	colortypes: polarLUV(h, c, l: float32): ColorPolarLUV	
-oklab	chroma/colortypes.html#oklab,float32,float32,float32	colortypes: oklab(L, a, b: float32): ColorOklab	
-polarOklab	chroma/colortypes.html#polarOklab,float32,float32,float32	colortypes: polarOklab(L, C, h: float32): ColorPolarOklab	
+nimTitle	colortypes	chroma/colortypes.html	module src/chroma/colortypes		0
+nim	Color	chroma/colortypes.html#Color	object Color		2
+nim	ColorRGB	chroma/colortypes.html#ColorRGB	object ColorRGB		10
+nim	ColorRGBA	chroma/colortypes.html#ColorRGBA	object ColorRGBA		17
+nim	ColorRGBX	chroma/colortypes.html#ColorRGBX	object ColorRGBX		24
+nim	ColorCMY	chroma/colortypes.html#ColorCMY	object ColorCMY		32
+nim	ColorCMYK	chroma/colortypes.html#ColorCMYK	object ColorCMYK		39
+nim	ColorHSL	chroma/colortypes.html#ColorHSL	object ColorHSL		47
+nim	ColorHSV	chroma/colortypes.html#ColorHSV	object ColorHSV		54
+nim	ColorYUV	chroma/colortypes.html#ColorYUV	object ColorYUV		60
+nim	ColorXYZ	chroma/colortypes.html#ColorXYZ	object ColorXYZ		66
+nim	ColorLAB	chroma/colortypes.html#ColorLAB	object ColorLAB		71
+nim	ColorPolarLAB	chroma/colortypes.html#ColorPolarLAB	object ColorPolarLAB		79
+nim	ColorLUV	chroma/colortypes.html#ColorLUV	object ColorLUV		86
+nim	ColorPolarLUV	chroma/colortypes.html#ColorPolarLUV	object ColorPolarLUV		91
+nim	ColorHCL	chroma/colortypes.html#ColorHCL	type ColorHCL		97
+nim	ColorOklab	chroma/colortypes.html#ColorOklab	object ColorOklab		99
+nim	ColorPolarOklab	chroma/colortypes.html#ColorPolarOklab	object ColorPolarOklab		104
+nim	SomeColor	chroma/colortypes.html#SomeColor	type SomeColor		109
+nim	InvalidColor	chroma/colortypes.html#InvalidColor	object InvalidColor		113
+nim	color	chroma/colortypes.html#color,float32,float32,float32,float32	proc color(r, g, b: float32; a: float32 = 1.0): Color		117
+nim	rgb	chroma/colortypes.html#rgb,uint8,uint8,uint8	proc rgb(r, g, b: uint8): ColorRGB		126
+nim	rgba	chroma/colortypes.html#rgba,uint8,uint8,uint8,uint8	proc rgba(r, g, b, a: uint8): ColorRGBA		133
+nim	rgbx	chroma/colortypes.html#rgbx,uint8,uint8,uint8,uint8	proc rgbx(r, g, b, a: uint8): ColorRGBX		142
+nim	cmy	chroma/colortypes.html#cmy,float32,float32,float32	proc cmy(c, m, y: float32): ColorCMY		151
+nim	cmyk	chroma/colortypes.html#cmyk,float32,float32,float32,float32	proc cmyk(c, m, y, k: float32): ColorCMYK		154
+nim	hsl	chroma/colortypes.html#hsl,float32,float32,float32	proc hsl(h, s, l: float32): ColorHSL		157
+nim	hsv	chroma/colortypes.html#hsv,float32,float32,float32	proc hsv(h, s, v: float32): ColorHSV		160
+nim	yuv	chroma/colortypes.html#yuv,float32,float32,float32	proc yuv(y, u, v: float32): ColorYUV		163
+nim	xyz	chroma/colortypes.html#xyz,float32,float32,float32	proc xyz(x, y, z: float32): ColorXYZ		166
+nim	lab	chroma/colortypes.html#lab,float32,float32,float32	proc lab(l, a, b: float32): ColorLAB		169
+nim	polarLAB	chroma/colortypes.html#polarLAB,float32,float32,float32	proc polarLAB(l, c, h: float32): ColorPolarLAB		172
+nim	luv	chroma/colortypes.html#luv,float32,float32,float32	proc luv(l, u, v: float32): ColorLUV		175
+nim	polarLUV	chroma/colortypes.html#polarLUV,float32,float32,float32	proc polarLUV(h, c, l: float32): ColorPolarLUV		178
+nim	oklab	chroma/colortypes.html#oklab,float32,float32,float32	proc oklab(L, a, b: float32): ColorOklab		181
+nim	polarOklab	chroma/colortypes.html#polarOklab,float32,float32,float32	proc polarOklab(L, C, h: float32): ColorPolarOklab		184

@@ -1,65 +1,77 @@
-rgba	chroma/transformations.html#rgba,ColorRGBX	transformations: rgba(c: ColorRGBX): ColorRGBA	
-rgbx	chroma/transformations.html#rgbx,ColorRGBA	transformations: rgbx(c: ColorRGBA): ColorRGBX	
-rgbx	chroma/transformations.html#rgbx,ColorRGB	transformations: rgbx(c: ColorRGB): ColorRGBX	
-rgb	chroma/transformations.html#rgb,Color	transformations: rgb(c: Color): ColorRGB	
-color	chroma/transformations.html#color,ColorRGB	transformations: color(c: ColorRGB): Color	
-rgba	chroma/transformations.html#rgba,Color	transformations: rgba(c: Color): ColorRGBA	
-color	chroma/transformations.html#color,ColorRGBA	transformations: color(c: ColorRGBA): Color	
-hsl	chroma/transformations.html#hsl,Color	transformations: hsl(c: Color): ColorHSL	
-color	chroma/transformations.html#color,ColorHSL	transformations: color(c: ColorHSL): Color	
-hsv	chroma/transformations.html#hsv,Color	transformations: hsv(c: Color): ColorHSV	
-color	chroma/transformations.html#color,ColorHSV	transformations: color(c: ColorHSV): Color	
-yuv	chroma/transformations.html#yuv,Color	transformations: yuv(c: Color): ColorYUV	
-color	chroma/transformations.html#color,ColorYUV	transformations: color(c: ColorYUV): Color	
-cmy	chroma/transformations.html#cmy,Color	transformations: cmy(c: Color): ColorCMY	
-color	chroma/transformations.html#color,ColorCMY	transformations: color(c: ColorCMY): Color	
-cmyk	chroma/transformations.html#cmyk,Color	transformations: cmyk(c: Color): ColorCMYK	
-color	chroma/transformations.html#color,ColorCMYK	transformations: color(color: ColorCMYK): Color	
-xyz	chroma/transformations.html#xyz,Color	transformations: xyz(c: Color): ColorXYZ	
-color	chroma/transformations.html#color,ColorXYZ	transformations: color(c: ColorXYZ): Color	
-kappa	chroma/transformations.html#kappa	transformations: kappa	
-epsilon	chroma/transformations.html#epsilon	transformations: epsilon	
-xyz	chroma/transformations.html#xyz,ColorLAB	transformations: xyz(c: ColorLAB): ColorXYZ	
-f	chroma/transformations.html#f,float32	transformations: f(t: float32): float32	
-lab	chroma/transformations.html#lab,ColorXYZ	transformations: lab(c: ColorXYZ): ColorLAB	
-polarLAB	chroma/transformations.html#polarLAB,ColorLAB	transformations: polarLAB(c: ColorLAB): ColorPolarLAB	
-lab	chroma/transformations.html#lab,ColorPolarLAB	transformations: lab(c: ColorPolarLAB): ColorLAB	
-uv	chroma/transformations.html#uv,ColorXYZ	transformations: uv(c: ColorXYZ): tuple[u, v: float32]	
-luv	chroma/transformations.html#luv,ColorXYZ	transformations: luv(c: ColorXYZ): ColorLUV	
-xyz	chroma/transformations.html#xyz,ColorLUV	transformations: xyz(c: ColorLUV): ColorXYZ	
-polarLUV	chroma/transformations.html#polarLUV,ColorLUV	transformations: polarLUV(c: ColorLUV): ColorPolarLUV	
-luv	chroma/transformations.html#luv,ColorPolarLUV	transformations: luv(c: ColorPolarLUV): ColorLUV	
-lab	chroma/transformations.html#lab,Color	transformations: lab(c: Color): ColorLAB	
-rgbx	chroma/transformations.html#rgbx,Color	transformations: rgbx(c: Color): ColorRGBX	
-color	chroma/transformations.html#color,ColorLAB	transformations: color(c: ColorLAB): Color	
-polarLAB	chroma/transformations.html#polarLAB,Color	transformations: polarLAB(c: Color): ColorPolarLAB	
-color	chroma/transformations.html#color,ColorPolarLAB	transformations: color(c: ColorPolarLAB): Color	
-luv	chroma/transformations.html#luv,Color	transformations: luv(c: Color): ColorLUV	
-color	chroma/transformations.html#color,ColorLUV	transformations: color(c: ColorLUV): Color	
-polarLUV	chroma/transformations.html#polarLUV,Color	transformations: polarLUV(c: Color): ColorPolarLUV	
-color	chroma/transformations.html#color,ColorPolarLUV	transformations: color(c: ColorPolarLUV): Color	
-oklab	chroma/transformations.html#oklab,Color	transformations: oklab(c: Color): ColorOklab	
-color	chroma/transformations.html#color,ColorOklab	transformations: color(c: ColorOklab): Color	
-oklab	chroma/transformations.html#oklab,ColorPolarOklab	transformations: oklab(c: ColorPolarOklab): ColorOklab	
-polarOklab	chroma/transformations.html#polarOklab,ColorOklab	transformations: polarOklab(c: ColorOklab): ColorPolarOklab	
-color	chroma/transformations.html#color,ColorPolarOklab	transformations: color(c: ColorPolarOklab): Color	
-polarOklab	chroma/transformations.html#polarOklab,Color	transformations: polarOklab(c: Color): ColorPolarOklab	
-color	chroma/transformations.html#color,Color	transformations: color(c: Color): Color	
-color	chroma/transformations.html#color,ColorRGBX	transformations: color(rgbx: ColorRGBX): Color	
-to	chroma/transformations.html#to,SomeColor,typedesc[T]	transformations: to[T: SomeColor](c: SomeColor; toColor: typedesc[T]): T	
-asColor	chroma/transformations.html#asColor,SomeColor	transformations: asColor(c: SomeColor): Color	
-asRgb	chroma/transformations.html#asRgb,SomeColor	transformations: asRgb(c: SomeColor): ColorRGB	
-asRgba	chroma/transformations.html#asRgba,SomeColor	transformations: asRgba(c: SomeColor): ColorRGBA	
-asCmy	chroma/transformations.html#asCmy,SomeColor	transformations: asCmy(c: SomeColor): ColorCMY	
-asCmyk	chroma/transformations.html#asCmyk,SomeColor	transformations: asCmyk(c: SomeColor): ColorCMYK	
-asHsl	chroma/transformations.html#asHsl,SomeColor	transformations: asHsl(c: SomeColor): ColorHSL	
-asHsv	chroma/transformations.html#asHsv,SomeColor	transformations: asHsv(c: SomeColor): ColorHSV	
-asYuv	chroma/transformations.html#asYuv,SomeColor	transformations: asYuv(c: SomeColor): ColorYUV	
-asXyz	chroma/transformations.html#asXyz,SomeColor	transformations: asXyz(c: SomeColor): ColorXYZ	
-asLab	chroma/transformations.html#asLab,SomeColor	transformations: asLab(c: SomeColor): ColorLAB	
-asPolarLAB	chroma/transformations.html#asPolarLAB,SomeColor	transformations: asPolarLAB(c: SomeColor): ColorPolarLAB	
-asLuv	chroma/transformations.html#asLuv,SomeColor	transformations: asLuv(c: SomeColor): ColorLUV	
-asPolarLuv	chroma/transformations.html#asPolarLuv,SomeColor	transformations: asPolarLuv(c: SomeColor): ColorPolarLUV	
-asOklab	chroma/transformations.html#asOklab,SomeColor	transformations: asOklab(c: SomeColor): ColorOklab	
-asPolarOklab	chroma/transformations.html#asPolarOklab,SomeColor	transformations: asPolarOklab(c: SomeColor): ColorPolarOklab	
-asRgbx	chroma/transformations.html#asRgbx,SomeColor	transformations: asRgbx(c: SomeColor): ColorRGBX	
+nimTitle	transformations	chroma/transformations.html	module src/chroma/transformations		0
+nim	rgba	chroma/transformations.html#rgba,ColorRGBX	proc rgba(c: ColorRGBX): ColorRGBA		17
+nim	rgbx	chroma/transformations.html#rgbx,ColorRGBA	proc rgbx(c: ColorRGBA): ColorRGBX		29
+nim	rgbx	chroma/transformations.html#rgbx,ColorRGB	proc rgbx(c: ColorRGB): ColorRGBX		36
+nim	rgb	chroma/transformations.html#rgb,Color	proc rgb(c: Color): ColorRGB		43
+nim	color	chroma/transformations.html#color,ColorRGB	proc color(c: ColorRGB): Color		49
+nim	rgba	chroma/transformations.html#rgba,Color	proc rgba(c: Color): ColorRGBA		56
+nim	color	chroma/transformations.html#color,ColorRGBA	proc color(c: ColorRGBA): Color		63
+nim	hsl	chroma/transformations.html#hsl,Color	proc hsl(c: Color): ColorHSL		73
+nim	color	chroma/transformations.html#color,ColorHSL	proc color(c: ColorHSL): Color		131
+nim	hsv	chroma/transformations.html#hsv,Color	proc hsv(c: Color): ColorHSV		172
+nim	color	chroma/transformations.html#color,ColorHSV	proc color(c: ColorHSV): Color		199
+nim	yuv	chroma/transformations.html#yuv,Color	proc yuv(c: Color): ColorYUV		226
+nim	color	chroma/transformations.html#color,ColorYUV	proc color(c: ColorYUV): Color		232
+nim	cmy	chroma/transformations.html#cmy,Color	proc cmy(c: Color): ColorCMY		243
+nim	color	chroma/transformations.html#color,ColorCMY	proc color(c: ColorCMY): Color		249
+nim	cmyk	chroma/transformations.html#cmyk,Color	proc cmyk(c: Color): ColorCMYK		256
+nim	color	chroma/transformations.html#color,ColorCMYK	proc color(color: ColorCMYK): Color		265
+nim	xyz	chroma/transformations.html#xyz,Color	proc xyz(c: Color): ColorXYZ		336
+nim	color	chroma/transformations.html#color,ColorXYZ	proc color(c: ColorXYZ): Color		345
+nim	kappa	chroma/transformations.html#kappa	const kappa		352
+nim	epsilon	chroma/transformations.html#epsilon	const epsilon		356
+nim	xyz	chroma/transformations.html#xyz,ColorLAB	proc xyz(c: ColorLAB): ColorXYZ		361
+nim	f	chroma/transformations.html#f,float32	proc f(t: float32): float32		389
+nim	lab	chroma/transformations.html#lab,ColorXYZ	proc lab(c: ColorXYZ): ColorLAB		395
+nim	polarLAB	chroma/transformations.html#polarLAB,ColorLAB	proc polarLAB(c: ColorLAB): ColorPolarLAB		416
+nim	lab	chroma/transformations.html#lab,ColorPolarLAB	proc lab(c: ColorPolarLAB): ColorLAB		427
+nim	uv	chroma/transformations.html#uv,ColorXYZ	proc uv(c: ColorXYZ): tuple[u, v: float32]		432
+nim	luv	chroma/transformations.html#luv,ColorXYZ	proc luv(c: ColorXYZ): ColorLUV		447
+nim	xyz	chroma/transformations.html#xyz,ColorLUV	proc xyz(c: ColorLUV): ColorXYZ		461
+nim	polarLUV	chroma/transformations.html#polarLUV,ColorLUV	proc polarLUV(c: ColorLUV): ColorPolarLUV		488
+nim	luv	chroma/transformations.html#luv,ColorPolarLUV	proc luv(c: ColorPolarLUV): ColorLUV		497
+nim	lab	chroma/transformations.html#lab,Color	proc lab(c: Color): ColorLAB		503
+nim	rgbx	chroma/transformations.html#rgbx,Color	proc rgbx(c: Color): ColorRGBX		506
+nim	color	chroma/transformations.html#color,ColorLAB	proc color(c: ColorLAB): Color		509
+nim	polarLAB	chroma/transformations.html#polarLAB,Color	proc polarLAB(c: Color): ColorPolarLAB		512
+nim	color	chroma/transformations.html#color,ColorPolarLAB	proc color(c: ColorPolarLAB): Color		515
+nim	luv	chroma/transformations.html#luv,Color	proc luv(c: Color): ColorLUV		518
+nim	color	chroma/transformations.html#color,ColorLUV	proc color(c: ColorLUV): Color		521
+nim	polarLUV	chroma/transformations.html#polarLUV,Color	proc polarLUV(c: Color): ColorPolarLUV		524
+nim	color	chroma/transformations.html#color,ColorPolarLUV	proc color(c: ColorPolarLUV): Color		527
+nim	oklab	chroma/transformations.html#oklab,Color	proc oklab(c: Color): ColorOklab		530
+nim	color	chroma/transformations.html#color,ColorOklab	proc color(c: ColorOklab): Color		543
+nim	oklab	chroma/transformations.html#oklab,ColorPolarOklab	proc oklab(c: ColorPolarOklab): ColorOklab		557
+nim	polarOklab	chroma/transformations.html#polarOklab,ColorOklab	proc polarOklab(c: ColorOklab): ColorPolarOklab		563
+nim	color	chroma/transformations.html#color,ColorPolarOklab	proc color(c: ColorPolarOklab): Color		574
+nim	polarOklab	chroma/transformations.html#polarOklab,Color	proc polarOklab(c: Color): ColorPolarOklab		577
+nim	color	chroma/transformations.html#color,Color	proc color(c: Color): Color		580
+nim	color	chroma/transformations.html#color,ColorRGBX	proc color(rgbx: ColorRGBX): Color		583
+nim	to	chroma/transformations.html#to,SomeColor,typedesc[T]	proc to[T: SomeColor](c: SomeColor; toColor: typedesc[T]): T		586
+nim	asColor	chroma/transformations.html#asColor,SomeColor	proc asColor(c: SomeColor): Color		625
+nim	asRgb	chroma/transformations.html#asRgb,SomeColor	proc asRgb(c: SomeColor): ColorRGB		626
+nim	asRgba	chroma/transformations.html#asRgba,SomeColor	proc asRgba(c: SomeColor): ColorRGBA		627
+nim	asCmy	chroma/transformations.html#asCmy,SomeColor	proc asCmy(c: SomeColor): ColorCMY		628
+nim	asCmyk	chroma/transformations.html#asCmyk,SomeColor	proc asCmyk(c: SomeColor): ColorCMYK		629
+nim	asHsl	chroma/transformations.html#asHsl,SomeColor	proc asHsl(c: SomeColor): ColorHSL		630
+nim	asHsv	chroma/transformations.html#asHsv,SomeColor	proc asHsv(c: SomeColor): ColorHSV		631
+nim	asYuv	chroma/transformations.html#asYuv,SomeColor	proc asYuv(c: SomeColor): ColorYUV		632
+nim	asXyz	chroma/transformations.html#asXyz,SomeColor	proc asXyz(c: SomeColor): ColorXYZ		633
+nim	asLab	chroma/transformations.html#asLab,SomeColor	proc asLab(c: SomeColor): ColorLAB		634
+nim	asPolarLAB	chroma/transformations.html#asPolarLAB,SomeColor	proc asPolarLAB(c: SomeColor): ColorPolarLAB		635
+nim	asLuv	chroma/transformations.html#asLuv,SomeColor	proc asLuv(c: SomeColor): ColorLUV		636
+nim	asPolarLuv	chroma/transformations.html#asPolarLuv,SomeColor	proc asPolarLuv(c: SomeColor): ColorPolarLUV		637
+nim	asOklab	chroma/transformations.html#asOklab,SomeColor	proc asOklab(c: SomeColor): ColorOklab		638
+nim	asPolarOklab	chroma/transformations.html#asPolarOklab,SomeColor	proc asPolarOklab(c: SomeColor): ColorPolarOklab		639
+nim	asRgbx	chroma/transformations.html#asRgbx,SomeColor	proc asRgbx(c: SomeColor): ColorRGBX		640
+nimgrp	color	chroma/transformations.html#color-procs-all	proc		49
+nimgrp	polarlab	chroma/transformations.html#polarLAB-procs-all	proc		416
+nimgrp	oklab	chroma/transformations.html#oklab-procs-all	proc		530
+nimgrp	xyz	chroma/transformations.html#xyz-procs-all	proc		336
+nimgrp	rgbx	chroma/transformations.html#rgbx-procs-all	proc		29
+nimgrp	polaroklab	chroma/transformations.html#polarOklab-procs-all	proc		563
+nimgrp	polarluv	chroma/transformations.html#polarLUV-procs-all	proc		488
+nimgrp	lab	chroma/transformations.html#lab-procs-all	proc		395
+nimgrp	rgba	chroma/transformations.html#rgba-procs-all	proc		17
+nimgrp	luv	chroma/transformations.html#luv-procs-all	proc		447
+heading	#                      Ported code from colorspaces                        ###	chroma/transformations.html#ported-code-from-colorspaces	 #                      Ported code from colorspaces                        ###		0

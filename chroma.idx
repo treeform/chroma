@@ -1,42 +1,45 @@
-`$`	chroma.html#$,Color	chroma: `$`(c: Color): string	
-hash	chroma.html#hash,Color	chroma: hash(c: Color): Hash	
-hash	chroma.html#hash,ColorRGB	chroma: hash(c: ColorRGB): Hash	
-hash	chroma.html#hash,ColorRGBA	chroma: hash(c: ColorRGBA): Hash	
-hash	chroma.html#hash,ColorCMY	chroma: hash(c: ColorCMY): Hash	
-hash	chroma.html#hash,ColorCMYK	chroma: hash(c: ColorCMYK): Hash	
-hash	chroma.html#hash,ColorHSL	chroma: hash(c: ColorHSL): Hash	
-hash	chroma.html#hash,ColorHSV	chroma: hash(c: ColorHSV): Hash	
-hash	chroma.html#hash,ColorYUV	chroma: hash(c: ColorYUV): Hash	
-hash	chroma.html#hash,ColorXYZ	chroma: hash(c: ColorXYZ): Hash	
-hash	chroma.html#hash,ColorLAB	chroma: hash(c: ColorLAB): Hash	
-hash	chroma.html#hash,ColorPolarLAB	chroma: hash(c: ColorPolarLAB): Hash	
-hash	chroma.html#hash,ColorLUV	chroma: hash(c: ColorLUV): Hash	
-hash	chroma.html#hash,ColorPolarLUV	chroma: hash(c: ColorPolarLUV): Hash	
-hash	chroma.html#hash,ColorOklab	chroma: hash(c: ColorOklab): Hash	
-hash	chroma.html#hash,ColorPolarOklab	chroma: hash(c: ColorPolarOklab): Hash	
-almostEqual	chroma.html#almostEqual,Color,Color,float	chroma: almostEqual(a, b: Color; ep = 0.01): bool	
-parseHex	chroma.html#parseHex,string	chroma: parseHex(hex: string): Color	
-toHex	chroma.html#toHex,Color	chroma: toHex(c: Color): string	
-parseHexAlpha	chroma.html#parseHexAlpha,string	chroma: parseHexAlpha(hex: string): Color	
-toHexAlpha	chroma.html#toHexAlpha,Color	chroma: toHexAlpha(c: Color): string	
-parseHtmlHex	chroma.html#parseHtmlHex,string	chroma: parseHtmlHex(hex: string): Color	
-toHtmlHex	chroma.html#toHtmlHex,Color	chroma: toHtmlHex(c: Color): string	
-parseHtmlHexTiny	chroma.html#parseHtmlHexTiny,string	chroma: parseHtmlHexTiny(hex: string): Color	
-toHtmlHexTiny	chroma.html#toHtmlHexTiny,Color	chroma: toHtmlHexTiny(c: Color): string	
-parseHtmlRgb	chroma.html#parseHtmlRgb,string	chroma: parseHtmlRgb(text: string): Color	
-toHtmlRgb	chroma.html#toHtmlRgb,Color	chroma: toHtmlRgb(c: Color): string	
-parseHtmlRgba	chroma.html#parseHtmlRgba,string	chroma: parseHtmlRgba(text: string): Color	
-toHtmlRgba	chroma.html#toHtmlRgba,Color	chroma: toHtmlRgba(c: Color): string	
-parseHtmlName	chroma.html#parseHtmlName,string	chroma: parseHtmlName(text: string): Color	
-parseHtmlColor	chroma.html#parseHtmlColor,string	chroma: parseHtmlColor(colorText: string): Color	
-lighten	chroma.html#lighten,Color,float32	chroma: lighten(color: Color; amount: float32): Color	
-darken	chroma.html#darken,Color,float32	chroma: darken(color: Color; amount: float32): Color	
-saturate	chroma.html#saturate,Color,float32	chroma: saturate(color: Color; amount: float32): Color	
-desaturate	chroma.html#desaturate,Color,float32	chroma: desaturate(color: Color; amount: float32): Color	
-spin	chroma.html#spin,Color,float32	chroma: spin(color: Color; degrees: float32): Color	
-mix	chroma.html#mix,Color,Color	chroma: mix(a, b: Color): Color	
-mix	chroma.html#mix,Color,Color,float32	chroma: mix(a, b: Color; v: float32): Color	
-mixCMYK	chroma.html#mixCMYK,Color,Color	chroma: mixCMYK(colorA, colorB: Color): Color	
-mix	chroma.html#mix,ColorRGB,ColorRGB	chroma: mix(a, b: ColorRGB): ColorRGB	
-mix	chroma.html#mix,ColorRGBA,ColorRGBA	chroma: mix(a, b: ColorRGBA): ColorRGBA	
-distance	chroma.html#distance,SomeColor,SomeColor	chroma: distance(c1, c2: SomeColor): float32	
+nimTitle	chroma	chroma.html	module src/chroma		0
+nim	`$`	chroma.html#$,Color	proc `$`(c: Color): string		13
+nim	hash	chroma.html#hash,Color	proc hash(c: Color): Hash		17
+nim	hash	chroma.html#hash,ColorRGB	proc hash(c: ColorRGB): Hash		21
+nim	hash	chroma.html#hash,ColorRGBA	proc hash(c: ColorRGBA): Hash		25
+nim	hash	chroma.html#hash,ColorCMY	proc hash(c: ColorCMY): Hash		29
+nim	hash	chroma.html#hash,ColorCMYK	proc hash(c: ColorCMYK): Hash		33
+nim	hash	chroma.html#hash,ColorHSL	proc hash(c: ColorHSL): Hash		37
+nim	hash	chroma.html#hash,ColorHSV	proc hash(c: ColorHSV): Hash		41
+nim	hash	chroma.html#hash,ColorYUV	proc hash(c: ColorYUV): Hash		45
+nim	hash	chroma.html#hash,ColorXYZ	proc hash(c: ColorXYZ): Hash		49
+nim	hash	chroma.html#hash,ColorLAB	proc hash(c: ColorLAB): Hash		53
+nim	hash	chroma.html#hash,ColorPolarLAB	proc hash(c: ColorPolarLAB): Hash		57
+nim	hash	chroma.html#hash,ColorLUV	proc hash(c: ColorLUV): Hash		61
+nim	hash	chroma.html#hash,ColorPolarLUV	proc hash(c: ColorPolarLUV): Hash		65
+nim	hash	chroma.html#hash,ColorOklab	proc hash(c: ColorOklab): Hash		69
+nim	hash	chroma.html#hash,ColorPolarOklab	proc hash(c: ColorPolarOklab): Hash		73
+nim	almostEqual	chroma.html#almostEqual,Color,Color,float	proc almostEqual(a, b: Color; ep = 0.01): bool		77
+nim	parseHex	chroma.html#parseHex,string	proc parseHex(hex: string): Color		94
+nim	toHex	chroma.html#toHex,Color	proc toHex(c: Color): string		105
+nim	parseHexAlpha	chroma.html#parseHexAlpha,string	proc parseHexAlpha(hex: string): Color		114
+nim	toHexAlpha	chroma.html#toHexAlpha,Color	proc toHexAlpha(c: Color): string		127
+nim	parseHtmlHex	chroma.html#parseHtmlHex,string	proc parseHtmlHex(hex: string): Color		138
+nim	toHtmlHex	chroma.html#toHtmlHex,Color	proc toHtmlHex(c: Color): string		147
+nim	parseHtmlHexTiny	chroma.html#parseHtmlHexTiny,string	proc parseHtmlHexTiny(hex: string): Color		154
+nim	toHtmlHexTiny	chroma.html#toHtmlHexTiny,Color	proc toHtmlHexTiny(c: Color): string		167
+nim	parseHtmlRgb	chroma.html#parseHtmlRgb,string	proc parseHtmlRgb(text: string): Color		176
+nim	toHtmlRgb	chroma.html#toHtmlRgb,Color	proc toHtmlRgb(c: Color): string		195
+nim	parseHtmlRgba	chroma.html#parseHtmlRgba,string	proc parseHtmlRgba(text: string): Color		206
+nim	toHtmlRgba	chroma.html#toHtmlRgba,Color	proc toHtmlRgba(c: Color): string		228
+nim	parseHtmlName	chroma.html#parseHtmlName,string	proc parseHtmlName(text: string): Color		240
+nim	parseHtmlColor	chroma.html#parseHtmlColor,string	proc parseHtmlColor(colorText: string): Color		253
+nim	lighten	chroma.html#lighten,Color,float32	proc lighten(color: Color; amount: float32): Color		276
+nim	darken	chroma.html#darken,Color,float32	proc darken(color: Color; amount: float32): Color		284
+nim	saturate	chroma.html#saturate,Color,float32	proc saturate(color: Color; amount: float32): Color		288
+nim	desaturate	chroma.html#desaturate,Color,float32	proc desaturate(color: Color; amount: float32): Color		296
+nim	spin	chroma.html#spin,Color,float32	proc spin(color: Color; degrees: float32): Color		300
+nim	mix	chroma.html#mix,Color,Color	proc mix(a, b: Color): Color		309
+nim	mix	chroma.html#mix,Color,Color,float32	proc mix(a, b: Color; v: float32): Color		319
+nim	mixCMYK	chroma.html#mixCMYK,Color,Color	proc mixCMYK(colorA, colorB: Color): Color		326
+nim	mix	chroma.html#mix,ColorRGB,ColorRGB	proc mix(a, b: ColorRGB): ColorRGB		338
+nim	mix	chroma.html#mix,ColorRGBA,ColorRGBA	proc mix(a, b: ColorRGBA): ColorRGBA		344
+nim	distance	chroma.html#distance,SomeColor,SomeColor	proc distance(c1, c2: SomeColor): float32		351
+nimgrp	mix	chroma.html#mix-procs-all	proc		309
+nimgrp	hash	chroma.html#hash-procs-all	proc		17

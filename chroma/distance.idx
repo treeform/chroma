@@ -1,1 +1,2 @@
-deltaE00	chroma/distance.html#deltaE00,ColorLAB,ColorLAB	distance: deltaE00(c1, c2: ColorLAB; kL, kC, kH = 1.float32): float32	
+nimTitle	distance	chroma/distance.html	module src/chroma/distance		0
+nim	deltaE00	chroma/distance.html#deltaE00,ColorLAB,ColorLAB	proc deltaE00(c1, c2: ColorLAB; kL, kC, kH = 1.float32): float32		20

@@ -1,1 +1,2 @@
-fromTemperature	chroma/temperature.html#fromTemperature,float	temperature: fromTemperature(kelvin: float): Color	
+nimTitle	temperature	chroma/temperature.html	module src/chroma/temperature		0
+nim	fromTemperature	chroma/temperature.html#fromTemperature,float	proc fromTemperature(kelvin: float): Color		17

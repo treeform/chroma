@@ -23,5 +23,5 @@ nim	blendColor	chroma/blends.html#blendColor,Color,Color	proc blendColor(backdro
 nim	blendLuminosity	chroma/blends.html#blendLuminosity,Color,Color	proc blendLuminosity(backdrop, source: Color): Color		200
 nim	blendHue	chroma/blends.html#blendHue,Color,Color	proc blendHue(backdrop, source: Color): Color		204
 nim	blendSaturation	chroma/blends.html#blendSaturation,Color,Color	proc blendSaturation(backdrop, source: Color): Color		208
-nimgrp	-	chroma/blends.html#--procs-all	proc		28
 nimgrp	+	chroma/blends.html#+-procs-all	proc		17
+nimgrp	-	chroma/blends.html#--procs-all	proc		28

@@ -64,14 +64,14 @@ nim	asPolarLuv	chroma/transformations.html#asPolarLuv,SomeColor	proc asPolarLuv(
 nim	asOklab	chroma/transformations.html#asOklab,SomeColor	proc asOklab(c: SomeColor): ColorOklab		638
 nim	asPolarOklab	chroma/transformations.html#asPolarOklab,SomeColor	proc asPolarOklab(c: SomeColor): ColorPolarOklab		639
 nim	asRgbx	chroma/transformations.html#asRgbx,SomeColor	proc asRgbx(c: SomeColor): ColorRGBX		640
-nimgrp	color	chroma/transformations.html#color-procs-all	proc		49
-nimgrp	polarlab	chroma/transformations.html#polarLAB-procs-all	proc		416
-nimgrp	oklab	chroma/transformations.html#oklab-procs-all	proc		530
-nimgrp	xyz	chroma/transformations.html#xyz-procs-all	proc		336
 nimgrp	rgbx	chroma/transformations.html#rgbx-procs-all	proc		29
+nimgrp	color	chroma/transformations.html#color-procs-all	proc		49
 nimgrp	polaroklab	chroma/transformations.html#polarOklab-procs-all	proc		563
-nimgrp	polarluv	chroma/transformations.html#polarLUV-procs-all	proc		488
 nimgrp	lab	chroma/transformations.html#lab-procs-all	proc		395
 nimgrp	rgba	chroma/transformations.html#rgba-procs-all	proc		17
+nimgrp	polarluv	chroma/transformations.html#polarLUV-procs-all	proc		488
+nimgrp	xyz	chroma/transformations.html#xyz-procs-all	proc		336
+nimgrp	oklab	chroma/transformations.html#oklab-procs-all	proc		530
 nimgrp	luv	chroma/transformations.html#luv-procs-all	proc		447
+nimgrp	polarlab	chroma/transformations.html#polarLAB-procs-all	proc		416
 heading	#                      Ported code from colorspaces                        ###	chroma/transformations.html#ported-code-from-colorspaces	 #                      Ported code from colorspaces                        ###		0

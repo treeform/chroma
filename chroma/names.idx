@@ -1,2 +1,2 @@
-nimTitle	names	chroma/names.html	module src/chroma/names		0
+nimTitle	names	chroma/names.html	module chroma/names		0
 nim	colorNames	chroma/names.html#colorNames	const colorNames		3

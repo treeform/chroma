@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>src/chroma/colortypes</title>
+<title>chroma/colortypes</title>
 
 <!-- Google fonts -->
 <link href='https://fonts.googleapis.com/css?family=Lato:400,600,900' rel='stylesheet' type='text/css'/>
@@ -16,15 +16,18 @@
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH4QQQEwksSS9ZWwAAAk1JREFUWMPtll2ITVEUx39nn/O7Y5qR8f05wtCUUr6ZIS++8pEnkZInPImneaCQ5METNdOkeFBKUhMPRIkHKfEuUZSUlGlKPN2TrgfncpvmnntnmlEyq1Z7t89/rf9a6+y99oZxGZf/XeIq61EdtgKXgdXA0xrYAvBjOIF1AI9zvjcC74BSpndrJPkBWDScTF8Aa4E3wDlgHbASaANmVqlcCnwHvgDvgVfAJ+AikAAvgfVZwLnSVZHZaOuKoQi3ZOMi4NkYkpe1p4J7A8BpYAD49hfIy/oqG0+hLomiKP2L5L+1ubn5115S+3OAn4EnwBlgMzCjyt6ZAnQCJ4A7wOs88iRJHvw50HoujuPBoCKwHWiosy8MdfZnAdcHk8dxXFJ3VQbQlCTJvRBCGdRbD4M6uc5glpY3eAihpN5S5w12diSEcCCEcKUO4ljdr15T76ur1FDDLIQQ3qv71EdDOe3Kxj3leRXyk+pxdWnFWod6Wt2bY3de3aSuUHcPBVimHs7mK9WrmeOF6lR1o9qnzskh2ar2qm1qizpfXaPeVGdlmGN5pb09qMxz1Xb1kLqgzn1RyH7JUXW52lr5e/Kqi9qpto7V1atuUzfnARrV7jEib1T76gG2qxdGmXyiekkt1GswPTtek0aBfJp6YySGBfWg2tPQ0FAYgf1stUfdmdcjarbYJEniKIq6gY/Aw+zWHAC+p2labGpqiorFYgGYCEzN7oQdQClN07O1/EfDyGgC0ALMBdYAi4FyK+4H3gLPsxfR1zRNi+NP7nH5J+QntnXe5B5mpfQAAAAASUVORK5CYII=">
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="../nimdoc.out.css?v=2.2.4">
+<link rel="stylesheet" type="text/css" href="../nimdoc.out.css?v=2.2.10">
 
 <!-- JS -->
-<script type="text/javascript" src="../dochack.js?v=2.2.4"></script>
+<script type="text/javascript" src="../dochack.js?v=2.2.10"></script>
 </head>
 <body>
   <div class="document" id="documentId">
+    <input type="checkbox" id="nav-toggle" hidden>
+    <label for="nav-toggle" id="nav-burger">&#9776;</label>
+    <label for="nav-toggle" id="nav-overlay"></label>
     <div class="container">
-      <h1 class="title">src/chroma/colortypes</h1>
+      <h1 class="title">chroma/colortypes</h1>
       <div class="row">
   <div class="three columns">
     <div class="theme-select-wrapper">
@@ -228,7 +231,7 @@
   <h1><a class="toc-backref" href="#7">Types</a></h1>
   <dl class="item">
     <div id="Color">
-  <dt><pre><a href="colortypes.html#Color"><span class="Identifier">Color</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#Color"><span class="Identifier">Color</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">r</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## red (0-1)</span>
   <span class="Identifier">g</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## green (0-1)</span>
   <span class="Identifier">b</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## blue (0-1)</span>
@@ -242,7 +245,7 @@
   </dd>
 </div>
 <div id="ColorCMY">
-  <dt><pre><a href="colortypes.html#ColorCMY"><span class="Identifier">ColorCMY</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorCMY"><span class="Identifier">ColorCMY</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">c</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## Cyan 0 to 100</span>
   <span class="Identifier">m</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## Magenta 0 to 100</span>
   <span class="Identifier">y</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## Yellow 0 to 100</span></pre></dt>
@@ -255,7 +258,7 @@
   </dd>
 </div>
 <div id="ColorCMYK">
-  <dt><pre><a href="colortypes.html#ColorCMYK"><span class="Identifier">ColorCMYK</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorCMYK"><span class="Identifier">ColorCMYK</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">c</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## Cyan 0 to 1</span>
   <span class="Identifier">m</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## Magenta 0 to 1</span>
   <span class="Identifier">y</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## Yellow 0 to 1</span>
@@ -269,7 +272,7 @@
   </dd>
 </div>
 <div id="ColorHCL">
-  <dt><pre><a href="colortypes.html#ColorHCL"><span class="Identifier">ColorHCL</span></a> <span class="Other">=</span> <a href="colortypes.html#ColorPolarLUV"><span class="Identifier">ColorPolarLUV</span></a></pre></dt>
+  <dt><pre><a href="#ColorHCL"><span class="Identifier">ColorHCL</span></a> <span class="Other">=</span> <a href="#ColorPolarLUV"><span class="Identifier">ColorPolarLUV</span></a></pre></dt>
   <dd>
     
     
@@ -279,7 +282,7 @@
   </dd>
 </div>
 <div id="ColorHSL">
-  <dt><pre><a href="colortypes.html#ColorHSL"><span class="Identifier">ColorHSL</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorHSL"><span class="Identifier">ColorHSL</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">h</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## hue 0 to 360</span>
   <span class="Identifier">s</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## saturation 0 to 100</span>
   <span class="Identifier">l</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## lightness 0 to 100</span></pre></dt>
@@ -292,7 +295,7 @@
   </dd>
 </div>
 <div id="ColorHSV">
-  <dt><pre><a href="colortypes.html#ColorHSV"><span class="Identifier">ColorHSV</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorHSV"><span class="Identifier">ColorHSV</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">h</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## hue 0 to 360</span>
   <span class="Identifier">s</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## saturation 0 to 100</span>
   <span class="Identifier">v</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## value 0 to 100</span></pre></dt>
@@ -305,7 +308,7 @@
   </dd>
 </div>
 <div id="ColorLAB">
-  <dt><pre><a href="colortypes.html#ColorLAB"><span class="Identifier">ColorLAB</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorLAB"><span class="Identifier">ColorLAB</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">l</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## lightness, range 0.0 (black) to 100.0 (white)</span>
   <span class="Identifier">a</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## green (min) to red (max)</span>
   <span class="Identifier">b</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## blue (min) to yellow (max)</span></pre></dt>
@@ -318,7 +321,7 @@
   </dd>
 </div>
 <div id="ColorLUV">
-  <dt><pre><a href="colortypes.html#ColorLUV"><span class="Identifier">ColorLUV</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorLUV"><span class="Identifier">ColorLUV</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">l</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## lightness, range 0.0 to 100.0</span>
   <span class="Identifier">u</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## red to green</span>
   <span class="Identifier">v</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## blue to yellow</span></pre></dt>
@@ -331,7 +334,7 @@
   </dd>
 </div>
 <div id="ColorOklab">
-  <dt><pre><a href="colortypes.html#ColorOklab"><span class="Identifier">ColorOklab</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorOklab"><span class="Identifier">ColorOklab</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">L</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## perceived lightness</span>
   <span class="Identifier">a</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## greenless/redness</span>
   <span class="Identifier">b</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## blueless/yellowless</span></pre></dt>
@@ -344,7 +347,7 @@
   </dd>
 </div>
 <div id="ColorPolarLAB">
-  <dt><pre><a href="colortypes.html#ColorPolarLAB"><span class="Identifier">ColorPolarLAB</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorPolarLAB"><span class="Identifier">ColorPolarLAB</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">l</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## lightness, range 0.0 (black) to 100.0 (white)</span>
   <span class="Identifier">c</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## chroma, range 0.0 to max</span>
   <span class="Identifier">h</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## hue angle, range 0.0 to 360.0</span>
@@ -358,7 +361,7 @@
   </dd>
 </div>
 <div id="ColorPolarLUV">
-  <dt><pre><a href="colortypes.html#ColorPolarLUV"><span class="Identifier">ColorPolarLUV</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorPolarLUV"><span class="Identifier">ColorPolarLUV</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">h</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## hue angle, range 0.0 to 360.0</span>
   <span class="Identifier">c</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## chroma</span>
   <span class="Identifier">l</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## luminance</span></pre></dt>
@@ -371,7 +374,7 @@
   </dd>
 </div>
 <div id="ColorPolarOklab">
-  <dt><pre><a href="colortypes.html#ColorPolarOklab"><span class="Identifier">ColorPolarOklab</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorPolarOklab"><span class="Identifier">ColorPolarOklab</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">L</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## perceived lightness</span>
   <span class="Identifier">C</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## chroma</span>
   <span class="Identifier">h</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## hue</span></pre></dt>
@@ -384,7 +387,7 @@
   </dd>
 </div>
 <div id="ColorRGB">
-  <dt><pre><a href="colortypes.html#ColorRGB"><span class="Identifier">ColorRGB</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorRGB"><span class="Identifier">ColorRGB</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">r</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">uint8</span>                  <span class="Comment">## Red 0-255</span>
   <span class="Identifier">g</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">uint8</span>                  <span class="Comment">## Green 0-255</span>
   <span class="Identifier">b</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">uint8</span>                  <span class="Comment">## Blue 0-255</span></pre></dt>
@@ -397,7 +400,7 @@
   </dd>
 </div>
 <div id="ColorRGBA">
-  <dt><pre><a href="colortypes.html#ColorRGBA"><span class="Identifier">ColorRGBA</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorRGBA"><span class="Identifier">ColorRGBA</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">r</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">uint8</span>                  <span class="Comment">## Red 0-255</span>
   <span class="Identifier">g</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">uint8</span>                  <span class="Comment">## Green 0-255</span>
   <span class="Identifier">b</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">uint8</span>                  <span class="Comment">## Blue 0-255</span>
@@ -411,7 +414,7 @@
   </dd>
 </div>
 <div id="ColorRGBX">
-  <dt><pre><a href="colortypes.html#ColorRGBX"><span class="Identifier">ColorRGBX</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorRGBX"><span class="Identifier">ColorRGBX</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">r</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">uint8</span>                  <span class="Comment">## Red 0-a</span>
   <span class="Identifier">g</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">uint8</span>                  <span class="Comment">## Green 0-a</span>
   <span class="Identifier">b</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">uint8</span>                  <span class="Comment">## Blue 0-a</span>
@@ -425,7 +428,7 @@
   </dd>
 </div>
 <div id="ColorXYZ">
-  <dt><pre><a href="colortypes.html#ColorXYZ"><span class="Identifier">ColorXYZ</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorXYZ"><span class="Identifier">ColorXYZ</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">x</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## range 0.0 to WhiteX</span>
   <span class="Identifier">y</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## range 0.0 to WhiteY</span>
   <span class="Identifier">z</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## range 0.0 to WhiteZ</span></pre></dt>
@@ -438,7 +441,7 @@
   </dd>
 </div>
 <div id="ColorYUV">
-  <dt><pre><a href="colortypes.html#ColorYUV"><span class="Identifier">ColorYUV</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
+  <dt><pre><a href="#ColorYUV"><span class="Identifier">ColorYUV</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
   <span class="Identifier">y</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## 0 to 1</span>
   <span class="Identifier">u</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## -0.5 to 0.5</span>
   <span class="Identifier">v</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">float32</span>                <span class="Comment">## -0.5 to 0.5</span></pre></dt>
@@ -451,7 +454,7 @@
   </dd>
 </div>
 <div id="InvalidColor">
-  <dt><pre><a href="colortypes.html#InvalidColor"><span class="Identifier">InvalidColor</span></a> <span class="Other">=</span> <span class="Keyword">object</span> <span class="Keyword">of</span> <span class="Identifier">ValueError</span></pre></dt>
+  <dt><pre><a href="#InvalidColor"><span class="Identifier">InvalidColor</span></a> <span class="Other">=</span> <span class="Keyword">object</span> <span class="Keyword">of</span> <span class="Identifier">ValueError</span></pre></dt>
   <dd>
     
     
@@ -461,17 +464,17 @@
   </dd>
 </div>
 <div id="SomeColor">
-  <dt><pre><a href="colortypes.html#SomeColor"><span class="Identifier">SomeColor</span></a> <span class="Other">=</span> <a href="colortypes.html#Color"><span class="Identifier">Color</span></a> <span class="Operator">|</span> <a href="colortypes.html#ColorRGB"><span class="Identifier">ColorRGB</span></a> <span class="Operator">|</span> <a href="colortypes.html#ColorRGBA"><span class="Identifier">ColorRGBA</span></a> <span class="Operator">|</span> <a href="colortypes.html#ColorHSL"><span class="Identifier">ColorHSL</span></a> <span class="Operator">|</span> <a href="colortypes.html#ColorHSV"><span class="Identifier">ColorHSV</span></a> <span class="Operator">|</span> <a href="colortypes.html#ColorCMY"><span class="Identifier">ColorCMY</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorCMYK"><span class="Identifier">ColorCMYK</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorYUV"><span class="Identifier">ColorYUV</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorLAB"><span class="Identifier">ColorLAB</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorPolarLAB"><span class="Identifier">ColorPolarLAB</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorLUV"><span class="Identifier">ColorLUV</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorPolarLUV"><span class="Identifier">ColorPolarLUV</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorXYZ"><span class="Identifier">ColorXYZ</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorOklab"><span class="Identifier">ColorOklab</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorPolarOklab"><span class="Identifier">ColorPolarOklab</span></a> <span class="Operator">|</span>
-    <a href="colortypes.html#ColorRGBX"><span class="Identifier">ColorRGBX</span></a></pre></dt>
+  <dt><pre><a href="#SomeColor"><span class="Identifier">SomeColor</span></a> <span class="Other">=</span> <a href="#Color"><span class="Identifier">Color</span></a> <span class="Operator">|</span> <a href="#ColorRGB"><span class="Identifier">ColorRGB</span></a> <span class="Operator">|</span> <a href="#ColorRGBA"><span class="Identifier">ColorRGBA</span></a> <span class="Operator">|</span> <a href="#ColorHSL"><span class="Identifier">ColorHSL</span></a> <span class="Operator">|</span> <a href="#ColorHSV"><span class="Identifier">ColorHSV</span></a> <span class="Operator">|</span> <a href="#ColorCMY"><span class="Identifier">ColorCMY</span></a> <span class="Operator">|</span>
+    <a href="#ColorCMYK"><span class="Identifier">ColorCMYK</span></a> <span class="Operator">|</span>
+    <a href="#ColorYUV"><span class="Identifier">ColorYUV</span></a> <span class="Operator">|</span>
+    <a href="#ColorLAB"><span class="Identifier">ColorLAB</span></a> <span class="Operator">|</span>
+    <a href="#ColorPolarLAB"><span class="Identifier">ColorPolarLAB</span></a> <span class="Operator">|</span>
+    <a href="#ColorLUV"><span class="Identifier">ColorLUV</span></a> <span class="Operator">|</span>
+    <a href="#ColorPolarLUV"><span class="Identifier">ColorPolarLUV</span></a> <span class="Operator">|</span>
+    <a href="#ColorXYZ"><span class="Identifier">ColorXYZ</span></a> <span class="Operator">|</span>
+    <a href="#ColorOklab"><span class="Identifier">ColorOklab</span></a> <span class="Operator">|</span>
+    <a href="#ColorPolarOklab"><span class="Identifier">ColorPolarOklab</span></a> <span class="Operator">|</span>
+    <a href="#ColorRGBX"><span class="Identifier">ColorRGBX</span></a></pre></dt>
   <dd>
     
     
@@ -488,7 +491,7 @@
   <dl class="item">
     <div id="cmy-procs-all">
   <div id="cmy,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#cmy%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">cmy</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">,</span> <span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorCMY"><span class="Identifier">ColorCMY</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#cmy%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">cmy</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">,</span> <span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorCMY"><span class="Identifier">ColorCMY</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -501,7 +504,7 @@
 </div>
 <div id="cmyk-procs-all">
   <div id="cmyk,float32,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#cmyk%2Cfloat32%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">cmyk</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">,</span> <span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">,</span> <span class="Identifier">k</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorCMYK"><span class="Identifier">ColorCMYK</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#cmyk%2Cfloat32%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">cmyk</span></a><span class="Other">(</span><span class="Identifier">c</span><span class="Other">,</span> <span class="Identifier">m</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">,</span> <span class="Identifier">k</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorCMYK"><span class="Identifier">ColorCMYK</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -515,7 +518,7 @@
 </div>
 <div id="color-procs-all">
   <div id="color,float32,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#color%2Cfloat32%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">color</span></a><span class="Other">(</span><span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">g</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">float32</span> <span class="Other">=</span> <span class="FloatNumber">1.0</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#Color"><span class="Identifier">Color</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#color%2Cfloat32%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">color</span></a><span class="Other">(</span><span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">g</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">;</span> <span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">float32</span> <span class="Other">=</span> <span class="FloatNumber">1.0</span><span class="Other">)</span><span class="Other">:</span> <a href="#Color"><span class="Identifier">Color</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -535,7 +538,7 @@
 </div>
 <div id="hsl-procs-all">
   <div id="hsl,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#hsl%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">hsl</span></a><span class="Other">(</span><span class="Identifier">h</span><span class="Other">,</span> <span class="Identifier">s</span><span class="Other">,</span> <span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorHSL"><span class="Identifier">ColorHSL</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#hsl%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">hsl</span></a><span class="Other">(</span><span class="Identifier">h</span><span class="Other">,</span> <span class="Identifier">s</span><span class="Other">,</span> <span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorHSL"><span class="Identifier">ColorHSL</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -548,7 +551,7 @@
 </div>
 <div id="hsv-procs-all">
   <div id="hsv,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#hsv%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">hsv</span></a><span class="Other">(</span><span class="Identifier">h</span><span class="Other">,</span> <span class="Identifier">s</span><span class="Other">,</span> <span class="Identifier">v</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorHSV"><span class="Identifier">ColorHSV</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#hsv%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">hsv</span></a><span class="Other">(</span><span class="Identifier">h</span><span class="Other">,</span> <span class="Identifier">s</span><span class="Other">,</span> <span class="Identifier">v</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorHSV"><span class="Identifier">ColorHSV</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -561,7 +564,7 @@
 </div>
 <div id="lab-procs-all">
   <div id="lab,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#lab%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">lab</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">,</span> <span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorLAB"><span class="Identifier">ColorLAB</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#lab%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">lab</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">,</span> <span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorLAB"><span class="Identifier">ColorLAB</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -574,7 +577,7 @@
 </div>
 <div id="luv-procs-all">
   <div id="luv,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#luv%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">luv</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">,</span> <span class="Identifier">u</span><span class="Other">,</span> <span class="Identifier">v</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorLUV"><span class="Identifier">ColorLUV</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#luv%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">luv</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">,</span> <span class="Identifier">u</span><span class="Other">,</span> <span class="Identifier">v</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorLUV"><span class="Identifier">ColorLUV</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -587,7 +590,7 @@
 </div>
 <div id="oklab-procs-all">
   <div id="oklab,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#oklab%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">oklab</span></a><span class="Other">(</span><span class="Identifier">L</span><span class="Other">,</span> <span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorOklab"><span class="Identifier">ColorOklab</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#oklab%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">oklab</span></a><span class="Other">(</span><span class="Identifier">L</span><span class="Other">,</span> <span class="Identifier">a</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorOklab"><span class="Identifier">ColorOklab</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -601,7 +604,7 @@
 </div>
 <div id="polarLAB-procs-all">
   <div id="polarLAB,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#polarLAB%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">polarLAB</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">,</span> <span class="Identifier">c</span><span class="Other">,</span> <span class="Identifier">h</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorPolarLAB"><span class="Identifier">ColorPolarLAB</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#polarLAB%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">polarLAB</span></a><span class="Other">(</span><span class="Identifier">l</span><span class="Other">,</span> <span class="Identifier">c</span><span class="Other">,</span> <span class="Identifier">h</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorPolarLAB"><span class="Identifier">ColorPolarLAB</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -615,7 +618,7 @@
 </div>
 <div id="polarLUV-procs-all">
   <div id="polarLUV,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#polarLUV%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">polarLUV</span></a><span class="Other">(</span><span class="Identifier">h</span><span class="Other">,</span> <span class="Identifier">c</span><span class="Other">,</span> <span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorPolarLUV"><span class="Identifier">ColorPolarLUV</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#polarLUV%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">polarLUV</span></a><span class="Other">(</span><span class="Identifier">h</span><span class="Other">,</span> <span class="Identifier">c</span><span class="Other">,</span> <span class="Identifier">l</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorPolarLUV"><span class="Identifier">ColorPolarLUV</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -629,7 +632,7 @@
 </div>
 <div id="polarOklab-procs-all">
   <div id="polarOklab,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#polarOklab%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">polarOklab</span></a><span class="Other">(</span><span class="Identifier">L</span><span class="Other">,</span> <span class="Identifier">C</span><span class="Other">,</span> <span class="Identifier">h</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorPolarOklab"><span class="Identifier">ColorPolarOklab</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#polarOklab%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">polarOklab</span></a><span class="Other">(</span><span class="Identifier">L</span><span class="Other">,</span> <span class="Identifier">C</span><span class="Other">,</span> <span class="Identifier">h</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorPolarOklab"><span class="Identifier">ColorPolarOklab</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -643,7 +646,7 @@
 </div>
 <div id="rgb-procs-all">
   <div id="rgb,uint8,uint8,uint8">
-  <dt><pre><span class="Keyword">proc</span> <a href="#rgb%2Cuint8%2Cuint8%2Cuint8"><span class="Identifier">rgb</span></a><span class="Other">(</span><span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">g</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">uint8</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorRGB"><span class="Identifier">ColorRGB</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#rgb%2Cuint8%2Cuint8%2Cuint8"><span class="Identifier">rgb</span></a><span class="Other">(</span><span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">g</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">:</span> <span class="Identifier">uint8</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorRGB"><span class="Identifier">ColorRGB</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     Creates from uint8s like:<ul class="simple"><li>rgba(255,0,0) -&gt; red</li>
@@ -660,7 +663,7 @@
 </div>
 <div id="rgba-procs-all">
   <div id="rgba,uint8,uint8,uint8,uint8">
-  <dt><pre><span class="Keyword">proc</span> <a href="#rgba%2Cuint8%2Cuint8%2Cuint8%2Cuint8"><span class="Identifier">rgba</span></a><span class="Other">(</span><span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">g</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">uint8</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorRGBA"><span class="Identifier">ColorRGBA</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#rgba%2Cuint8%2Cuint8%2Cuint8%2Cuint8"><span class="Identifier">rgba</span></a><span class="Other">(</span><span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">g</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">uint8</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorRGBA"><span class="Identifier">ColorRGBA</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -680,7 +683,7 @@
 </div>
 <div id="rgbx-procs-all">
   <div id="rgbx,uint8,uint8,uint8,uint8">
-  <dt><pre><span class="Keyword">proc</span> <a href="#rgbx%2Cuint8%2Cuint8%2Cuint8%2Cuint8"><span class="Identifier">rgbx</span></a><span class="Other">(</span><span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">g</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">uint8</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorRGBX"><span class="Identifier">ColorRGBX</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#rgbx%2Cuint8%2Cuint8%2Cuint8%2Cuint8"><span class="Identifier">rgbx</span></a><span class="Other">(</span><span class="Identifier">r</span><span class="Other">,</span> <span class="Identifier">g</span><span class="Other">,</span> <span class="Identifier">b</span><span class="Other">,</span> <span class="Identifier">a</span><span class="Other">:</span> <span class="Identifier">uint8</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorRGBX"><span class="Identifier">ColorRGBX</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
@@ -700,7 +703,7 @@
 </div>
 <div id="xyz-procs-all">
   <div id="xyz,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#xyz%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">xyz</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">,</span> <span class="Identifier">z</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorXYZ"><span class="Identifier">ColorXYZ</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#xyz%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">xyz</span></a><span class="Other">(</span><span class="Identifier">x</span><span class="Other">,</span> <span class="Identifier">y</span><span class="Other">,</span> <span class="Identifier">z</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorXYZ"><span class="Identifier">ColorXYZ</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -713,7 +716,7 @@
 </div>
 <div id="yuv-procs-all">
   <div id="yuv,float32,float32,float32">
-  <dt><pre><span class="Keyword">proc</span> <a href="#yuv%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">yuv</span></a><span class="Other">(</span><span class="Identifier">y</span><span class="Other">,</span> <span class="Identifier">u</span><span class="Other">,</span> <span class="Identifier">v</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="colortypes.html#ColorYUV"><span class="Identifier">ColorYUV</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#yuv%2Cfloat32%2Cfloat32%2Cfloat32"><span class="Identifier">yuv</span></a><span class="Other">(</span><span class="Identifier">y</span><span class="Other">,</span> <span class="Identifier">u</span><span class="Other">,</span> <span class="Identifier">v</span><span class="Other">:</span> <span class="Identifier">float32</span><span class="Other">)</span><span class="Other">:</span> <a href="#ColorYUV"><span class="Identifier">ColorYUV</span></a> {.<span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
     
@@ -734,7 +737,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2025-09-20 04:09:47 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2026-05-25 03:00:13 UTC</small>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-nimTitle	chroma	chroma.html	module src/chroma		0
+nimTitle	chroma	chroma.html	module chroma		0
 nim	`$`	chroma.html#$,Color	proc `$`(c: Color): string		13
 nim	hash	chroma.html#hash,Color	proc hash(c: Color): Hash		17
 nim	hash	chroma.html#hash,ColorRGB	proc hash(c: ColorRGB): Hash		21

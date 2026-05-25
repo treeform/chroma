@@ -1,4 +1,4 @@
-nimTitle	colortypes	chroma/colortypes.html	module src/chroma/colortypes		0
+nimTitle	colortypes	chroma/colortypes.html	module chroma/colortypes		0
 nim	Color	chroma/colortypes.html#Color	object Color		2
 nim	ColorRGB	chroma/colortypes.html#ColorRGB	object ColorRGB		10
 nim	ColorRGBA	chroma/colortypes.html#ColorRGBA	object ColorRGBA		17

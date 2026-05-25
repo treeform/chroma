@@ -1,4 +1,4 @@
-nimTitle	transformations	chroma/transformations.html	module src/chroma/transformations		0
+nimTitle	transformations	chroma/transformations.html	module chroma/transformations		0
 nim	rgba	chroma/transformations.html#rgba,ColorRGBX	proc rgba(c: ColorRGBX): ColorRGBA		17
 nim	rgbx	chroma/transformations.html#rgbx,ColorRGBA	proc rgbx(c: ColorRGBA): ColorRGBX		29
 nim	rgbx	chroma/transformations.html#rgbx,ColorRGB	proc rgbx(c: ColorRGB): ColorRGBX		36

@@ -1,4 +1,4 @@
-nimTitle	blends	chroma/blends.html	module src/chroma/blends		0
+nimTitle	blends	chroma/blends.html	module chroma/blends		0
 nim	`*`	chroma/blends.html#*,Color,float32	proc `*`(c: Color; v: float32): Color		3
 nim	`/`	chroma/blends.html#/,Color,float32	proc `/`(c: Color; v: float32): Color		10
 nim	`+`	chroma/blends.html#+,Color,float32	proc `+`(c: Color; v: float32): Color		17
